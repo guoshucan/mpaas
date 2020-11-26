@@ -1,0 +1,21 @@
+﻿<!--
+	作者：27048384@qq.com
+	时间：2020-04-06
+	描述：删除确认弹框
+-->
+<script type="text/ng-template" id="d305fb00-49d3-4b0c-9af0-268e9bf0e2be">
+	<div class="modal-header">
+		<h3 class="modal-title">确认删除!</h3>
+	</div>
+	<div class="modal-body">
+		<ul>
+			<li ng-repeat="item in rows">
+		            选择的是: <b>{{ item.groupName }}</b>
+			</li>
+		</ul>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-default" ng-click="cancel()">取消</button>
+		<button class="btn btn-primary" ng-click="ok()">确定</button>
+	</div>
+</script>

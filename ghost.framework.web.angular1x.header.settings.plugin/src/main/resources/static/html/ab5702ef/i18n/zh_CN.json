@@ -1,0 +1,9 @@
+{
+  "layoutSettings": "布局设置",
+  "selectThemeColor": "请选择颜色主题",
+  "container": "盒模型布局",
+  "asideDock": "顶部停靠侧边栏",
+  "asideFolded": "折叠侧边栏",
+  "asideFixed": "冻结侧边栏",
+  "headerFixed": "冻结顶部"
+}

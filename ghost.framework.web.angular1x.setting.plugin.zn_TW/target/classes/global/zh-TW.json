@@ -1,0 +1,18 @@
+{
+  "header": {
+  },
+  "aside": {
+    "nav": {
+      "SystemManagement": {
+        "name": "系統管理",
+        "Admin": {
+          "name": "管理員",
+          "Setting": {
+            "name": "設置",
+            "title": "系統設置"
+          }
+        }
+      }
+    }
+  }
+}

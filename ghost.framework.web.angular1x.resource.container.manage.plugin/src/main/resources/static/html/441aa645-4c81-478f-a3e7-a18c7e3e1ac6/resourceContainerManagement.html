@@ -1,0 +1,748 @@
+<!--
+	作者：27048384@qq.com
+	时间：2020-06-08
+	描述：查看详情
+-->
+<script type="text/ng-template" id="79ab6d65-76b3-4311-9c54-9c0c304271b8">
+	<div class="modal-header">
+		<h4 class="modal-title">{{rows.title}}资源服务器详情</h4>
+	</div>
+	<div class="modal-body" style="padding: 2px;">
+		<ul>
+			<table>
+				<tr>
+					<td align="right" style="min-width: 100px;">Id:&nbsp</td>
+					<td>{{ rows.id }}</td>
+				</tr>
+				<tr>
+					<td align="right">服务商:&nbsp</td>
+					<td>{{ rows.providerName }}</td>
+				</tr>
+				<tr ng-if="rows.regionName">
+					<td align="right">区域:&nbsp</td>
+					<td>{{ rows.regionName }}</td>
+				</tr>
+				<tr>
+					<td align="right">名称:&nbsp</td>
+					<td>{{ rows.name }}</td>
+				</tr>
+				<tr>
+					<td align="right">用户名称:&nbsp</td>
+					<td>{{ rows.userName }}</td>
+				</tr>
+				<tr>
+					<td align="right">状态:&nbsp</td>
+					<td>
+						<label class="i-switch m-t-xs m-r" style="height: 15px;margin-top: 0px;">
+						<input type="checkbox" ng-model="rows.status" disabled="disabled"><i></i>
+					</label>
+					</td>
+				</tr>
+				<tr>
+					<td align="right">终结点:&nbsp</td>
+					<td>{{ rows.endpoint }}</td>
+				</tr>
+				<tr ng-if="rows.port">
+					<td align="right">端口:&nbsp</td>
+					<td>{{ rows.port }}</td>
+				</tr>
+				<tr ng-if="rows.timeout">
+					<td align="right">超时:&nbsp</td>
+					<td>{{ rows.timeout }}</td>
+				</tr>
+				<tr ng-if="rows.bucket">
+					<td align="right">存储通:&nbsp</td>
+					<td>{{ rows.bucket }}</td>
+				</tr>
+				<tr>
+					<td align="right">授权id:&nbsp</td>
+					<td>{{ rows.accessKeyId }}</td>
+				</tr>
+				<tr>
+					<td align="right">授权密码:&nbsp</td>
+					<td>{{ rows.accessKeySecret }}</td>
+				</tr>
+				<tr>
+					<td align="right">创建时间:&nbsp</td>
+					<td>{{ rows.createTime }}</td>
+				</tr>
+			</table>
+		</ul>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-default" ng-click="cancel()">关闭</button>
+	</div>
+</script>
+<!--
+	作者：27048384@qq.com
+	时间：2020-04-06
+	描述：删除确认弹框
+-->
+<script type="text/ng-template" id="d305fb00-49d3-4b0c-9af0-268e9bf0e2be">
+	<div class="modal-header">
+		<h4 class="modal-title">确认删除!</h4>
+	</div>
+	<div class="modal-body">
+		<ul>
+			<li ng-repeat="item in rows" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+				选择的是: <b>{{ item.name }}</b>
+			</li>
+		</ul>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-default" ng-click="cancel()">取消</button>
+		<button class="btn btn-primary" ng-click="ok()">确定</button>
+	</div>
+</script>
+<!--
+	作者：27048384@qq.com
+	时间：2020-04-06
+	描述：内容
+-->
+<div class="bg-light lter b-b wrapper-md page_header" style="padding: 10px;">系统资源 ><strong style="color: rgb(25,158,216);">资源容器管理</strong></div>
+<div class="wrapper-md" ng-controller="63a9e086-2f82-44ca-896c-85305ecf552d" ng-init="init()">
+	<div ng-controller="ToasterCtrl" ng-init="init()">
+		<!-- toaster directive -->
+		<toaster-container toaster-options="{'position-class': 'toast-top-center', 'close-button':true}"></toaster-container>
+		<!-- / toaster directive -->
+	</div>
+	<!--列表-->
+	<div class="panel panel-default" ng-show="tableContent">
+		<div class="panel-heading">资源容器管理</div>
+		<div class="row wrapper">
+
+			<div style="margin-bottom: 0px;width: auto;" class="form-group col-sm-2">
+				<div class="input-group">
+					<select class="form-control inline v-middle" ng-model="selectRequest.status">
+						<option value="-1">请选择状态</option>
+						<option value="0">禁用</option>
+						<option value="1">启用</option>
+					</select>
+				</div>
+			</div>
+
+			<div style="margin-bottom: 0px;width: auto;" class="form-group col-sm-2">
+				<div class="input-group">
+					<select class="form-control inline v-middle" ng-model="selectRequest.provider">
+						<option value="-1">请选择类型</option>
+						<option value="0">阿里云OSS</option>
+						<option value="1">腾讯云COS</option>
+						<option value="2">FastDFS</option>
+						<option value="3">Hadoop HDFS</option>
+						<option value="4">Minio</option>
+					</select>
+				</div>
+			</div>
+
+			<div style="margin-bottom: 0px;" class="form-group col-sm-2" ng-controller="02fdff6a" ng-init="init('startTime')">
+				<div class="input-group">
+					<input type="text" class="form-control" datepicker-popup="{{format}}" id="startTime" ng-model="selectRequest.startTime" is-open="opened" min-date="'1980-1-1'" max-date="'2100-12-31'" datepicker-options="dateOptions" ng-required="true" close-text="关闭" clear-text="清除" current-text="今天" format-date placeholder="开始日期" />
+					<span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open($event, 'startTime')"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+				</div>
+			</div>
+
+			<div style="margin-bottom: 0px;" class="form-group col-sm-2" ng-controller="02fdff6a" ng-init="init('endTime')">
+				<div class="input-group">
+					<input type="text" class="form-control" datepicker-popup="{{format}}" id="endTime" ng-model="selectRequest.endTime" is-open="opened" min-date="'1980-1-1'" max-date="'2100-12-31'" datepicker-options="dateOptions" ng-required="true" close-text="关闭" clear-text="清除" current-text="今天" format-date placeholder="结束日期" />
+					<span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open($event, 'endTime')"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+				</div>
+			</div>
+
+			<div style="margin-bottom: 0px;" class="form-group col-sm-2">
+				<div class="input-group">
+					<input type="text" class="form-control" ng-model="selectRequest.key" placeholder="请输入关键字...">
+					<span class="input-group-btn"><button class="btn btn-info" type="button" ng-click="search(false)">搜索</button></span>
+				</div>
+			</div>
+			<div style="margin-bottom: 0px;width: auto;" class="form-group col-sm-2">
+				<div class="input-group">
+					<button class="btn btn-dark" ng-click="search(true)">清除</button>
+				</div>
+			</div>
+
+			<div style="margin-bottom: 0px;width: auto;" class="form-group col-sm-2">
+				<!--<div class="input-group">
+					<button class="btn btn-primary" ng-click="add()">新增</button>
+				</div>-->
+				<div class="btn-group dropdown">
+					<button class="btn btn-primary" data-toggle="dropdown">新增<span class="caret"></span></button>
+					<ul class="dropdown-menu">
+						<li ng-click="addAliyunOss(false)">
+							<a href>阿里云OSS</a>
+						</li>
+						<li ng-click="addTencentCloudCos(false)">
+							<a href>腾讯云COS</a>
+						</li>
+						<li class="divider"></li>
+						<li ng-click="addFastDFS(false)">
+							<a href>FastDFS</a>
+						</li>
+						<li  ng-click="addHdfs(false)">
+							<a href>Hadoop HDFS</a>
+						</li>
+						<li  ng-click="addMinio(false)">
+							<a href>Minio</a>
+						</li>
+					</ul>
+				</div>
+
+			</div>
+
+			<div style="margin-bottom: 0px;width: auto;" class="form-group col-sm-2">
+				<div class="input-group" ng-controller="ff6f79f6">
+					<button class="btn btn-danger" ng-disabled="deleteAllDisabled" ng-click="open()">删除所选</button>
+				</div>
+			</div>
+		</div>
+		<div class="table-responsive">
+			<table class="table table-striped b-t b-light">
+				<thead>
+					<tr>
+						<th style="width:20px;">
+							<label class="i-checks m-b-none">
+							<input type="checkbox" ng-model="selectAll" ng-click="checkboxAll(selectAll)" ng-checked="selectAll" ng-disabled="page.data.length==0"><i></i>
+						</label>
+						</th>
+						<th>Id</th>
+						<th>服务商</th>
+						<th>名称</th>
+						<th>终结点</th>
+						<th>状态</th>
+						<th>日期</th>
+						<th style="text-align: center;">操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="item in page.data">
+						<td><label class="i-checks m-b-none"><input type="checkbox" value="{{item.id}}" ng-click="checkboxSelected($event,item.id)" ng-checked="item.check" ng-model="item.check"><i></i></label></td>
+						<td><span class="text-ellipsis">{{item.id}}</span></td>
+						<td><span class="text-ellipsis">{{item.providerName}}</span></td>
+						<td><span class="text-ellipsis">{{item.name}}</span></td>
+						<td><span class="text-ellipsis">{{item.endpoint}}</span></td>
+						<td>
+							<label class="i-switch m-t-xs m-r">
+								<input type="checkbox" ng-model="item.statusCheck" ng-click="statusUpdate(item);"><i></i>
+							</label>
+						</td>
+						<td><span class="text-ellipsis">{{item.createTime}}</span></td>
+						<td style="text-align: center;" ng-controller="0ebf2e8e-9269-4661-8b34-e8364c0e59d5">
+							<button style="height: 24px;padding: 2px;" class="btn btn-info btn-sm ng-scope" ng-controller="52703cfb-2d25-4811-9f01-99429dfdf698" ng-click="show(item)">查看</button>
+							<button style="height: 24px;padding: 2px;" class="btn btn-info btn-sm ng-scope" ng-click="testConnection(item)">测试</button>
+							<button style="height: 24px;padding: 2px;" class="btn btn-success btn-sm" style="margin-left:5px;" ng-click="edit(item)">修改</button>
+							<button style="height: 24px;padding: 2px;" class="btn btn-danger btn-sm" style="margin-left:5px;" ng-click="open(item)">删除</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<footer class="panel-footer">
+			<div class="row">
+				<div class="col-sm-3 hidden-xs">
+					<select class="input-sm form-control w-sm inline v-middle" ng-model="selectRequest.length" ng-change="selectRowLengthChange();">
+						<option value="10">10</option>
+						<option value="25">25</option>
+						<option value="50">50</option>
+						<option value="100">100</option>
+					</select>
+					<small class="text-muted inline m-t-sm m-b-sm">每页{{selectRequest.length}}行</small>
+				</div>
+				<div class="col-sm-7">
+					<div class="col-sm-4 text-center">
+						<small class="text-muted inline m-t-sm m-b-sm">显示 {{page.data.length}}条， 共 {{page.count}} 条</small>
+					</div>
+					<div style="height: 29px;padding-top: 5px; width: 66%;" class="col-sm-4 text-right text-center-xs">
+						<pagination ng-change="pageChange()" total-items="page.count" ng-model="selectRequest.start" max-size="page.maxSize" class="pagination-sm m-t-none m-b" boundary-links="true" boundary-link-numbers="true" rotate="false" items-per-page="selectRequest.length" num-pages="page.pages" previous-text="上一页" next-text="下一页" first-text="第一页" last-text="尾页"></pagination>
+					</div>
+				</div>
+			</div>
+		</footer>
+	</div>
+	<!--添加minio-->
+	<div class="panel panel-default" ng-show="addMinioContent">
+		<form name="formValidateMinioAdd" class="form-horizontal form-validation">
+			<div class="panel-heading">
+				<strong>添加 Minio 资源</strong>
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">资源名称：</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" placeholder="请填写资源名称..." ng-model="data.name" maxlength="100" minlength="1" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">文件桶名称：</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" placeholder="请填写文件桶名称..." ng-model="data.bucket" maxlength="100" minlength="1" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">是否启用：</label>
+					<div class="col-sm-9">
+						<label class="checkbox i-checks">
+                    <input type="checkbox" ng-model="data.status"><i></i>
+                  </label>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">网络终结点：</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" placeholder="请填写网络终结点地址..." ng-model="data.endpoint" maxlength="255" minlength="8" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">授权键id：</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" placeholder="请填写授权键id..." ng-model="data.accessKeyId" maxlength="128" minlength="5" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">授权秘密：</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" placeholder="请填写授权秘密..." ng-model="data.accessKeySecret" maxlength="128" minlength="5" required>
+					</div>
+				</div>
+			</div>
+			<footer class="panel-footer text-center bg-light lter">
+				<button type="submit" class="btn btn-success" ng-disabled="formValidateMinioAdd.$invalid" aria-disabled="false" ng-click="addMinio(true);">提交</button>
+				<button type="button" class="btn btn-danger" style="margin-left: 50px;" ng-click="back();">返回</button>
+			</footer>
+		</form>
+	</div>
+	<!--修改minio-->
+	<div class="panel panel-default" ng-show="editMinioContent">
+		<form name="formValidateMinioEdit" class="form-horizontal form-validation">
+			<div class="panel-heading">
+				<strong>修改 Minio 资源</strong>
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">资源名称：</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" placeholder="请填写资源名称..." ng-model="data.name" maxlength="100" minlength="1" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">文件桶名称：</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" placeholder="请填写文件桶名称..." ng-model="data.bucket" maxlength="100" minlength="1" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">是否启用：</label>
+					<div class="col-sm-9">
+						<label class="checkbox i-checks">
+                    <input type="checkbox" ng-model="data.status"><i></i>
+                  </label>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">网络终结点：</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" placeholder="请填写网络终结点地址..." ng-model="data.endpoint" maxlength="255" minlength="8" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">授权键id：</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" placeholder="请填写授权键id..." ng-model="data.accessKeyId" maxlength="128" minlength="5" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">授权秘密：</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" placeholder="请填写授权秘密..." ng-model="data.accessKeySecret" maxlength="128" minlength="5" required>
+					</div>
+				</div>
+			</div>
+			<footer class="panel-footer text-center bg-light lter">
+				<button type="submit" class="btn btn-success" ng-disabled="formValidateMinioEdit.$invalid" aria-disabled="false" ng-click="editMinio(true);">提交</button>
+				<button type="button" class="btn btn-danger" style="margin-left: 50px;" ng-click="back();">返回</button>
+			</footer>
+		</form>
+	</div>
+	<!--添加FastDFS-->
+	<div class="panel panel-default" ng-show="addFastDFSContent">
+		<form name="formValidateFastDFSAdd" class="form-horizontal form-validation">
+			<div class="panel-heading">
+				<strong>添加 FastDFS 资源</strong>
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">资源名称：</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" placeholder="请填写资源名称..." ng-model="data.name" maxlength="100" minlength="1" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">是否启用：</label>
+					<div class="col-sm-9">
+						<label class="checkbox i-checks">
+                    <input type="checkbox" ng-model="data.status"><i></i>
+                  </label>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">网络终结点：</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" placeholder="请填写网络终结点地址..." ng-model="data.endpoint" maxlength="255" minlength="8" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">系统超时：</label>
+					<div class="col-sm-9">
+						<input type="text" placeholder="请填写系统超时..." class="form-control ng-dirty ng-valid-parse ng-valid-required ng-touched ng-invalid ng-invalid-pattern" ng-model="data.soTimeout" ng-pattern="/^[0-9]+$/" required="" aria-required="false" aria-invalid="true">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">连接超时：</label>
+					<div class="col-sm-9">
+						<input type="text" placeholder="请填写连接超时..." class="form-control ng-dirty ng-valid-parse ng-valid-required ng-touched ng-invalid ng-invalid-pattern" ng-model="data.connectTimeout" ng-pattern="/^[0-9]+$/" required="" aria-required="false" aria-invalid="true">
+					</div>
+				</div>
+			</div>
+			<footer class="panel-footer text-center bg-light lter">
+				<button type="submit" class="btn btn-success" ng-disabled="formValidateFastDFSAdd.$invalid" aria-disabled="false" ng-click="addFastDFS(true);">提交</button>
+				<button type="button" class="btn btn-danger" style="margin-left: 50px;" ng-click="back();">返回</button>
+			</footer>
+		</form>
+	</div>
+	<!--修改FastDFS-->
+	<div class="panel panel-default" ng-show="editFastDFSContent">
+		<form name="formValidateFastDFSEdit" class="form-horizontal form-validation">
+			<div class="panel-heading">
+				<strong>修改 FastDFS 资源</strong>
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">资源名称：</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" placeholder="请填写资源名称..." ng-model="data.name" maxlength="100" minlength="1" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">是否启用：</label>
+					<div class="col-sm-9">
+						<label class="checkbox i-checks">
+                    <input type="checkbox" ng-model="data.status"><i></i>
+                  </label>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">网络终结点：</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" placeholder="请填写网络终结点地址..." ng-model="data.endpoint" maxlength="255" minlength="8" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">系统超时：</label>
+					<div class="col-sm-9">
+						<input type="text" placeholder="请填写系统超时..." class="form-control ng-dirty ng-valid-parse ng-valid-required ng-touched ng-invalid ng-invalid-pattern" ng-model="data.soTimeout" ng-pattern="/^[0-9]+$/" required="" aria-required="false" aria-invalid="true">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">连接超时：</label>
+					<div class="col-sm-9">
+						<input type="text" placeholder="请填写连接超时..." class="form-control ng-dirty ng-valid-parse ng-valid-required ng-touched ng-invalid ng-invalid-pattern" ng-model="data.connectTimeout" ng-pattern="/^[0-9]+$/" required="" aria-required="false" aria-invalid="true">
+					</div>
+				</div>
+			</div>
+			<footer class="panel-footer text-center bg-light lter">
+				<button type="submit" class="btn btn-success" ng-disabled="formValidateFastDFSEdit.$invalid" aria-disabled="false" ng-click="editFastDFS();">提交</button>
+				<button type="button" class="btn btn-danger" style="margin-left: 50px;" ng-click="back();">返回</button>
+			</footer>
+		</form>
+	</div>
+	<!--添加Hadoop Hdfs-->
+	<div class="panel panel-default" ng-show="addHadoopHDFSContent">
+		<form name="formValidateHdfsAdd" class="form-horizontal form-validation">
+			<div class="panel-heading">
+				<strong>添加 Hadoop HDFS 资源</strong>
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">资源名称：</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" placeholder="请填写资源名称..." ng-model="data.name" maxlength="100" minlength="1" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">是否启用：</label>
+					<div class="col-sm-9">
+						<label class="checkbox i-checks">
+                    <input type="checkbox" ng-model="data.status"><i></i>
+                  </label>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">网络终结点：</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" placeholder="请填写网络终结点地址..." ng-model="data.endpoint" maxlength="255" minlength="8" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">连接账号：</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" placeholder="请填写连接账号..." ng-model="data.userName" maxlength="64" minlength="2" required>
+					</div>
+				</div>
+			</div>
+			<footer class="panel-footer text-center bg-light lter">
+				<button type="submit" class="btn btn-success" ng-disabled="formValidateHdfsAdd.$invalid" aria-disabled="false" ng-click="addHdfs(true);">提交</button>
+				<button type="button" class="btn btn-danger" style="margin-left: 50px;" ng-click="back();">返回</button>
+			</footer>
+		</form>
+	</div>
+	<!--修改Hadoop Hdfs-->
+	<div class="panel panel-default" ng-show="editHadoopHDFSContent">
+		<form name="formValidateHdfsEdit" class="form-horizontal form-validation">
+			<div class="panel-heading">
+				<strong>添加 Hadoop HDFS 资源</strong>
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">资源名称：</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" placeholder="请填写资源名称..." ng-model="data.name" maxlength="100" minlength="1" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">是否启用：</label>
+					<div class="col-sm-9">
+						<label class="checkbox i-checks">
+                    <input type="checkbox" ng-model="data.status"><i></i>
+                  </label>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">网络终结点：</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" placeholder="请填写网络终结点地址..." ng-model="data.endpoint" maxlength="255" minlength="8" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">连接账号：</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" placeholder="请填写连接账号..." ng-model="data.userName" maxlength="64" minlength="2" required>
+					</div>
+				</div>
+			</div>
+			<footer class="panel-footer text-center bg-light lter">
+				<button type="submit" class="btn btn-success" ng-disabled="formValidateHdfsEdit.$invalid" aria-disabled="false" ng-click="editHdfs();">提交</button>
+				<button type="button" class="btn btn-danger" style="margin-left: 50px;" ng-click="back();">返回</button>
+			</footer>
+		</form>
+	</div>
+	<!--添加TencentCloudCos-->
+	<div class="panel panel-default" ng-show="addTencentCloudCosContent">
+		<form name="formValidateTencentCloudCosAdd" class="form-horizontal form-validation">
+			<div class="panel-heading">
+				<strong>添加腾讯云 COS 资源</strong>
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">资源名称：</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" placeholder="请填写资源名称..." ng-model="data.name" maxlength="50" minlength="1" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">是否启用：</label>
+					<div class="col-sm-9">
+						<label class="checkbox i-checks">
+                    <input type="checkbox" ng-model="data.status"><i></i>
+                  </label>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">网络终结点：</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" placeholder="请填写网络终结点地址..." ng-model="data.endpoint" maxlength="255" minlength="8" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">区域：</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" placeholder="请填写区域..." ng-model="data.region" maxlength="128" minlength="1" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">限流（单位KB）：</label>
+					<div class="col-sm-9">
+						<input type="number" class="form-control" placeholder="请填写限流..." data-min="0" ng-model="data.trafficLimit" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">授权键id：</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" placeholder="请填写授权键id..." ng-model="data.accessKeyId" maxlength="128" minlength="5" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">授权秘密：</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" placeholder="请填写授权秘密..." ng-model="data.accessKeySecret" maxlength="128" minlength="5" required>
+					</div>
+				</div>
+			</div>
+			<footer class="panel-footer text-center bg-light lter">
+				<button type="submit" class="btn btn-success" ng-disabled="formValidateTencentCloudCosAdd.$invalid" aria-disabled="false" ng-click="addTencentCloudCos(true);">提交</button>
+				<button type="button" class="btn btn-danger" style="margin-left: 50px;" ng-click="back();">返回</button>
+			</footer>
+		</form>
+	</div>
+	<!--修改TencentCloudCos-->
+	<div class="panel panel-default" ng-show="editTencentCloudCosContent">
+		<form name="formValidateTencentCloudCosEdit" class="form-horizontal form-validation">
+			<div class="panel-heading">
+				<strong>修改腾讯云 COS 资源</strong>
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">资源名称：</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" placeholder="请填写资源名称..." ng-model="data.name" maxlength="50" minlength="1" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">是否启用：</label>
+					<div class="col-sm-9">
+						<label class="checkbox i-checks">
+                    <input type="checkbox" ng-model="data.status"><i></i>
+                  </label>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">网络终结点：</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" placeholder="请填写网络终结点地址..." ng-model="data.endpoint" maxlength="255" minlength="8" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">区域：</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" placeholder="请填写区域..." ng-model="data.region" maxlength="128" minlength="1" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">限流（单位KB）：</label>
+					<div class="col-sm-9">
+						<input type="number" class="form-control" placeholder="请填写限流..." data-min="0" ng-model="data.trafficLimit" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">授权键id：</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" placeholder="请填写授权键id..." ng-model="data.accessKeyId" maxlength="128" minlength="5" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">授权秘密：</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" placeholder="请填写授权秘密..." ng-model="data.accessKeySecret" maxlength="128" minlength="5" required>
+					</div>
+				</div>
+			</div>
+			<footer class="panel-footer text-center bg-light lter">
+				<button type="submit" class="btn btn-success" ng-disabled="formValidateTencentCloudCosEdit.$invalid" aria-disabled="false" ng-click="editTencentCloudCos();">提交</button>
+				<button type="button" class="btn btn-danger" style="margin-left: 50px;" ng-click="back();">返回</button>
+			</footer>
+		</form>
+	</div>
+	<!--添加AliyunOss-->
+	<div class="panel panel-default" ng-show="addAliyunOssContent">
+		<form name="formValidateAliyunOssAdd" class="form-horizontal form-validation">
+			<div class="panel-heading">
+				<strong>添加阿里云 OSS 资源</strong>
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">资源名称：</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" placeholder="请填写资源名称..." ng-model="data.name" maxlength="100" minlength="1" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">是否启用：</label>
+					<div class="col-sm-9">
+						<label class="checkbox i-checks">
+                    <input type="checkbox" ng-model="data.status"><i></i>
+                  </label>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">网络终结点：</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" placeholder="请填写网络终结点地址..." ng-model="data.endpoint" maxlength="255" minlength="8" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">授权键id：</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" placeholder="请填写授权键id..." ng-model="data.accessKeyId" maxlength="128" minlength="5" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">授权秘密：</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" placeholder="请填写授权秘密..." ng-model="data.accessKeySecret" maxlength="128" minlength="5" required>
+					</div>
+				</div>
+			</div>
+			<footer class="panel-footer text-center bg-light lter">
+				<button type="submit" class="btn btn-success" ng-disabled="formValidateAliyunOssAdd.$invalid" aria-disabled="false" ng-click="addAliyunOss(true);">提交</button>
+				<button type="button" class="btn btn-danger" style="margin-left: 50px;" ng-click="back();">返回</button>
+			</footer>
+		</form>
+	</div>
+	<!--修改AliyunOss-->
+	<div class="panel panel-default" ng-show="editAliyunOssContent">
+		<form name="formValidateAliyunOssEdit" class="form-horizontal form-validation">
+			<div class="panel-heading">
+				<strong>修改阿里云 OSS 资源</strong>
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">资源名称：</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" placeholder="请填写资源名称..." ng-model="data.name" maxlength="100" minlength="1" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">是否启用：</label>
+					<div class="col-sm-9">
+						<label class="checkbox i-checks">
+                    <input type="checkbox" ng-model="data.status"><i></i>
+                  </label>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">网络终结点：</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" placeholder="请填写网络终结点地址..." ng-model="data.endpoint" maxlength="255" minlength="8" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">授权键id：</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" placeholder="请填写授权键id..." ng-model="data.accessKeyId" maxlength="128" minlength="5" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">授权秘密：</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" placeholder="请填写授权秘密..." ng-model="data.accessKeySecret" maxlength="128" minlength="5" required>
+					</div>
+				</div>
+			</div>
+			<footer class="panel-footer text-center bg-light lter">
+				<button type="submit" class="btn btn-success" ng-disabled="formValidateAliyunOssEdit.$invalid" aria-disabled="false" ng-click="editAliyunOss();">提交</button>
+				<button type="button" class="btn btn-danger" style="margin-left: 50px;" ng-click="back();">返回</button>
+			</footer>
+		</form>
+	</div>
+</div>

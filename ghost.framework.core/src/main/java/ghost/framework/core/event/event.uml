@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="0.0" y="0.0">ghost.framework.core.event.IApplicationOwnerEventFactory</node>
+    <node x="363.0" y="0.0">ghost.framework.tomcat.web.module</node>
+    <node x="8.0" y="333.0">ghost.framework.core.event.ApplicationOwnerEventFactory</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="ghost.framework.core.event.ApplicationOwnerEventFactory" target="ghost.framework.core.event.IApplicationOwnerEventFactory">
+      <point x="0.0" y="-49.5" />
+      <point x="0.0" y="141.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="531.5" y="275.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

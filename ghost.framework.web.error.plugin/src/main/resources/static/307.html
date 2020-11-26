@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>307</title>
+</head>
+<body>
+307 temporary redirect 和302（found）相同，许多浏览器会错误的相应302应该进行重定向，即使原来的请求是post，即使它实际上只在post请求的应答是303时，才能重定向。由于这个原因，HTTP1.1新增了307，以便更加清楚的区分几个状态代码，当出现303应答时，浏览器可以跟随重定向的get和post请求，如是307应答，则浏览器只能跟随对get的请求的重定向
+</body>
+</html>

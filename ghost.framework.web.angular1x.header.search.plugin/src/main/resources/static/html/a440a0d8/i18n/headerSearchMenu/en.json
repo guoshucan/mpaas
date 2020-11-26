@@ -1,0 +1,14 @@
+{
+  "key": "Please enter key words...",
+  "page": {
+    "perPage": "Per page",
+    "row": "row",
+    "show": "Show",
+    "article": "article",
+    "total": "Total",
+    "previous": "Previous",
+    "next": "Next",
+    "first": "First",
+    "last": "Last"
+  }
+}

@@ -1,0 +1,41 @@
+Spring JDBC中NamedParameterJdbcTemplate的使用，包括in的用法
+前言
+项目中使用到了Spring JDBC, 一般jdbcTemplate基本可以满足我们的需求，我们可以通过?占位符来传参，方式sql注入。
+例如：
+
+@Override
+	public boolean queryMultBySpuId(String spuId, String companyId) {
+		String sql = "SELECT goods_commonid FROM zcy_goods_item WHERE goods_commonid=? AND company_id=? ";
+		try {
+			List<String> commonidList=jdbcTemplate.queryForList(sql, new String[]{spuId, companyId},String.class);
+			if (CollectionUtils.isEmpty(commonidList)) {
+				return false;
+			} else {
+				return true;
+			}
+		} catch (DataAccessException e) {
+			return false;
+		}
+问题
+如果我们在sql中使用了in，那么通过?占位符来传参是不能解决问题的，直接拼接sql又会有sql注入的风险。这种情况下我们可以使用NamedParameterJdbcTemplate 来解决问题。
+NamedParameterJdbcTemplate支持具名参数
+PS:具名参数: SQL 按名称(以冒号开头)而不是按位置进行指定. 具名参数更易于维护, 也提升了可读性. 具名参数由框架类在运行时用占位符取代
+
+解决办法
+获得NamedParameterJdbcTemplate实例，在NamedParameterJdbcTemplate 构造器中直接传入JdbcTemplate的实例即可，如下：
+NamedParameterJdbcTemplate nameJdbc = new NamedParameterJdbcTemplate(jdbcTemplate);
+使用NamedParameterJdbcTemplate实例，我们可以把in中的参数放入map中，值为List<String>
+paramMap.put("itemIds", Arrays.asList(itemIds.split(",")))
+代码如下：
+	@Override
+	public List<Item> selectItemByIds(String itemIds) {
+		NamedParameterJdbcTemplate nameJdbc = new NamedParameterJdbcTemplate(jdbcTemplate);
+		Map<String,Object> paramMap = new HashMap<String, Object>();
+		try {
+			String sql = "SELECT  *  FROM zcy_goods_item WHERE id IN(:itemIds) ORDER BY id DESC";
+			paramMap.put("itemIds", Arrays.asList(itemIds.split(",")));
+			return nameJdbc.query(sql,paramMap, new BeanPropertyRowMapper<Item>(Item.class));
+		} catch (DataAccessException e) {
+			return null;
+		}
+	}

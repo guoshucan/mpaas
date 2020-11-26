@@ -1,0 +1,7 @@
+启动注释依赖加载顺序：
+|--RootClass:
+   1|--@ConfigurationPropertiess    注释app的env配置
+   2|--@MavenDepositorys            注释maven仓库
+   3|--@MavenDependencys            注释maven包依赖
+   4|--@DataSourceMavenDependencys  注释maven绑定数据源包依赖
+   5|--@ModuleMavenDependencys      注释maven模块依赖

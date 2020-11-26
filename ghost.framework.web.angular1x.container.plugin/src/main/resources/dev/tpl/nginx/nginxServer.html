@@ -1,0 +1,658 @@
+<!--
+	作者：27048384@qq.com
+	时间：2020-04-10
+	描述：重置密码弹框
+-->
+<script type="text/ng-template" id="27f61412">
+	<div class="modal-header">
+		<h4 class="modal-title">重置[{{rows.adminUser}}]账号密码</h4>
+	</div>
+	<div class="modal-body">
+
+		<div class="form-group pull-in clearfix">
+			<div class="col-sm-6">
+				<label>新密码:{{rows.password}}</label>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-primary" ng-click="ok()">关闭</button>
+	</div>
+</script>
+<!--
+	作者：27048384@qq.com
+	时间：2020-04-06
+	描述：修改密码弹框
+-->
+<script type="text/ng-template" id="b8bba39c">
+	<form name="editPasswordform" class="form-validation">
+		<div class="modal-header">
+			<h4 class="modal-title">修改[{{rows.adminUser}}]账号密码</h4>
+		</div>
+		<div class="modal-body">
+
+			<div class="form-group pull-in clearfix">
+				<div class="col-sm-6">
+					<label>密码</label>
+					<input type="password" class="form-control" name="password" ng-model="password" ng-pattern="/^[0-9a-zA-Z]{5,32}$/" maxlength="32" minlength="6" required>
+				</div>
+				<div class="col-sm-6">
+					<label>重复密码</label>
+					<input type="password" class="form-control" name="confirm_password" required ng-model="confirm_password" ng-pattern="/^[0-9a-zA-Z]{5,32}$/" maxlength="32" minlength="6" ui-validate=" '$value==password' " ui-validate-watch=" 'password' ">
+					<span ng-show='editPasswordform.confirm_password.$error.validator'>两次密码输入不一致!</span>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-default" ng-click="cancel()">取消</button>
+			<button class="btn btn-primary" ng-disabled="editPasswordform.$invalid" ng-click="ok()">确定</button>
+		</div>
+	</form>
+</script>
+<!--
+	作者：27048384@qq.com
+	时间：2020-04-06
+	描述：删除确认弹框
+-->
+<script type="text/ng-template" id="aae9de1f">
+	<div class="modal-header">
+		<h4 class="modal-title">确认删除!</h4>
+	</div>
+	<div class="modal-body">
+		<ul>
+			<li ng-repeat="item in rows" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+				选择的是: <b>{{ item.name }}</b>
+			</li>
+		</ul>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-default" ng-click="cancel()">取消</button>
+		<button class="btn btn-primary" ng-click="ok()">确定</button>
+	</div>
+</script>
+<!--
+	作者：27048384@qq.com
+	时间：2020-04-06
+	描述：查看SSH服务器员详情弹框
+-->
+<script type="text/ng-template" id="d933d3e7">
+	<div class="modal-header">
+		<h4 class="modal-title">SSH服务器详情</h4>
+	</div>
+	<div class="modal-body" style="padding: 2px;">
+		<ul>
+			<table>
+				<tr>
+					<td align="right" style="min-width: 100px;">Id:&nbsp</td>
+					<td>{{ rows.id }}</td>
+				</tr>
+				<tr>
+					<td align="right">组:&nbsp</td>
+					<td>{{ rows.groupName }}</td>
+				</tr>
+				<tr>
+					<td align="right">区域:&nbsp</td>
+					<td>{{ rows.regionName }}</td>
+				</tr>
+				<tr>
+					<td align="right">名称:&nbsp</td>
+					<td>{{ rows.name }}</td>
+				</tr>
+				<tr>
+					<td align="right">状态:&nbsp</td>
+					<td nd-controller="ffcd05b6-9fcf-4420-939b-e3a3a2a64f1f">
+						<label class="i-switch m-t-xs m-r" style="height: 15px;margin-top: 0px;">
+						<input type="checkbox" ng-model="rows.status" disabled="disabled"><i></i>
+					</label>
+					</td>
+				</tr>
+				<tr>
+					<td align="right">主机:&nbsp</td>
+					<td>{{ rows.hostName }}</td>
+				</tr>
+				<tr>
+					<td align="right">端口:&nbsp</td>
+					<td>{{ rows.port }}</td>
+				</tr>
+				<tr>
+					<td align="right">超时:&nbsp</td>
+					<td>{{ rows.timeout }}</td>
+				</tr>
+				<tr>
+					<td align="right">远程路径:&nbsp</td>
+					<td>{{ rows.remoteDirectory }}</td>
+				</tr>
+				<tr>
+					<td align="right">创建时间:&nbsp</td>
+					<td>{{ rows.createTime }}</td>
+				</tr>
+				<tr>
+					<td align="right">描述:&nbsp</td>
+					<td style="text-overflow:ellipsis;white-space:normal;">{{ rows.description }}</td>
+				</tr>
+			</table>
+		</ul>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-default" ng-click="cancel()">关闭</button>
+	</div>
+</script>
+<!--SSH服务器组弹框模块-->
+<script type="text/ng-template" id="299137d7">
+	<div class="modal-header">
+		<h4 class="modal-title">选择SSH服务器组</h4>
+	</div>
+	<div class="modal-body" style="padding: 2px;">
+		<div class="row wrapper" style="padding-top: 0px;padding-bottom: 2px;">
+
+			<div style="margin: 0px;width: auto;" class="form-group col-sm-2">
+				<div class="input-group">
+					<select class="form-control inline v-middle" ng-model="p.group.selectRequest.status">
+						<option value="-1">请选择状态</option>
+						<option value="0">禁用</option>
+						<option value="1">启用</option>
+					</select>
+				</div>
+			</div>
+
+			<div style="margin: 0px;" class="form-group col-sm-2" ng-controller="02fdff6a">
+				<div class="input-group" style="width: 150px;">
+					<input type="text" class="form-control" datepicker-popup="{{format}}" ng-click="close()" ng-model="p.group.selectRequest.startTime" is-open="opened" min-date="1980-1-1" max-date="'2100-12-31'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="关闭" clear-text="清除" current-text="今天" format-date placeholder="开始日期" />
+					<span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+				</div>
+			</div>
+
+			<div style="margin: 0px;" class="form-group col-sm-2" ng-controller="02fdff6a">
+				<div class="input-group" style="width: 150px;">
+					<input type="text" class="form-control" datepicker-popup="{{format}}" ng-click="close()" ng-model="p.group.selectRequest.endTime" is-open="opened" min-date="1980-1-1" max-date="'2100-12-31'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="关闭" clear-text="清除" current-text="今天" format-date placeholder="结束日期" />
+					<span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+				</div>
+			</div>
+
+			<div style="margin: 0px;width: 250px;" class="form-group col-sm-2">
+				<div class="input-group">
+					<input type="text" class="form-control" ng-model="p.group.selectRequest.key" placeholder="请输入关键字...">
+					<span class="input-group-btn"><button class="btn btn-info" type="button" ng-click="p.group.search(false)">搜索</button></span>
+				</div>
+			</div>
+			<div style="margin: 0px;width: auto;width: 50px;" class="form-group col-sm-2">
+				<div class="input-group">
+					<button class="btn btn-dark" ng-click="p.group.search(true)">清除</button>
+				</div>
+			</div>
+		</div>
+		<div class="table-responsive">
+			<table class="table table-striped b-t b-light" style="margin-bottom: 0px;">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>名称</th>
+						<th>状态</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-click="p.click(item)" ng-repeat="item in p.group.page.data" style="cursor:pointer;">
+						<td><span class="text-ellipsis">{{item.id}}</span></td>
+						<td><span class="text-ellipsis">{{item.name}}</span></td>
+						<td>
+							<label class="i-switch m-t-xs m-r">
+								<input type="checkbox" ng-model="item.statusCheck" disabled="disabled"><i></i>
+						    </label>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<footer class="panel-footer" style="padding: 0;">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="col-sm-4 text-center">
+						<small class="text-muted inline m-t-sm m-b-sm">显示 {{p.group.page.data.length}}条， 共 {{p.group.page.count}} 条</small>
+					</div>
+					<div style="height: 29px;padding-top: 5px; width: 66%; " class="col-sm-4 text-right text-center-xs">
+						<pagination ng-change="p.group.pageChange()" total-items="p.group.page.count" ng-model="p.group.selectRequest.start" max-size="p.group.page.maxSize" class="pagination-sm m-t-none m-b" boundary-links="true" boundary-link-numbers="true" rotate="false" items-per-page="p.group.selectRequest.length" num-pages="p.group.page.pages" previous-text="上一页 " next-text="下一页 " first-text="第一页 " last-text="尾页 "></pagination>
+					</div>
+				</div>
+			</div>
+		</footer>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-default" ng-click="cancel()">取消</button>
+	</div>
+</script>
+<!--SSH服务器区域弹框模块-->
+<script type="text/ng-template" id="77dfbc63">
+	<div class="modal-header">
+		<h4 class="modal-title">选择SSH服务器区域</h4>
+	</div>
+	<div class="modal-body" style="padding: 2px;">
+		<div class="row wrapper" style="padding-top: 0px;padding-bottom: 2px;">
+
+			<div style="margin: 0px;width: auto;" class="form-group col-sm-2">
+				<div class="input-group">
+					<select class="form-control inline v-middle" ng-model="p.region.selectRequest.status">
+						<option value="-1">请选择状态</option>
+						<option value="0">禁用</option>
+						<option value="1">启用</option>
+					</select>
+				</div>
+			</div>
+
+			<div style="margin: 0px;width: 150px;" class="form-group col-sm-2" ng-controller="DatepickerCtrl">
+				<div class="input-group">
+					<input type="text" class="form-control" datepicker-popup="{{format}}" ng-click="close()" ng-model="p.region.selectRequest.startTime" is-open="opened" min-date="1980-1-1" max-date="'2100-12-31'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="关闭" clear-text="清除" current-text="今天" format-date placeholder="开始日期" />
+					<span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+				</div>
+			</div>
+
+			<div style="margin: 0px;width: 150px;" class="form-group col-sm-2" ng-controller="DatepickerCtrl">
+				<div class="input-group">
+					<input type="text" class="form-control" datepicker-popup="{{format}}" ng-click="close()" ng-model="p.region.selectRequest.endTime" is-open="opened" min-date="1980-1-1" max-date="'2100-12-31'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="关闭" clear-text="清除" current-text="今天" format-date placeholder="结束日期" />
+					<span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+				</div>
+			</div>
+
+			<div style="margin: 0px;width: 250px;" class="form-group col-sm-2">
+				<div class="input-group">
+					<input type="text" class="form-control" ng-model="p.region.selectRequest.key" placeholder="请输入关键字...">
+					<span class="input-group-btn"><button class="btn btn-info" type="button" ng-click="p.region.search(false)">搜索</button></span>
+				</div>
+			</div>
+			<div style="margin: 0px;width: auto;width: 50px;" class="form-group col-sm-2">
+				<div class="input-group">
+					<button class="btn btn-dark" ng-click="p.region.search(true)">清除</button>
+				</div>
+			</div>
+		</div>
+		<div class="table-responsive">
+			<table class="table table-striped b-t b-light" style="margin-bottom: 0px;">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>名称</th>
+						<th>状态</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-click="p.click(item)" ng-repeat="item in p.region.page.data" style="cursor:pointer;">
+						<td><span class="text-ellipsis">{{item.id}}</span></td>
+						<td><span class="text-ellipsis">{{item.name}}</span></td>
+						<td>
+							<label class="i-switch m-t-xs m-r">
+								<input type="checkbox" ng-model="item.statusCheck" disabled="disabled"><i></i>
+						    </label>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<footer class="panel-footer" style="padding: 0;">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="col-sm-4 text-center">
+						<small class="text-muted inline m-t-sm m-b-sm">显示 {{p.region.page.data.length}}条， 共 {{p.region.page.count}} 条</small>
+					</div>
+					<div style="height: 29px;padding-top: 5px; width: 66%; " class="col-sm-4 text-right text-center-xs">
+						<pagination ng-change="p.region.pageChange()" total-items="p.region.page.count" ng-model="p.region.selectRequest.start" max-size="p.region.page.maxSize" class="pagination-sm m-t-none m-b" boundary-links="true" boundary-link-numbers="true" rotate="false" items-per-page="p.region.selectRequest.length" num-pages="p.region.page.pages" previous-text="上一页 " next-text="下一页 " first-text="第一页 " last-text="尾页 "></pagination>
+					</div>
+				</div>
+			</div>
+		</footer>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-default" ng-click="cancel()">取消</button>
+	</div>
+</script>
+<!--SSH服务器控制器-->
+<div class="bg-light lter b-b wrapper-md page_header" style="padding: 10px;">运维 ><strong style="color: rgb(25,158,216);">SSH服务器管理</strong></div>
+<div class="wrapper-md" ng-controller="f3b62bf1" ng-init="init()">
+	<div ng-controller="ToasterCtrl" ng-init="init()">
+		<!-- toaster directive -->
+		<toaster-container toaster-options="{'position-class': 'toast-top-center', 'close-button':true}"></toaster-container>
+		<!-- / toaster directive -->
+	</div>
+	<!--列表-->
+	<div class="panel panel-default" ng-show="tableContent">
+		<div class="panel-heading">SSH服务器管理</div>
+		<div class="row wrapper">
+
+			<div style="margin-bottom: 0px;width: auto;" class="form-group col-sm-2">
+				<div class="input-group">
+					<select class="form-control inline v-middle" ng-model="selectRequest.status">
+						<option value="-1">请选择状态</option>
+						<option value="0">禁用</option>
+						<option value="1">启用</option>
+					</select>
+				</div>
+			</div>
+
+			<div style="margin-bottom: 0px;width: 200px;" class="form-group col-sm-2" ng-controller="f341fa72" ng-init="init()">
+				<div class="input-group">
+					<input readonly="true" type="text" class="form-control" ng-model="selectGroup.name" ng-required="true" placeholder="选择SSH服务器组..." />
+					<span class="input-group-btn">
+                       <button type="button" class="btn btn-default" ng-click="open('lg')"><i class="icon-target"></i></button>
+                    </span>
+				</div>
+			</div>
+
+			<div style="margin-bottom: 0px;width: 200px;" class="form-group col-sm-2" ng-controller="701dd22f-9f03-425d-9170-213a7d298cdc" ng-init="init()">
+				<div class="input-group">
+					<input readonly="true" type="text" class="form-control" ng-model="selectRegion.name" ng-required="true" placeholder="选择SSH服务器区域..." />
+					<span class="input-group-btn">
+                       <button type="button" class="btn btn-default" ng-click="open('lg')"><i class="icon-target"></i></button>
+                    </span>
+				</div>
+			</div>
+
+			<div style="margin-bottom: 0px; width: 180px;" class="form-group col-sm-2" ng-controller="DatepickerCtrl">
+				<div class="input-group">
+					<input type="text" class="form-control" datepicker-popup="{{format}}" ng-click="close()" ng-model="selectRequest.startTime" is-open="opened" min-date="1980-1-1" max-date="'2100-12-31'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="关闭" clear-text="清除" current-text="今天" format-date placeholder="开始日期" />
+					<span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+				</div>
+			</div>
+
+			<div style="margin-bottom: 0px; width: 180px;" class="form-group col-sm-2" ng-controller="DatepickerCtrl">
+				<div class="input-group">
+					<input type="text" class="form-control" datepicker-popup="{{format}}" ng-click="close()" ng-model="selectRequest.endTime" is-open="opened" min-date="1980-1-1" max-date="'2100-12-31'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="关闭" clear-text="清除" current-text="今天" format-date placeholder="结束日期" />
+					<span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+				</div>
+			</div>
+
+			<div style="margin-bottom: 0px; width: 200px;" class="form-group col-sm-2">
+				<div class="input-group">
+					<input type="text" class="form-control" ng-model="selectRequest.key" placeholder="请输入关键字...">
+					<span class="input-group-btn"><button class="btn btn-info" type="button" ng-click="search(false)">搜索</button></span>
+				</div>
+			</div>
+			<div style="margin-bottom: 0px;width: auto;" class="form-group col-sm-2">
+				<div class="input-group">
+					<button class="btn btn-dark" ng-click="search(true)">清除</button>
+				</div>
+			</div>
+
+			<div style="margin-bottom: 0px;width: auto;" class="form-group col-sm-2">
+				<div class="input-group">
+					<button class="btn btn-primary" ng-click="add()">新增</button>
+				</div>
+			</div>
+
+			<div style="margin-bottom: 0px;width: auto;" class="form-group col-sm-2">
+				<div class="input-group" ng-controller="f2c6bb9d-9faf-4ae7-9ead-989c047a7491">
+					<button class="btn btn-danger" ng-disabled="deleteAllDisabled" ng-click="open()">删除所选</button>
+				</div>
+			</div>
+		</div>
+		<div class="table-responsive">
+			<table class="table table-striped b-t b-light">
+				<thead>
+					<tr>
+						<th style="width:20px;">
+							<label class="i-checks m-b-none">
+							<input type="checkbox" ng-model="selectAll" ng-click="checkboxAll(selectAll)" ng-checked="selectAll" ng-disabled="page.data.length==0"><i></i>
+						</label>
+						</th>
+						<th>Id</th>
+						<th>组</th>
+						<th>区域</th>
+						<th>名称</th>
+						<th>服务器</th>
+						<th>端口</th>
+						<th>状态</th>
+						<th>日期</th>
+						<th style="text-align: center;">操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="item in page.data">
+						<td><label class="i-checks m-b-none"><input type="checkbox" value="{{item.groupId}}" ng-click="checkboxSelected($event,item.userId)" ng-checked="item.check" ng-model="item.check"><i></i></label></td>
+						<td><span class="text-ellipsis">{{item.id}}</span></td>
+						<td><span class="text-ellipsis">{{item.groupName}}</span></td>
+						<td><span class="text-ellipsis">{{item.regionName}}</span></td>
+						<td><span class="text-ellipsis">{{item.name}}</span></td>
+						<td><span class="text-ellipsis">{{item.hostName}}</span></td>
+						<td><span class="text-ellipsis">{{item.port}}</span></td>
+						<td>
+							<label class="i-switch m-t-xs m-r">
+								<input type="checkbox" ng-model="item.statusCheck" ng-click="statusUpdate(item);"><i></i>
+							</label>
+						</td>
+						<td><span class="text-ellipsis">{{item.createTime}}</span></td>
+						<td style="text-align: center;">
+							<button style="height: 24px;padding: 2px;" class="btn btn-info btn-sm" style="margin-left:5px;" ng-controller="4a2d21ee" ng-click="testConnection(item)">测试</button>
+							<button style="height: 24px;padding: 2px;" class="btn btn-info btn-sm" style="margin-left:5px;" ng-controller="4a2d21ee" ng-click="show(item)">查看</button>
+							<button style="height: 24px;padding: 2px;" class="btn btn-success btn-sm" style="margin-left:5px;" ng-controller="c38fa735" ng-click="editPassword(item)">修改密码</button>
+							<button style="height: 24px;padding: 2px;" class="btn btn-success btn-sm" style="margin-left:5px;" ng-controller="6fb41bc1" ng-click="resetPassword(item)">重置密码</button>
+							<button style="height: 24px;padding: 2px;" class="btn btn-success btn-sm" style="margin-left:5px;" ng-click="edit(item)">修改</button>
+							<button style="height: 24px;padding: 2px;" class="btn btn-danger btn-sm" style="margin-left:5px;" ng-controller="ced851f6-aba4-4a36-90f3-c6b78087d774" ng-click="open(item)">删除</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<footer class="panel-footer">
+			<div class="row">
+				<div class="col-sm-3 hidden-xs">
+					<select class="input-sm form-control w-sm inline v-middle" ng-model="selectRequest.length" ng-change="selectRowLengthChange();">
+						<option value="10">10</option>
+						<option value="25">25</option>
+						<option value="50">50</option>
+						<option value="100">100</option>
+					</select>
+					<small class="text-muted inline m-t-sm m-b-sm">每页{{selectRequest.length}}行</small>
+				</div>
+				<div class="col-sm-7">
+					<div class="col-sm-4 text-center">
+						<small class="text-muted inline m-t-sm m-b-sm">显示 {{page.data.length}}条， 共 {{page.count}} 条</small>
+					</div>
+					<div style="height: 29px;padding-top: 5px; width: 66%;" class="col-sm-4 text-right text-center-xs">
+						<pagination ng-change="pageChange()" total-items="page.count" ng-model="selectRequest.start" max-size="page.maxSize" class="pagination-sm m-t-none m-b" boundary-links="true" boundary-link-numbers="true" rotate="false" items-per-page="selectRequest.length" num-pages="page.pages" previous-text="上一页" next-text="下一页" first-text="第一页" last-text="尾页"></pagination>
+					</div>
+				</div>
+			</div>
+		</footer>
+	</div>
+	<!--添加SSH服务器管理-->
+	<div class="panel panel-default" ng-show="addContent">
+		<form name="formValidateAdd" class="form-horizontal form-validation">
+			<div class="panel-heading">
+				<strong>添加SSH服务器管理</strong>
+			</div>
+			<div class="panel-body">
+				<div class="form-group" ng-controller="f341fa72" ng-init="init()">
+					<label class="col-sm-2 control-label">服务器组：</label>
+					<div class="col-sm-9 input-group">
+						<input readonly="true" type="text" class="form-control" ng-click="open('lg')" placeholder="请选择服务器组..." ng-model="openSelectGroup.name" maxlength="50" minlength="2" required>
+						<span class="input-group-btn">
+                           <button type="button" class="btn btn-default" ng-click="open('lg')"><i class="icon-target"></i></button>
+                        </span>
+					</div>
+				</div>
+				<div class="form-group" ng-controller="701dd22f-9f03-425d-9170-213a7d298cdc" ng-init="init()">
+					<label class="col-sm-2 control-label">服务器区域：</label>
+					<div class="col-sm-9 input-group">
+						<input readonly="true" type="text" class="form-control" ng-click="open('lg')" placeholder="请选择服务器区域..." ng-model="openSelectRegion.name" maxlength="50" minlength="2" required>
+						<span class="input-group-btn">
+                           <button type="button" class="btn btn-default" ng-click="open('lg')"><i class="icon-target"></i></button>
+                        </span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">服务器名称：</label>
+					<div class="col-sm-9 input-group">
+						<input type="text" class="form-control" placeholder="请填写服务器名称..." ng-model="data.name" maxlength="100" minlength="1" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">地址：</label>
+					<div class="col-sm-9 input-group">
+						<input type="text" class="form-control" placeholder="请填写地址..." ng-model="data.hostName" maxlength="255" minlength="8" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">端口：</label>
+					<div class="col-sm-9 input-group">
+						<input type="number" class="form-control" placeholder="请填写端口..." ng-model="data.port" 
+							data-min="1" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">超时：</label>
+					<div class="col-sm-9 input-group">
+						<input type="number" class="form-control" placeholder="请填写超时..." ng-model="data.timeout" 
+							data-min="1" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">账号：</label>
+					<div class="col-sm-9 input-group">
+						<input type="text" class="form-control" placeholder="请填写账号..." ng-model="data.userName" maxlength="128" minlength="1" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">密码：</label>
+					<div class="col-sm-9 input-group">
+						<input type="text" class="form-control" placeholder="请填写密码..." ng-model="data.password" maxlength="128">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">版本：</label>
+					<div class="col-sm-9 input-group">
+						<input type="text" class="form-control" placeholder="请填写版本..." ng-model="data.version" maxlength="128">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">远程路径：</label>
+					<div class="col-sm-9 input-group">
+						<input type="text" class="form-control" placeholder="请填写远程路径..." ng-model="data.remoteDirectory" maxlength="255">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">是否启用：</label>
+					<div class="col-sm-9 input-group">
+						<label class="checkbox i-checks">
+                    <input type="checkbox" ng-model="data.status"><i></i>
+                  </label>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">描述：</label>
+					<div class="col-sm-9 input-group">
+						<textarea class="form-control" style="resize: none;height: 80px;" rows="6" placeholder="请填写描述..." ng-model="data.description" maxlength="255"></textarea>
+					</div>
+				</div>
+			</div>
+			<footer class="panel-footer text-center bg-light lter">
+				<button type="submit" class="btn btn-success" ng-disabled="formValidateAdd.$invalid" ng-click="add();">提交</button>
+				<button type="button" class="btn btn-danger" style="margin-left: 50px;" ng-click="back();">返回</button>
+			</footer>
+		</form>
+	</div>
+	<!--修改SSH服务器管理-->
+	<div class="panel panel-default" ng-show="editContent">
+		<form name="formValidateEdit" class="form-horizontal form-validation">
+			<div class="panel-heading">
+				<strong>修改SSH服务器管理</strong>
+			</div>
+			<div class="panel-body">
+				<div class="form-group" ng-controller="f341fa72" ng-init="init()">
+					<label class="col-sm-2 control-label">服务器组：</label>
+					<div class="col-sm-9 input-group">
+						<input readonly="true" type="text" class="form-control" ng-click="open('lg')" placeholder="请选择服务器组..." ng-model="openSelectGroup.name" maxlength="50" minlength="2" required>
+						<span class="input-group-btn">
+                           <button type="button" class="btn btn-default" ng-click="open('lg')"><i class="icon-target"></i></button>
+                        </span>
+					</div>
+				</div>
+				<div class="form-group" ng-controller="701dd22f-9f03-425d-9170-213a7d298cdc" ng-init="init()">
+					<label class="col-sm-2 control-label">服务器区域：</label>
+					<div class="col-sm-9 input-group">
+						<input readonly="true" type="text" class="form-control" ng-click="open('lg')" placeholder="请选择服务器区域..." ng-model="openSelectRegion.name" maxlength="50" minlength="2" required>
+						<span class="input-group-btn">
+                           <button type="button" class="btn btn-default" ng-click="open('lg')"><i class="icon-target"></i></button>
+                        </span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">服务器名称：</label>
+					<div class="col-sm-9 input-group">
+						<input type="text" class="form-control" placeholder="请填写服务器名称..." ng-model="data.name" maxlength="100" minlength="1" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">地址：</label>
+					<div class="col-sm-9 input-group">
+						<input type="text" class="form-control" placeholder="请填写地址..." ng-model="data.hostName" maxlength="255" minlength="8" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">端口：</label>
+					<div class="col-sm-9 input-group">
+						<input type="number" class="form-control" placeholder="请填写端口..." ng-model="data.port" 
+							data-min="1" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">超时：</label>
+					<div class="col-sm-9 input-group">
+						<input type="number" class="form-control" placeholder="请填写超时..." ng-model="data.timeout" 
+							data-min="1" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">账号：</label>
+					<div class="col-sm-9 input-group">
+						<input type="text" class="form-control" placeholder="请填写账号..." ng-model="data.userName" maxlength="128" minlength="1" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">密码：</label>
+					<div class="col-sm-9 input-group">
+						<input type="text" class="form-control" placeholder="请填写密码..." ng-model="data.password" maxlength="128">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">版本：</label>
+					<div class="col-sm-9 input-group">
+						<input type="text" class="form-control" placeholder="请填写版本..." ng-model="data.version" maxlength="128">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">远程路径：</label>
+					<div class="col-sm-9 input-group">
+						<input type="text" class="form-control" placeholder="请填写远程路径..." ng-model="data.remoteDirectory" maxlength="255">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">是否启用：</label>
+					<div class="col-sm-9 input-group">
+						<label class="checkbox i-checks">
+                    <input type="checkbox" ng-model="data.status"><i></i>
+                  </label>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">描述：</label>
+					<div class="col-sm-9 input-group">
+						<textarea class="form-control" style="resize: none;height: 80px;" rows="6" placeholder="请填写描述..." ng-model="data.description" maxlength="255"></textarea>
+					</div>
+				</div>
+			</div>
+			<footer class="panel-footer text-center bg-light lter">
+				<button type="submit" class="btn btn-info" ng-disabled="formValidateEdit.$invalid" ng-click="edit(null);">提交</button>
+				<button type="button" class="btn btn-danger" style="margin-left: 50px;" ng-click="back();">返回</button>
+			</footer>
+		</form>
+	</div>
+</div>

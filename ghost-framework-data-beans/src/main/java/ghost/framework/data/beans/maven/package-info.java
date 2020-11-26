@@ -1,0 +1,1 @@
+package ghost.framework.data.beans.maven;

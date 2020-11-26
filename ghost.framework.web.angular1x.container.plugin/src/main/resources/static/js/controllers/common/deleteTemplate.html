@@ -1,0 +1,14 @@
+<div class="modal-header">
+	<h4 class="modal-title">{{i18n.delete.confirmDeletion}}</h4>
+</div>
+<div class="modal-body">
+	<ul>
+		<li ng-repeat="item in rows" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+			{{i18n.delete.chooseIs}}<b>{{ item.name }}</b>
+		</li>
+	</ul>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-default" ng-click="cancel()">{{i18n.delete.cancel}}</button>
+	<button class="btn btn-primary" ng-click="ok()">{{i18n.delete.confirm}}</button>
+</div>

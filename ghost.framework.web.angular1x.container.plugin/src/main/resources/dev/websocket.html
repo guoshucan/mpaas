@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title>HTML5 WebSocket测试</title>
+	</head>
+
+	<body>
+		<div>
+			<input type="button" value="Start" οnclick="start()" />
+		</div>
+		<div id="messages"></div>
+		<script type="text/javascript">
+			var webSocket = new WebSocket('ws://127.0.0.1:8081/websocketDemo/websocket');
+			webSocket.onerror = function(event) {
+				alert(event.data);
+			};
+			//与WebSocket建立连接
+			webSocket.onopen = function(event) {
+				document.getElementById('messages').innerHTML = '与服务器端建立连接';
+			};
+			//处理服务器返回的信息
+			webSocket.onmessage = function(event) {
+				document.getElementById('messages').innerHTML += '<br />' + event.data;
+			};
+
+			function start() {
+				//向服务器发送请求
+				webSocket.send('我是jCuckoo');
+			}
+		</script>
+	</body>
+
+</html>

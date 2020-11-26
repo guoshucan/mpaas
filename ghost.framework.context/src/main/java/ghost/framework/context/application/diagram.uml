@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="224.75" y="445.0">ghost.framework.context.application.AbstractApplicationEventContainer</node>
+    <node x="91.4675925925925" y="336.0">ghost.framework.context.application.IApplicationEventPublisherContainer</node>
+    <node x="560.6273148148148" y="237.0">ghost.framework.context.application.IApplicationEventListener</node>
+    <node x="392.46759259259244" y="336.0">ghost.framework.context.application.IApplicationEventContainer</node>
+    <node x="393.47619047619037" y="79.0">ghost.framework.context.application.ApplicationEventTopic</node>
+    <node x="102.9624669312168" y="237.0">ghost.framework.context.application.IApplicationEventPublisher</node>
+    <node x="512.75" y="445.0">ghost.framework.context.application.IApplicationEventProcessor</node>
+    <node x="712.2303240740739" y="336.0">ghost.framework.context.application.IApplicationEventListenerProcessor</node>
+    <node x="600.4761904761904" y="79.0">ghost.framework.context.application.IApplicationEvent</node>
+    <node x="549.1655092592591" y="158.0">ghost.framework.context.application.ApplicationEvent</node>
+    <node x="587.4761904761904" y="0.0">ghost.framework.context.application.IApplicationEventType</node>
+    <node x="-179.0" y="105.0">ghost.framework.context.application.ApplicationMethodEventListener</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="ghost.framework.context.application.IApplicationEventContainer" target="ghost.framework.context.application.IApplicationEventPublisher">
+      <point x="-82.875" y="-14.5" />
+      <point x="420.09259259259244" y="306.0" />
+      <point x="276.6053240740739" y="306.0" />
+      <point x="63.14285714285711" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.context.application.IApplicationEventPublisherContainer" target="ghost.framework.context.application.IApplicationEventPublisher">
+      <point x="70.25" y="-14.5" />
+      <point x="302.2175925925925" y="316.0" />
+      <point x="245.03389550264535" y="316.0" />
+      <point x="31.571428571428555" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.context.application.ApplicationEvent" target="ghost.framework.context.application.IApplicationEvent">
+      <point x="38.5" y="-14.5" />
+      <point x="664.6655092592591" y="133.0" />
+      <point x="680.9761904761904" y="133.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.context.application.IApplicationEventProcessor" target="ghost.framework.context.application.IApplicationEventPublisher">
+      <point x="-73.66666666666669" y="-14.5" />
+      <point x="549.5833333333333" y="385.0" />
+      <point x="80.9675925925925" y="385.0" />
+      <point x="80.9675925925925" y="306.0" />
+      <point x="181.89103835978824" y="306.0" />
+      <point x="-31.571428571428555" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.context.application.IApplicationEventContainer" target="ghost.framework.context.application.IApplicationEventListener">
+      <point x="27.625" y="-14.5" />
+      <point x="530.5925925925924" y="316.0" />
+      <point x="575.913029100529" y="316.0" />
+      <point x="-91.71428571428578" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.context.application.AbstractApplicationEventContainer" target="ghost.framework.context.application.IApplicationEventListener">
+      <point x="111.66666666666663" y="-14.5" />
+      <point x="470.41666666666663" y="425.0" />
+      <point x="634.9675925925924" y="425.0" />
+      <point x="634.9675925925924" y="316.0" />
+      <point x="667.6273148148148" y="316.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.context.application.IApplicationEventPublisher" target="ghost.framework.context.application.ApplicationEvent">
+      <point x="0.0" y="-14.5" />
+      <point x="213.4624669312168" y="212.0" />
+      <point x="574.8321759259258" y="212.0" />
+      <point x="-51.33333333333337" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.context.application.IApplicationEventListenerProcessor" target="ghost.framework.context.application.ApplicationEvent">
+      <point x="91.33333333333337" y="-14.5" />
+      <point x="940.5636574074074" y="316.0" />
+      <point x="868.0666335978835" y="316.0" />
+      <point x="868.0666335978835" y="212.0" />
+      <point x="677.4988425925925" y="212.0" />
+      <point x="51.33333333333337" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.context.application.IApplicationEventProcessor" target="ghost.framework.context.application.IApplicationEventContainer">
+      <point x="0.0" y="-14.5" />
+      <point x="623.25" y="405.0" />
+      <point x="576.6342592592591" y="405.0" />
+      <point x="73.66666666666674" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.context.application.IApplicationEventListenerProcessor" target="ghost.framework.context.application.IApplicationEventListener">
+      <point x="0.0" y="-14.5" />
+      <point x="849.2303240740739" y="306.0" />
+      <point x="759.3416005291006" y="306.0" />
+      <point x="91.71428571428578" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.context.application.ApplicationEvent" target="ghost.framework.context.application.ApplicationEventTopic">
+      <point x="-38.5" y="-14.5" />
+      <point x="587.6655092592591" y="133.0" />
+      <point x="486.97619047619037" y="133.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.context.application.IApplicationEvent" target="ghost.framework.context.application.IApplicationEventType">
+      <point x="0.0" y="-14.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.context.application.AbstractApplicationEventContainer" target="ghost.framework.context.application.IApplicationEventPublisher">
+      <point x="-111.66666666666663" y="-14.5" />
+      <point x="247.08333333333337" y="425.0" />
+      <point x="0.0" y="425.0" />
+      <point x="0.0" y="286.0" />
+      <point x="118.74818121693107" y="286.0" />
+      <point x="-94.71428571428572" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.context.application.AbstractApplicationEventContainer" target="ghost.framework.context.application.IApplicationEventContainer">
+      <point x="-22.333333333333258" y="-14.5" />
+      <point x="336.41666666666674" y="395.0" />
+      <point x="429.30092592592575" y="395.0" />
+      <point x="-73.66666666666669" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.context.application.IApplicationEventListener" target="ghost.framework.context.application.ApplicationEvent">
+      <point x="0.0" y="-14.5" />
+      <point x="667.6273148148148" y="212.0" />
+      <point x="626.1655092592591" y="212.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.context.application.IApplicationEventProcessor" target="ghost.framework.context.application.IApplicationEventListener">
+      <point x="73.66666666666669" y="-14.5" />
+      <point x="696.9166666666667" y="425.0" />
+      <point x="701.7303240740739" y="425.0" />
+      <point x="701.7303240740739" y="316.0" />
+      <point x="698.1987433862432" y="316.0" />
+      <point x="30.571428571428555" y="14.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="472.0" y="313.0" />
+  <SelectedNodes>
+    <node>ghost.framework.context.application.ApplicationMethodEventListener</node>
+  </SelectedNodes>
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

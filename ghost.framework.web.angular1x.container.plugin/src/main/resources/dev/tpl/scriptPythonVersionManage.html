@@ -1,0 +1,118 @@
+<div ng-controller="3c0c6519" ng-init="init()">
+	<div class="bg-light lter b-b wrapper-md page_header" style="padding: 10px;">{{i18n.operationMaintenance}} > {{i18n.script}} > <strong style="color: rgb(25,158,216);">{{i18n.content.versionManagement}}</strong></div>
+	<div class="wrapper-md">
+		<div ng-controller="ToasterCtrl" ng-init="init()">
+			<!-- toaster directive -->
+			<toaster-container toaster-options="{'position-class': 'toast-top-center', 'close-button':true}"></toaster-container>
+			<!-- / toaster directive -->
+		</div>
+		<!--列表-->
+		<div class="panel panel-default" ng-show="tableContent">
+			<div class="panel-heading">{{i18n.content.versionManagement}}</div>
+			<div class="row wrapper">
+
+				<div style="margin-bottom: 0px;width: auto;" class="form-group col-sm-2">
+					<div class="input-group">
+						<button class="btn btn-primary" ng-click="add()">{{i18n.add.name}}</button>
+					</div>
+				</div>
+
+				<div style="margin-bottom: 0px;width: auto;" class="form-group col-sm-2">
+					<div class="input-group" ng-controller="944fee3a">
+						<button class="btn btn-danger" ng-disabled="deleteAllDisabled" ng-click="open()">{{i18n.delete.selected}}</button>
+					</div>
+				</div>
+			</div>
+			<div class="table-responsive">
+				<table class="table table-striped b-t b-light">
+					<thead>
+						<tr>
+							<th style="width:20px;">
+								<label class="i-checks m-b-none">
+							<input type="checkbox" ng-model="selectAll" ng-click="checkboxAll(selectAll)" ng-checked="selectAll" ng-disabled="page.data.length==0"><i></i>
+						</label>
+							</th>
+							<th>Id</th>
+							<th>{{i18n.version}}</th>
+							<th>{{i18n.date}}</th>
+							<th style="text-align: center;">{{i18n.open}}</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="item in page.data">
+							<td><label class="i-checks m-b-none"><input type="checkbox" value="{{item.id}}" ng-click="checkboxSelected($event,item.id)" ng-checked="item.check" ng-model="item.check"><i></i></label></td>
+							<td><span class="text-ellipsis">{{item.id}}</span></td>
+							<td><span class="text-ellipsis">{{item.name}}</span></td>
+							<td><span class="text-ellipsis">{{item.createTime}}</span></td>
+							<td style="text-align: center;">
+								<button style="height: 24px;padding: 2px;" class="btn btn-success btn-sm" style="margin-left:5px;" ng-click="edit(item)">{{i18n.edit.name}}</button>
+								<button style="height: 24px;padding: 2px;" class="btn btn-danger btn-sm" style="margin-left:5px;" ng-controller="d50d4f45" ng-click="open(item)">{{i18n.delete.name}}</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<footer class="panel-footer">
+				<div class="row">
+					<div class="col-sm-3 hidden-xs">
+						<select class="input-sm form-control w-sm inline v-middle" ng-model="selectRequest.length" ng-change="selectRowLengthChange();">
+							<option value="10">10</option>
+							<option value="25">25</option>
+							<option value="50">50</option>
+							<option value="100">100</option>
+						</select>
+						<small class="text-muted inline m-t-sm m-b-sm">{{i18n.page.perPage}}&nbsp;{{selectRequest.length}}&nbsp;{{i18n.page.row}}</small>
+					</div>
+					<div class="col-sm-7">
+						<div class="col-sm-4 text-center">
+							<small class="text-muted inline m-t-sm m-b-sm">{{i18n.page.show}}&nbsp;{{page.data.length}}&nbsp;{{i18n.page.article}}， {{i18n.page.total}}&nbsp;{{page.count}}&nbsp;{{i18n.page.article}}</small>
+						</div>
+						<div style="height: 29px;padding-top: 5px; width: 66%;" class="col-sm-4 text-right text-center-xs">
+							<pagination ng-change="pageChange()" total-items="page.count" ng-model="selectRequest.start" max-size="page.maxSize" class="pagination-sm m-t-none m-b" boundary-links="true" boundary-link-numbers="true" rotate="false" items-per-page="selectRequest.length" num-pages="page.pages" previous-text="{{i18n.page.previous}}" next-text="{{i18n.page.next}}" first-text="{{i18n.page.first}}" last-text="{{i18n.page.last}}"></pagination>
+						</div>
+					</div>
+				</div>
+			</footer>
+		</div>
+		<!--添加-->
+		<div class="panel panel-default" ng-show="addContent">
+			<form name="formValidateAdd" class="form-horizontal form-validation">
+				<div class="panel-heading">
+					<strong>{{i18n.add.version}}</strong>
+				</div>
+				<div class="panel-body">
+					<div class="form-group">
+						<label class="col-sm-2 control-label">{{i18n.form.version.name}}</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" placeholder="{{i18n.form.version.placeholder}}" ng-model="data.name" maxlength="50" minlength="1" required>
+						</div>
+					</div>
+				</div>
+				<footer class="panel-footer text-center bg-light lter">
+					<button type="submit" class="btn btn-success" ng-disabled="formValidateAdd.$invalid" aria-disabled="false" ng-click="add();">{{i18n.submit}}</button>
+					<button type="button" class="btn btn-danger" style="margin-left: 50px;" ng-click="back();">{{i18n.back}}</button>
+				</footer>
+			</form>
+		</div>
+		<!--修改-->
+		<div class="panel panel-default" ng-show="editContent">
+			<form name="formValidateEdit" class="form-horizontal form-validation">
+				<div class="panel-heading">
+					<strong>{{i18n.edit.version}}</strong>
+				</div>
+				<div class="panel-body">
+					<div class="form-group">
+						<label class="col-sm-2 control-label">{{i18n.form.version.name}}</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" placeholder="{{i18n.form.version.placeholder}}" ng-model="data.name" maxlength="50" minlength="1" required>
+						</div>
+					</div>
+				</div>
+				<footer class="panel-footer text-center bg-light lter">
+					<button type="submit" class="btn btn-info" ng-click="edit(null);">{{i18n.submit}}</button>
+					<button type="button" class="btn btn-danger" style="margin-left: 50px;" ng-click="back();">{{i18n.back}}</button>
+				</footer>
+			</form>
+		</div>
+	</div>
+</div>

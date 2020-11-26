@@ -1,0 +1,101 @@
+package com.hzcominfo.application.common.base.cmpt.web.controller.common.util;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
+
+import ghost.framework.beans.factory.annotation.Value;
+import ghost.framework.stereotype.Controller;
+import ghost.framework.web.bind.annotation.RequestMapping;
+import ghost.framework.web.bind.annotation.ResponseBody;
+
+import com.alibaba.fastjson.JSONObject;
+import com.hzcominfo.application.common.base.cmpt.web.controller.index.BaseController;
+import com.hzcominfo.application.common.util.DatetimeUtil;
+import com.hzcominfo.application.common.util.StringUtil;
+
+/**
+ * 获取项目maven版本号
+ *
+ * @Author:linzp
+ */
+@Controller
+@RequestMapping("/mavenVersion/")
+public class MavenVersion extends BaseController {
+
+    @Value("${other.info:Copyright info}")
+    private String otherInfo;
+
+    /**
+     * 查看jar包中maven版本号
+     *
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("getVersion")
+    public JSONObject getJarPath(String groupId, String artifactId,String jarName, String fileName) {
+        JSONObject jSONObject = new JSONObject();
+        Map<String, Object> versionInfo = new HashMap<String, Object>();
+        //查看jar包里面pom.properties版本号
+        try {
+//            String jarPath = MavenVersion.class.getProtectionDomain().getCodeSource().getLocation().getFile();
+            String pomVersion = "";
+            try{
+                String jarPath = System.getProperty("user.dir") + File.separator + jarName;
+                jarPath = java.net.URLDecoder.decode(jarPath, "UTF-8");
+                logger.info("version info : " + jarPath);
+                URL url = new URL("jar:file:" + jarPath + "!/META-INF/maven/" + groupId + "/" + artifactId + "/pom.properties");
+                Properties properties = new Properties();
+                properties.load(url.openStream());
+                pomVersion = properties.getProperty("version");
+            }catch(Exception e){
+                logger.error("read jar or pom error:",e);
+            }
+            String version = "";
+            if(StringUtil.isEmpty(fileName))fileName="version.txt";
+//            if(StringUtil.isNotEmpty(fileName)){
+                File otherInfoFile = new File(System.getProperty("user.dir") + File.separator + fileName);
+                Long filelength = otherInfoFile.length();
+                byte[] filecontent = new byte[filelength.intValue()];
+                try {
+                    FileInputStream in = new FileInputStream(otherInfoFile);
+                    in.read(filecontent);
+                    in.close();
+                    version += new String(filecontent, "utf-8");
+                } catch (FileNotFoundException e) {
+                    logger.error("version file not found :" , e);
+                } catch (IOException e) {
+                    logger.error("version file read error :" , e);
+                }
+//            }
+            versionInfo.put("versionInfo", version);
+            versionInfo.put("pomVersion", pomVersion);
+            versionInfo.put("jvmName", System.getProperty("java.vm.name"));
+            versionInfo.put("jvmVendor", System.getProperty("java.vm.vendor"));
+            versionInfo.put("javaVersion", System.getProperty("java.version"));
+            versionInfo.put("otherInfo", otherInfo);
+            versionInfo.put("serviceTime", DatetimeUtil.getDate());
+            jSONObject.put("result", "0");
+            jSONObject.put("versionInfo", versionInfo);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e.getMessage());
+            jSONObject.put("result", "1");
+        }
+        return jSONObject;
+    }
+    public static void aaa(){
+//        System.out.println(MavenVersion.class.getProtectionDomain().getCodeSource().getLocation().getFile());
+//        System.out.println(System.getProperty("java.vm.name"));
+        System.out.println(DatetimeUtil.getDate());
+    }
+    public static void main(String[] args) {
+//        System.out.println(MavenVersion.class.getProtectionDomain().getCodeSource().getLocation().getFile());
+        MavenVersion.aaa();
+    }
+}

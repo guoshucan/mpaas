@@ -1,0 +1,15 @@
+{
+  "ghost": {
+    "framework": {
+      "jetty": {
+        "web": {
+          "module": {
+            "test": {
+
+            }
+          }
+        }
+      }
+    }
+  }
+}

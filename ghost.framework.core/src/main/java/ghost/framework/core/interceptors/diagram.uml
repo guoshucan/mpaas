@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="260.0" y="79.0">ghost.framework.context.interceptors.annotation.IAnnotationEventInterceptor</node>
+    <node x="3.0" y="158.0">ghost.framework.context.interceptors.annotation.AnnotationInterceptorContainer</node>
+    <node x="0.0" y="79.0">ghost.framework.context.interceptors.annotation.IAnnotationInterceptorContainer</node>
+    <node x="183.25" y="0.0">ghost.framework.context.interceptors.IInterceptor</node>
+    <node x="263.0" y="158.0">ghost.framework.context.interceptors.annotation.AnnotationEventInterceptor</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="ghost.framework.context.interceptors.annotation.AnnotationEventInterceptor" target="ghost.framework.context.interceptors.annotation.IAnnotationEventInterceptor">
+      <point x="0.0" y="-14.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.context.interceptors.annotation.IAnnotationInterceptorContainer" target="ghost.framework.context.interceptors.IInterceptor">
+      <point x="0.0" y="-14.5" />
+      <point x="120.0" y="54.0" />
+      <point x="213.5" y="54.0" />
+      <point x="-30.25" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.context.interceptors.annotation.IAnnotationEventInterceptor" target="ghost.framework.context.interceptors.IInterceptor">
+      <point x="0.0" y="-14.5" />
+      <point x="367.5" y="54.0" />
+      <point x="274.0" y="54.0" />
+      <point x="30.25" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.context.interceptors.annotation.AnnotationInterceptorContainer" target="ghost.framework.context.interceptors.annotation.IAnnotationInterceptorContainer">
+      <point x="0.0" y="-14.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="585.5" y="358.0" />
+  <SelectedNodes>
+    <node>ghost.framework.context.interceptors.annotation.AnnotationEventInterceptor</node>
+  </SelectedNodes>
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

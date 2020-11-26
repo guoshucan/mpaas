@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: ghost.framework:ghost.framework.module.context:1.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/ghost/framework/ghost.framework.module.context/1.0-SNAPSHOT/ghost.framework.module.context-1.0-20200109.104504-474.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/ghost/framework/ghost.framework.module.context/1.0-SNAPSHOT/ghost.framework.module.context-1.0-20200109.104504-474-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/ghost/framework/ghost.framework.module.context/1.0-SNAPSHOT/ghost.framework.module.context-1.0-20200109.104504-474-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

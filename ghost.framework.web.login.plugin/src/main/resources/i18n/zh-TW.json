@@ -1,0 +1,22 @@
+{
+    "title": "登錄",
+    "password": "密碼",
+    "username": "賬號",
+    "system": {
+        "login": "系統登陸"
+    },
+    "button": {
+        "login": "登錄"
+    },
+    "record": {
+        "password": "記錄密碼"
+    },
+    "message": {
+        "username": "請輸入您的賬號",
+        "password": "請輸入您的密碼"
+    },
+    "code": {
+        "title": "驗證碼",
+        "alt": "點擊更換"
+    }
+}

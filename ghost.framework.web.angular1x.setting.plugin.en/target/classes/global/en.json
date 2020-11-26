@@ -1,0 +1,18 @@
+{
+  "header": {
+  },
+  "aside": {
+    "nav": {
+      "SystemManagement": {
+        "name": "SystemManagement",
+        "Admin": {
+          "name": "Admin",
+          "Setting": {
+            "name": "Setting",
+            "title": "SystemSetting"
+          }
+        }
+      }
+    }
+  }
+}

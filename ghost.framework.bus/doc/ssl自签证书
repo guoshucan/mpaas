@@ -1,0 +1,34 @@
+自签证书
+生成服务器端和客户端keystore
+
+keytool -genkey -alias server -keysize 4096 -validity 36500 -keyalg RSA -dname "CN=localhost" -keypass a5f60909-047b-40ea-b58c-f6ac303aff8f  -storepass a5f60909-047b-40ea-b58c-f6ac303aff8f -keystore server.jks
+keytool -genkey -alias client -keysize 4096 -validity 36500 -keyalg RSA -dname "CN=localhost" -keypass a5f60909-047b-40ea-b58c-f6ac303aff8f  -storepass a5f60909-047b-40ea-b58c-f6ac303aff8f -keystore client.jks
+
+其中：
+   -alias：表示秘钥对的名称
+  -keysize：秘钥长度，1024已经不安全了，至少2048起步
+  -keypass、-storepass：密码，保持一样就好
+  -keystore：生成keystore文件名
+
+
+keytool -export -alias server -keystore server.jks -storepass a5f60909-047b-40ea-b58c-f6ac303aff8f -file server.cer
+keytool -export -alias client -keystore client.jks -storepass a5f60909-047b-40ea-b58c-f6ac303aff8f -file client.cer
+
+将服务器端证书导入客户端的keystore（供客户端验证服务器证书）
+keytool -import -trustcacerts -alias server -file server.cer -storepass a5f60909-047b-40ea-b58c-f6ac303aff8f -keystore client.jks
+
+将客户端证书导入服务器端的keystore（供服务器端验证客户端证书）
+keytool -import -trustcacerts -alias client -file client.cer -storepass a5f60909-047b-40ea-b58c-f6ac303aff8f -keystore server.jks
+执行该命令时，提示符会询问你是否相信这个证书，你回答yes即可。
+Trust this certificate? [no]:  yes
+Certificate was added to keystore
+
+确认domain.xml配置文件里有如下配置
+<jvm-options>-Djavax.net.ssl.trustStore=trustStoreFile</jvm-options>
+
+
+注：
+我犯的错误就是在配置nginx和glassfish时，只用了域名证书，没有用完整的证书链（bundle），才出现了前面证书链不完整的错误。其实，刚开始接触证书，对于有些概念不是很清楚。有空可以看看一些相关书籍，不用都懂，看了大部分内容就可以了。
+《HTTPS权威指南 在服务器和WEB应用上部署SSL TLS和PKL》
+《OpenSSL Cookbook-OpenSSL攻略-中文版》
+《Openssl编程-赵春平-中文版》

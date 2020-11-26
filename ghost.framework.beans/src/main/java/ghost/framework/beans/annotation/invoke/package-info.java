@@ -1,0 +1,1 @@
+package ghost.framework.beans.annotation.invoke;

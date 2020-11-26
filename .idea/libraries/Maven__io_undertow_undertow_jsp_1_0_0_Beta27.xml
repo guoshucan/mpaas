@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: io.undertow:undertow-jsp:1.0.0.Beta27">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/io/undertow/undertow-jsp/1.0.0.Beta27/undertow-jsp-1.0.0.Beta27.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/io/undertow/undertow-jsp/1.0.0.Beta27/undertow-jsp-1.0.0.Beta27-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/io/undertow/undertow-jsp/1.0.0.Beta27/undertow-jsp-1.0.0.Beta27-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

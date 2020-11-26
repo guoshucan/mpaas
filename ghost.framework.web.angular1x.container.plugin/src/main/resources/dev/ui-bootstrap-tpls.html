@@ -1,0 +1,22 @@
+<!doctype html>
+<html ng-app="myApp">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+    <script src="libs/angular/angular/angular.js"></script>
+    <script src="libs/angular/angular-sanitize/angular-sanitize.js"></script>
+    <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.6.0.js"></script>
+    <script src="example.js"></script>
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+  </head>
+  <body>
+
+    <alert style="width: 250px;" ng-repeat="alert in alerts" type="alert.type" close="alert.close()">
+        <span data-ng-bind-html="alert.msg"></span>
+    </alert>
+    
+    <div ng-controller="UserCtrl">
+      <button class='btn' ng-click="editProfile()">更新</button>
+    </div>
+  </body>
+</html>

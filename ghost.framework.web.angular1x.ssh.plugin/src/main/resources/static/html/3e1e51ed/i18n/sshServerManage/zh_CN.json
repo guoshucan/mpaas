@@ -1,0 +1,141 @@
+{
+  "operationMaintenance": "运维",
+  "error": "错误！",
+  "complete": "完成",
+  "disable": "禁用",
+  "enable": "启用",
+  "startTime": "开始日期",
+  "endTime": "结束日期",
+  "close": "关闭",
+  "clear": "清除",
+  "currentDate": "今天",
+  "name": "名称",
+  "status": "状态",
+  "date": "日期",
+  "open": "操作",
+  "submit": "提交",
+  "back": "返回",
+  "repeat": "重复！",
+  "statusComplete": "状态完成。",
+  "show": "查看",
+  "select": "选择",
+  "cancel": "取消",
+  "version": "版本",
+  "supertube": "超管",
+  "hostName": "地址",
+  "port": "端口",
+  "test": "测试",
+  "testConnection": "测试连接",
+  "testConnectionFailed": "测试连接失败",
+  "testConnectionComplete": "测试连接完成",
+  "console": "控制台",
+  "fileManagement": "文件管理",
+  "management": {
+    "hide": "隐藏管理列表",
+    "show": "显示管理列表"
+  },
+  "form": {
+    "name": {
+      "name": "名称：",
+      "placeholder": "请填写名称..."
+    },
+    "port": {
+      "name": "端口：",
+      "placeholder": "请填写端口..."
+    },
+    "group": {
+      "name": "组：",
+      "placeholder": "请选择组..."
+    },
+    "type": {
+      "name": "类型：",
+      "placeholder": "请选择类型..."
+    },
+    "account": {
+      "name": "账号：",
+      "placeholder": "请选择账号..."
+    },
+    "region": {
+      "name": "区域：",
+      "placeholder": "请选择区域..."
+    },
+    "host": {
+      "name": "主机：",
+      "placeholder": "请填写主机..."
+    },
+    "timeout": {
+      "name": "超时：",
+      "placeholder": "请填写超时..."
+    },
+    "channelTimeout": {
+      "name": "通道超时：",
+      "placeholder": "请填写通道超时..."
+    },
+    "remoteDirectory": {
+      "name": "远程路径：",
+      "placeholder": "请填写远程路径..."
+    },
+    "createTime": "创建时间：",
+    "description": {
+      "name": "描述：",
+      "placeholder": "请填写描述..."
+    },
+    "status": "是否启用：",
+    "id": "Id："
+  },
+  "add": {
+    "name": "新增",
+    "server": "添加服务器"
+  },
+  "edit": {
+    "name": "修改",
+    "server": "修改服务器"
+  },
+  "content": {
+    "details": "服务器详情",
+    "serverManagement": "服务器管理"
+  },
+  "group": {
+    "details": "组"
+  },
+  "type": {
+    "details": "类型"
+  },
+  "region": {
+    "details": "区域"
+  },
+  "account": {
+    "details": "账号",
+    "select": {
+      "pleaseSelect": "请选择超管",
+      "manage": "管理"
+    }
+  },
+  "delete": {
+    "confirmDeletion": "确认删除！",
+    "chooseIs": "选择的是:",
+    "cancel": "取消",
+    "confirm": "确认",
+    "selected": "删除所选",
+    "name": "删除",
+    "complete": "删除完成",
+    "error": "删除错误！"
+  },
+  "search": {
+    "pleaseSelectStatus": "请选择状态",
+    "pleaseSelect": "请选择...",
+    "key": "请输入关键字...",
+    "name": "搜索"
+  },
+  "page": {
+    "perPage": "每页",
+    "row": "行",
+    "show": "显示",
+    "article": "条",
+    "total": "总",
+    "previous": "上一页",
+    "next": "下一页",
+    "first": "第一页",
+    "last": "尾页"
+  }
+}

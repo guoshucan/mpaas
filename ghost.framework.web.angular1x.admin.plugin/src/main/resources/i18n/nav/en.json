@@ -1,0 +1,22 @@
+{
+  "header": {
+    "navbar": {
+    }
+  },
+  "aside": {
+    "nav": {
+      "8e92359b": {
+        "name": "System Management",
+        "36048b84": {
+          "name": "Admin",
+          "c06bb67c": {
+            "name": "Admin Group"
+          },
+          "5a1cdb1e": {
+            "name": "Admin Management"
+          }
+        }
+      }
+    }
+  }
+}

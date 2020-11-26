@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="0.0" y="148.0">ghost.framework.web.module.request.HttpRequestMethod</node>
+    <node x="0.0" y="222.0">ghost.framework.web.module.request.IHttpHandler</node>
+    <node x="0.0" y="0.0">ghost.framework.web.module.request.HttpRequestMethodContainer</node>
+    <node x="0.0" y="74.0">ghost.framework.web.module.request.HttpRequestMethodProxy</node>
+  </nodes>
+  <notes />
+  <edges />
+  <settings layout="Hierarchic Group" zoom="1.0" x="308.5" y="120.0" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

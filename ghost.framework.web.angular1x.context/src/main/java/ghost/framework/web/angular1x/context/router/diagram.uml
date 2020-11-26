@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="0.0" y="158.0">ghost.framework.web.angular1x.context.router.IWebRouterNavMenuTitle</node>
+    <node x="0.0" y="464.0">ghost.framework.web.angular1x.context.router.IWebRouterItem</node>
+    <node x="378.0" y="464.0">ghost.framework.web.angular1x.context.router.IWebHeaderMenuContainer</node>
+    <node x="220.0" y="158.0">ghost.framework.web.angular1x.context.router.IWebRouterNavMenuGroup</node>
+    <node x="0.0" y="311.0">ghost.framework.web.angular1x.context.router.IWebMenuRouterContainer</node>
+    <node x="230.5" y="79.0">ghost.framework.web.angular1x.context.router.IWebRouterMenuGroup</node>
+    <node x="3.5" y="237.0">ghost.framework.web.angular1x.context.router.WebRouterNavMenuTitle</node>
+    <node x="124.0" y="0.0">ghost.framework.web.angular1x.context.router.IWebRouterMenuItem</node>
+    <node x="223.5" y="237.0">ghost.framework.web.angular1x.context.router.WebRouterNavMenuGroup</node>
+    <node x="3.5" y="390.0">ghost.framework.web.angular1x.context.router.WebMenuRouterContainer</node>
+    <node x="10.5" y="79.0">ghost.framework.web.angular1x.context.router.IWebRouterMenuTitle</node>
+    <node x="3.5" y="543.0">ghost.framework.web.angular1x.context.router.WebRouterItem</node>
+    <node x="252.0" y="311.0">ghost.framework.web.angular1x.context.router.IWebRouterContainer</node>
+    <node x="189.0" y="464.0">ghost.framework.web.angular1x.context.router.IWebHeaderMenu</node>
+    <node x="255.5" y="390.0">ghost.framework.web.angular1x.context.router.WebRouterContainer</node>
+    <node x="192.5" y="543.0">ghost.framework.web.angular1x.context.router.WebHeaderMenu</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="ghost.framework.web.angular1x.context.router.WebHeaderMenu" target="ghost.framework.web.angular1x.context.router.IWebHeaderMenu">
+      <point x="0.0" y="-14.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.web.angular1x.context.router.WebMenuRouterContainer" target="ghost.framework.web.angular1x.context.router.IWebMenuRouterContainer">
+      <point x="0.0" y="-14.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.web.angular1x.context.router.IWebRouterMenuGroup" target="ghost.framework.web.angular1x.context.router.IWebRouterMenuItem">
+      <point x="0.0" y="-14.5" />
+      <point x="320.0" y="54.0" />
+      <point x="253.0" y="54.0" />
+      <point x="43.0" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.web.angular1x.context.router.IWebRouterMenuTitle" target="ghost.framework.web.angular1x.context.router.IWebRouterMenuItem">
+      <point x="0.0" y="-14.5" />
+      <point x="100.0" y="54.0" />
+      <point x="167.0" y="54.0" />
+      <point x="-43.0" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.web.angular1x.context.router.WebRouterNavMenuGroup" target="ghost.framework.web.angular1x.context.router.IWebRouterNavMenuGroup">
+      <point x="0.0" y="-14.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.web.angular1x.context.router.WebRouterContainer" target="ghost.framework.web.angular1x.context.router.IWebRouterContainer">
+      <point x="0.0" y="-14.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.web.angular1x.context.router.IWebRouterNavMenuTitle" target="ghost.framework.web.angular1x.context.router.IWebRouterMenuTitle">
+      <point x="0.0" y="-14.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.web.angular1x.context.router.WebRouterItem" target="ghost.framework.web.angular1x.context.router.IWebRouterItem">
+      <point x="0.0" y="-14.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.web.angular1x.context.router.IWebRouterNavMenuGroup" target="ghost.framework.web.angular1x.context.router.IWebRouterMenuGroup">
+      <point x="0.0" y="-14.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.web.angular1x.context.router.WebRouterNavMenuTitle" target="ghost.framework.web.angular1x.context.router.IWebRouterNavMenuTitle">
+      <point x="0.0" y="-14.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="699.0" y="300.0" />
+  <SelectedNodes>
+    <node>ghost.framework.web.angular1x.context.router.IWebRouterNavMenuGroup</node>
+  </SelectedNodes>
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

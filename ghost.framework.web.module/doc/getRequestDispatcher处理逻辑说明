@@ -1,0 +1,17 @@
+RequestDispatcher接口的include()方法与forward()方法的区别 
+
+RequestDispatcher接口所定义的forward()方法可以将HTTP请求转送给其他Web资源（例如Servlet、JSP或HTML）进行处理，并产生HTTP回应。RequestDispatcher接口的include()方法与forward()方法非常类似，惟一的不同在于：利用include()方法将HTTP请求转送给其他Servlet后，被调用的Servlet虽然可以处理这个HTTP请求，但是最后的主导权仍然是在原来的Servlet。RequestDispatcher是一个Web资源的包装器，可以用来把当前request传递到该资源，或者把新的资源包括到当前响应中。RequestDispatcher接口中定义了两个方法：include/forward由于<jsp:include>只能指定固定的jsp文件名，不能动态指定jsp文件名。我们需要把<jsp:include>翻译为Java code – RequestDispatcher.include(); 
+
+用法： 
+<% request.getRequestDispatcher(filename).include(request, response); /> 
+
+服务器端的重定向可以有两种方式，一是使用HttpServletResponse的sendRedirect()方法，一是使用RequestDispatcher的forward()方法. 
+
+HttpServletResponse.sendRedirect()方法将响应定向到参数location指定的、新的URL。location可以是一个绝对的URL，如 response.sendRedirect("http://java.sun.com")也可以使用相对的URL。如果location以“/”开头，则容器认为相对于当前Web应用的根，否则，容器将解析为相对于当前请求的URL。这种重定向的方法，将导致客户端浏览器的请求URL跳转。从浏览器中的地址栏中可以看到新的URL地址，作用类似于上面设置HTTP响应头信息的实现。 
+
+
+RequestDispatcher.forward()方法将当前的request和response重定向到该 RequestDispacher指定的资源。这在实际项目中大量使用，因为完成一个业务操作往往需要跨越多个步骤，每一步骤完成相应的处理后，转向到下一个步骤。比如，通常业务处理在Servlet中处理，处理的结果转向到一个JSP页面进行显示。这样看起来类似于Servlet链的功能，但是还有一些区别。一个RequestDispatcher对象可以把请求发送到任意一个服务器资源，而不仅仅是另外一个Servlet。 include()方法将把Request Dispatcher资源的输出包含到当前输出中。 
+
+注意，只有在尚未向客户端输出响应时才可以调用forward()方法，如果页面缓存不为空，在重定向前将 
+
+自动清除缓存。否则将抛出一个IllegalStateException异常。 

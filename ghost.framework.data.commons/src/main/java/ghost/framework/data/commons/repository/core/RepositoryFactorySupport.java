@@ -1,0 +1,657 @@
+/*
+ * Copyright 2008-2020 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package ghost.framework.data.commons.repository.core;
+
+//import ghost.framework.aop.framework.ProxyFactory;
+//import ghost.framework.aop.interceptor.ExposeInvocationInterceptor;
+
+import ghost.framework.aop.framework.ProxyFactory;
+import ghost.framework.aop.interceptor.ExposeInvocationInterceptor;
+import ghost.framework.beans.BeanException;
+import ghost.framework.beans.annotation.constraints.Nullable;
+import ghost.framework.context.base.ICoreInterface;
+import ghost.framework.context.factory.BeanFactory;
+import ghost.framework.core.converter.GenericConversionService;
+import ghost.framework.data.commons.MethodInvocationValidator;
+import ghost.framework.data.commons.projection.DefaultMethodInvokingMethodInterceptor;
+import ghost.framework.data.commons.projection.ProjectionFactory;
+import ghost.framework.data.commons.projection.SpelAwareProxyProjectionFactory;
+import ghost.framework.data.commons.repository.*;
+import ghost.framework.data.commons.repository.query.QueryLookupStrategy;
+import ghost.framework.data.commons.repository.utils.QueryExecutionConverters;
+import ghost.framework.data.commons.repository.utils.ReactiveWrapperConverters;
+import ghost.framework.data.commons.repository.utils.ReactiveWrappers;
+import ghost.framework.data.commons.util.ReflectionUtils;
+import ghost.framework.transaction.TransactionalProxy;
+import ghost.framework.util.Assert;
+import ghost.framework.util.ClassUtils;
+import ghost.framework.util.ConcurrentReferenceHashMap;
+import ghost.framework.util.ObjectUtils;
+import org.aopalliance.intercept.MethodInterceptor;
+import org.aopalliance.intercept.MethodInvocation;
+import org.slf4j.Logger;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+import java.util.*;
+import java.util.function.BiFunction;
+import java.util.stream.Collectors;
+
+//import ghost.framework.transaction.TransactionalProxy;
+
+//import ghost.framework.context.proxy.aop.ProxyFactory;
+//import ghost.framework.context.proxy.aop.interceptor.ExposeInvocationInterceptor;
+//import ghost.framework.data.jdbc.jpa.plugin.util.ReactiveWrapperConverters;
+//import ghost.framework.data.jdbc.jpa.plugin.util.ReactiveWrappers;
+//import ghost.framework.data.transaction.TransactionalProxy;
+
+//import javax.persistence.NamedQueries;
+
+//import ghost.framework.aop.framework.ProxyFactory;
+//import ghost.framework.aop.interceptor.ExposeInvocationInterceptor;
+//import ghost.framework.beans.BeanUtils;
+//import ghost.framework.beans.BeansException;
+//import ghost.framework.beans.factory.BeanClassLoaderAware;
+//import ghost.framework.beans.factory.BeanFactory;
+//import ghost.framework.beans.factory.BeanFactoryAware;
+//import ghost.framework.core.convert.support.DefaultConverterContainer;
+//import ghost.framework.core.convert.support.GenericConversionService;
+//import ghost.framework.data.projection.DefaultMethodInvokingMethodInterceptor;
+//import ghost.framework.data.projection.ProjectionFactory;
+//import ghost.framework.data.projection.SpelAwareProxyProjectionFactory;
+//import ghost.framework.data.repository.Repository;
+//import ghost.framework.data.repository.core.NamedQueries;
+//import ghost.framework.data.repository.core.RepositoryInformation;
+//import ghost.framework.data.repository.core.support.RepositoryComposition.RepositoryFragments;
+//import ghost.framework.data.repository.query.QueryLookupStrategy;
+//import ghost.framework.data.repository.query.QueryLookupStrategy.Key;
+//import ghost.framework.data.repository.query.QueryMethod;
+//import ghost.framework.data.repository.query.QueryMethodEvaluationContextProvider;
+//import ghost.framework.data.repository.query.RepositoryQuery;
+//import ghost.framework.data.repository.util.ClassUtils;
+//import ghost.framework.data.repository.util.QueryExecutionConverters;
+//import ghost.framework.data.repository.util.ReactiveWrapperConverters;
+//import ghost.framework.data.repository.util.ReactiveWrappers;
+//import ghost.framework.data.util.ReflectionUtils;
+//import ghost.framework.lang.Nullable;
+//import ghost.framework.transaction.interceptor.TransactionalProxy;
+//import ghost.framework.util.Assert;
+//import ghost.framework.util.ConcurrentReferenceHashMap;
+//import ghost.framework.util.ConcurrentReferenceHashMap.ReferenceType;
+//import ghost.framework.util.ObjectUtils;
+
+/**
+ * Factory bean to create instances of a given repository interface. Creates a proxy implementing the configured
+ * repository interface and apply an advice handing the control to the {@code QueryExecutorMethodInterceptor}. Query
+ * detection strategy can be configured by setting {@link QueryLookupStrategy.Key}.
+ *
+ * @author Oliver Gierke
+ * @author Mark Paluch
+ * @author Christoph Strobl
+ * @author Jens Schauder
+ */
+public abstract class RepositoryFactorySupport/* implements BeanFactoryAware*/ {
+
+	private static final BiFunction<Method, Object[], Object[]> REACTIVE_ARGS_CONVERTER = (method, args) -> {
+		if (ReactiveWrappers.isAvailable()) {
+			Class<?>[] parameterTypes = method.getParameterTypes();
+			Object[] converted = new Object[args.length];
+			for (int i = 0; i < args.length; i++) {
+				Object value = args[i];
+				Object convertedArg = value;
+				Class<?> parameterType = parameterTypes.length > i ? parameterTypes[i] : null;
+				if (value != null && parameterType != null) {
+					if (!parameterType.isAssignableFrom(value.getClass())
+							&& ReactiveWrapperConverters.canConvert(value.getClass(), parameterType)) {
+						convertedArg = ReactiveWrapperConverters.toWrapper(value, parameterType);
+					}
+				}
+				converted[i] = convertedArg;
+			}
+			return converted;
+		}
+		return args;
+	};
+	final static GenericConversionService CONVERSION_SERVICE = new GenericConversionService();
+	private static final Logger LOG = org.slf4j.LoggerFactory.getLogger(RepositoryFactorySupport.class);
+	static {
+		QueryExecutionConverters.registerConvertersIn(CONVERSION_SERVICE);
+//		CONVERSION_SERVICE.removeConvertible(Object.class, Object.class);
+	}
+	private final Map<RepositoryInformationCacheKey, RepositoryInformation> repositoryInformationCache;
+	private final List<RepositoryProxyPostProcessor> postProcessors;
+	private Optional<Class<?>> repositoryBaseClass;
+	private @Nullable
+	QueryLookupStrategy.Key queryLookupStrategyKey;
+	private List<QueryCreationListener<?>> queryPostProcessors;
+	private NamedQueries namedQueries;
+	private ClassLoader classLoader;
+	private QueryMethodEvaluationContextProvider evaluationContextProvider;
+	private BeanFactory beanFactory;
+	private final QueryCollectingQueryCreationListener collectingListener = new QueryCollectingQueryCreationListener();
+	protected final ICoreInterface coreInterface;
+	@SuppressWarnings("null")
+	public RepositoryFactorySupport(ICoreInterface coreInterface) {
+		Assert.notNull(coreInterface, "ICoreInterface must not be null!");
+		this.coreInterface = coreInterface;
+		this.repositoryInformationCache = new ConcurrentReferenceHashMap<>(16, ConcurrentReferenceHashMap.ReferenceType.WEAK);
+		this.postProcessors = new ArrayList<>();
+		this.repositoryBaseClass = Optional.empty();
+		this.namedQueries = PropertiesBasedNamedQueries.EMPTY;
+		this.classLoader = ClassUtils.getDefaultClassLoader();
+		this.evaluationContextProvider = QueryMethodEvaluationContextProvider.DEFAULT;
+		this.queryPostProcessors = new ArrayList<>();
+		this.queryPostProcessors.add(collectingListener);
+	}
+	/**
+	 * Sets the strategy of how to lookup a query to execute finders.
+	 *
+	 * @param key
+	 */
+	public void setQueryLookupStrategyKey(QueryLookupStrategy.Key key) {
+		this.queryLookupStrategyKey = key;
+	}
+
+	/**
+	 * Configures a {@link NamedQueries} instance to be handed to the {@link QueryLookupStrategy} for query creation.
+	 *
+	 * @param namedQueries the namedQueries to set
+	 */
+	public void setNamedQueries(NamedQueries namedQueries) {
+		this.namedQueries = namedQueries == null ? PropertiesBasedNamedQueries.EMPTY : namedQueries;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see ghost.framework.beans.factory.BeanClassLoaderAware#setBeanClassLoader(java.lang.ClassLoader)
+	 */
+//	@Override
+	public void setClassLoader(ClassLoader classLoader) {
+		this.classLoader = classLoader;// == null ? ClassUtils.getDefaultClassLoader() : classLoader;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see ghost.framework.beans.factory.BeanFactoryAware#setBeanFactory(ghost.framework.beans.factory.BeanFactory)
+	 */
+//	@Override
+	public void setBeanFactory(BeanFactory beanFactory) throws BeanException {
+		this.beanFactory = beanFactory;
+	}
+
+	/**
+	 * Sets the {@link QueryMethodEvaluationContextProvider} to be used to evaluate SpEL expressions in manually defined
+	 * queries.
+	 *
+	 * @param evaluationContextProvider can be {@literal null}, defaults to
+	 *          {@link DefaultQueryMethodEvaluationContextProvider#INSTANCE}.
+	 */
+	public void setEvaluationContextProvider(QueryMethodEvaluationContextProvider evaluationContextProvider) {
+		this.evaluationContextProvider = evaluationContextProvider == null ? QueryMethodEvaluationContextProvider.DEFAULT
+				: evaluationContextProvider;
+	}
+
+	/**
+	 * Configures the repository base class to use when creating the repository proxy. If not set, the factory will use
+	 * the type returned by {@link #getRepositoryBaseClass(RepositoryMetadata)} by default.
+	 *
+	 * @param repositoryBaseClass the repository base class to back the repository proxy, can be {@literal null}.
+	 * @since 1.11
+	 */
+	public void setRepositoryBaseClass(Class<?> repositoryBaseClass) {
+		this.repositoryBaseClass = Optional.ofNullable(repositoryBaseClass);
+	}
+
+	/**
+	 * Adds a {@link QueryCreationListener} to the factory to plug in functionality triggered right after creation of
+	 * {@link RepositoryQuery} instances.
+	 *
+	 * @param listener
+	 */
+	public void addQueryCreationListener(QueryCreationListener<?> listener) {
+
+		Assert.notNull(listener, "Listener must not be null!");
+		this.queryPostProcessors.add(listener);
+	}
+
+	/**
+	 * Adds {@link RepositoryProxyPostProcessor}s to the factory to allow manipulation of the {@link ProxyFactory} before
+	 * the proxy gets created. Note that the {@link QueryExecutorMethodInterceptor} will be added to the proxy
+	 * <em>after</em> the {@link RepositoryProxyPostProcessor}s are considered.
+	 *
+	 * @param processor
+	 */
+	public void addRepositoryProxyPostProcessor(RepositoryProxyPostProcessor processor) {
+
+		Assert.notNull(processor, "RepositoryProxyPostProcessor must not be null!");
+		this.postProcessors.add(processor);
+	}
+
+	/**
+	 * Creates {@link RepositoryComposition.RepositoryFragments} based on {@link RepositoryMetadata} to add repository-specific extensions.
+	 *
+	 * @param metadata
+	 * @return
+	 */
+	protected RepositoryComposition.RepositoryFragments getRepositoryFragments(RepositoryMetadata metadata) {
+		return RepositoryComposition.RepositoryFragments.empty();
+	}
+	/**
+	 * Creates {@link RepositoryComposition} based on {@link RepositoryMetadata} for repository-specific method handling.
+	 *
+	 * @param metadata
+	 * @return
+	 */
+	private RepositoryComposition getRepositoryComposition(RepositoryMetadata metadata) {
+		RepositoryComposition composition = RepositoryComposition.empty();
+
+		if (metadata.isReactiveRepository()) {
+			return composition.withMethodLookup(MethodLookups.forReactiveTypes(metadata))
+					.withArgumentConverter(REACTIVE_ARGS_CONVERTER);
+		}
+
+		return composition.withMethodLookup(MethodLookups.forRepositoryTypes(metadata));
+	}
+
+	/**
+	 * Returns a repository instance for the given interface.
+	 *
+	 * @param repositoryInterface must not be {@literal null}.
+	 * @return
+	 */
+	public <T> T getRepository(Class<T> repositoryInterface) {
+		return getRepository(repositoryInterface, RepositoryComposition.RepositoryFragments.empty());
+	}
+
+	/**
+	 * Returns a repository instance for the given interface backed by a single instance providing implementation logic
+	 * for custom logic. For more advanced composition needs use {@link #getRepository(Class, RepositoryComposition.RepositoryFragments)}.
+	 *
+	 * @param repositoryInterface must not be {@literal null}.
+	 * @param customImplementation must not be {@literal null}.
+	 * @return
+	 */
+	public <T> T getRepository(Class<T> repositoryInterface, Object customImplementation) {
+		return getRepository(repositoryInterface, RepositoryComposition.RepositoryFragments.just(customImplementation));
+	}
+
+	/**
+	 * Returns a repository instance for the given interface backed by an instance providing implementation logic for
+	 * custom logic.
+	 *
+	 * @param repositoryInterface must not be {@literal null}.
+	 * @param fragments must not be {@literal null}.
+	 * @return
+	 * @since 2.0
+	 */
+	@SuppressWarnings({ "unchecked" })
+	public <T> T getRepository(Class<T> repositoryInterface, RepositoryComposition.RepositoryFragments fragments) {
+
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("Initializing repository instance for {}…", repositoryInterface.getName());
+		}
+
+		Assert.notNull(repositoryInterface, "Repository interface must not be null!");
+		Assert.notNull(fragments, "RepositoryFragments must not be null!");
+
+		RepositoryMetadata metadata = getRepositoryMetadata(repositoryInterface);
+		RepositoryComposition composition = getRepositoryComposition(metadata, fragments);
+		RepositoryInformation information = getRepositoryInformation(metadata, composition);
+
+		validate(information, composition);
+		Object target = getTargetRepository(information);
+		// Create proxy
+		ProxyFactory result = new ProxyFactory();
+		result.setTarget(target);
+		result.setInterfaces(repositoryInterface, Repository.class, TransactionalProxy.class);
+		if (MethodInvocationValidator.supports(repositoryInterface)) {
+			result.addAdvice(new MethodInvocationValidator());
+		}
+		result.addAdvisor(ExposeInvocationInterceptor.ADVISOR);
+		postProcessors.forEach(processor -> processor.postProcess(result, information));
+		if (DefaultMethodInvokingMethodInterceptor.hasDefaultMethods(repositoryInterface)) {
+			result.addAdvice(new DefaultMethodInvokingMethodInterceptor());
+		}
+		ProjectionFactory projectionFactory = getProjectionFactory(classLoader, beanFactory);
+		Optional<QueryLookupStrategy> queryLookupStrategy = getQueryLookupStrategy(queryLookupStrategyKey,
+				evaluationContextProvider);
+		result.addAdvice(new QueryExecutorMethodInterceptor(information, projectionFactory, queryLookupStrategy,
+				namedQueries, queryPostProcessors));
+		composition = composition.append(RepositoryFragment.implemented(target));
+		result.addAdvice(new ImplementationMethodExecutionInterceptor(composition));
+
+		T repository = (T) result.getProxy(classLoader);
+
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("Finished creation of repository instance for {}.", repositoryInterface.getName());
+		}
+
+		return repository;
+	}
+
+	/**
+	 * Returns the {@link ProjectionFactory} to be used with the repository instances created.
+	 *
+	 * @param classLoader will never be {@literal null}.
+	 * @param beanFactory will never be {@literal null}.
+	 * @return will never be {@literal null}.
+	 */
+	protected ProjectionFactory getProjectionFactory(ClassLoader classLoader, BeanFactory beanFactory) {
+
+		SpelAwareProxyProjectionFactory factory = new SpelAwareProxyProjectionFactory();
+		factory.setBeanClassLoader(classLoader);
+		factory.setBeanFactory(beanFactory);
+
+		return factory;
+	}
+
+	/**
+	 * Returns the {@link RepositoryMetadata} for the given repository interface.
+	 *
+	 * @param repositoryInterface will never be {@literal null}.
+	 * @return
+	 */
+	protected RepositoryMetadata getRepositoryMetadata(Class<?> repositoryInterface) {
+		return AbstractRepositoryMetadata.getMetadata(repositoryInterface);
+	}
+
+	/**
+	 * Returns the {@link RepositoryInformation} for the given {@link RepositoryMetadata} and custom
+	 * {@link RepositoryComposition.RepositoryFragments}.
+	 *
+	 * @param metadata must not be {@literal null}.
+	 * @param fragments must not be {@literal null}.
+	 * @return will never be {@literal null}.
+	 */
+	protected RepositoryInformation getRepositoryInformation(RepositoryMetadata metadata, RepositoryComposition.RepositoryFragments fragments) {
+		return getRepositoryInformation(metadata, getRepositoryComposition(metadata, fragments));
+	}
+
+	/**
+	 * Returns the {@link RepositoryComposition} for the given {@link RepositoryMetadata} and extra
+	 * {@link RepositoryComposition.RepositoryFragments}.
+	 *
+	 * @param metadata must not be {@literal null}.
+	 * @param fragments must not be {@literal null}.
+	 * @return will never be {@literal null}.
+	 */
+	private RepositoryComposition getRepositoryComposition(RepositoryMetadata metadata, RepositoryComposition.RepositoryFragments fragments) {
+
+		Assert.notNull(metadata, "RepositoryMetadata must not be null!");
+		Assert.notNull(fragments, "RepositoryFragments must not be null!");
+
+		RepositoryComposition composition = getRepositoryComposition(metadata);
+		RepositoryComposition.RepositoryFragments repositoryAspects = getRepositoryFragments(metadata);
+
+		return composition.append(fragments).append(repositoryAspects);
+	}
+
+	/**
+	 * Returns the {@link RepositoryInformation} for the given repository interface.
+	 *
+	 * @param metadata
+	 * @param composition
+	 * @return
+	 */
+	private RepositoryInformation getRepositoryInformation(RepositoryMetadata metadata,
+			RepositoryComposition composition) {
+		RepositoryInformationCacheKey cacheKey = new RepositoryInformationCacheKey(metadata, composition);
+		return repositoryInformationCache.computeIfAbsent(cacheKey, key -> {
+			Class<?> baseClass = repositoryBaseClass.orElse(getRepositoryBaseClass(metadata));
+			return new DefaultRepositoryInformation(metadata, baseClass, composition);
+		});
+	}
+
+	protected List<QueryMethod> getQueryMethods() {
+		return collectingListener.getQueryMethods();
+	}
+
+	/**
+	 * Returns the {@link EntityInformation} for the given domain class.
+	 *
+	 * @param <T> the entity type
+	 * @param <ID> the id type
+	 * @param domainClass
+	 * @return
+	 */
+	public abstract <T, ID> EntityInformation<T, ID> getEntityInformation(Class<T> domainClass);
+
+	/**
+	 * Create a repository instance as backing for the query proxy.
+	 *
+	 * @param metadata
+	 * @return
+	 */
+	protected abstract Object getTargetRepository(RepositoryInformation metadata);
+
+	/**
+	 * Returns the base class backing the actual repository instance. Make sure
+	 * {@link #getTargetRepository(RepositoryInformation)} returns an instance of this class.
+	 *
+	 * @param metadata
+	 * @return
+	 */
+	protected abstract Class<?> getRepositoryBaseClass(RepositoryMetadata metadata);
+
+	/**
+	 * Returns the {@link QueryLookupStrategy} for the given {@link QueryLookupStrategy.Key} and {@link QueryMethodEvaluationContextProvider}.
+	 *
+	 * @param key can be {@literal null}.
+	 * @param evaluationContextProvider will never be {@literal null}.
+	 * @return the {@link QueryLookupStrategy} to use or {@literal null} if no queries should be looked up.
+	 * @since 1.9
+	 */
+	protected Optional<QueryLookupStrategy> getQueryLookupStrategy(@Nullable QueryLookupStrategy.Key key,
+			QueryMethodEvaluationContextProvider evaluationContextProvider) {
+		return Optional.empty();
+	}
+
+	/**
+	 * Validates the given repository interface as well as the given custom implementation.
+	 *
+	 * @param repositoryInformation
+	 * @param composition
+	 */
+	private void validate(RepositoryInformation repositoryInformation, RepositoryComposition composition) {
+
+		if (repositoryInformation.hasCustomMethod()) {
+
+			if (composition.isEmpty()) {
+
+				throw new IllegalArgumentException(
+						String.format("You have custom methods in %s but not provided a custom implementation!",
+								repositoryInformation.getRepositoryInterface()));
+			}
+
+			composition.validateImplementation();
+		}
+
+		validate(repositoryInformation);
+	}
+
+	protected void validate(RepositoryMetadata repositoryMetadata) {
+
+	}
+
+	/**
+	 * Creates a repository of the repository base class defined in the given {@link RepositoryInformation} using
+	 * reflection.
+	 *
+	 * @param information
+	 * @param constructorArguments
+	 * @return
+	 */
+	protected final <R> R getTargetRepositoryViaReflection(RepositoryInformation information,
+			Object... constructorArguments) {
+
+		Class<?> baseClass = information.getRepositoryBaseClass();
+		return getTargetRepositoryViaReflection(baseClass, constructorArguments);
+	}
+
+	/**
+	 * Creates a repository of the repository base class defined in the given {@link RepositoryInformation} using
+	 * reflection.
+	 *
+	 * @param baseClass
+	 * @param constructorArguments
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	protected final <R> R getTargetRepositoryViaReflection(Class<?> baseClass, Object... constructorArguments) {
+		Optional<Constructor<?>> constructor = ReflectionUtils.findConstructor(baseClass, constructorArguments);
+
+		return constructor.map(it -> (R) this.coreInterface.newInstanceParameters(it, constructorArguments))
+				.orElseThrow(() -> new IllegalStateException(String.format(
+						"No suitable constructor found on %s to match the given arguments: %s. Make sure you implement a constructor taking these",
+						baseClass, Arrays.stream(constructorArguments).map(Object::getClass).collect(Collectors.toList()))));
+	}
+
+	/**
+	 * Method interceptor that calls methods on the {@link RepositoryComposition}.
+	 *
+	 * @author Mark Paluch
+	 */
+	public class ImplementationMethodExecutionInterceptor implements MethodInterceptor {
+
+		private final RepositoryComposition composition;
+
+		public ImplementationMethodExecutionInterceptor(RepositoryComposition composition) {
+			this.composition = composition;
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * @see org.aopalliance.intercept.MethodInterceptor#invoke(org.aopalliance.intercept.MethodInvocation)
+		 */
+		@Nullable
+		@Override
+		public Object invoke(@SuppressWarnings("null") MethodInvocation invocation) throws Throwable {
+
+			Method method = invocation.getMethod();
+			Object[] arguments = invocation.getArguments();
+
+			try {
+				return composition.invoke(method, arguments);
+			} catch (Exception e) {
+//				ClassUtils.unwrapReflectionException(e);
+			}
+
+			throw new IllegalStateException("Should not occur!");
+		}
+	}
+
+	/**
+	 * {@link QueryCreationListener} collecting the {@link QueryMethod}s created for all query methods of the repository
+	 * interface.
+	 *
+	 * @author Oliver Gierke
+	 */
+	private static class QueryCollectingQueryCreationListener implements QueryCreationListener<RepositoryQuery> {
+
+		/**
+		 * All {@link QueryMethod}s.
+		 */
+		private final List<QueryMethod> queryMethods = new ArrayList<>();
+
+		/* (non-Javadoc)
+		 * @see ghost.framework.data.repository.core.support.QueryCreationListener#onCreation(ghost.framework.data.repository.query.RepositoryQuery)
+		 */
+		@Override
+		public void onCreation(RepositoryQuery query) {
+			this.queryMethods.add(query.getQueryMethod());
+		}
+
+		public List<QueryMethod> getQueryMethods() {
+			return this.queryMethods;
+		}
+	}
+
+	/**
+	 * Simple value object to build up keys to cache {@link RepositoryInformation} instances.
+	 *
+	 * @author Oliver Gierke
+	 * @author Mark Paluch
+	 */
+	private static final class RepositoryInformationCacheKey {
+
+		private final String repositoryInterfaceName;
+		private final long compositionHash;
+
+		/**
+		 * Creates a new {@link RepositoryInformationCacheKey} for the given {@link RepositoryMetadata} and composition.
+		 *
+		 * @param metadata must not be {@literal null}.
+		 * @param composition must not be {@literal null}.
+		 */
+		public RepositoryInformationCacheKey(RepositoryMetadata metadata, RepositoryComposition composition) {
+
+			this.repositoryInterfaceName = metadata.getRepositoryInterface().getName();
+			this.compositionHash = composition.hashCode();
+		}
+
+		public RepositoryInformationCacheKey(String repositoryInterfaceName, long compositionHash) {
+			this.repositoryInterfaceName = repositoryInterfaceName;
+			this.compositionHash = compositionHash;
+		}
+
+		public String getRepositoryInterfaceName() {
+			return this.repositoryInterfaceName;
+		}
+
+		public long getCompositionHash() {
+			return this.compositionHash;
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * @see java.lang.Object#equals(java.lang.Object)
+		 */
+		@Override
+		public boolean equals(Object o) {
+			if (this == o) {
+				return true;
+			}
+			if (!(o instanceof RepositoryInformationCacheKey)) {
+				return false;
+			}
+			RepositoryInformationCacheKey that = (RepositoryInformationCacheKey) o;
+			if (compositionHash != that.compositionHash) {
+				return false;
+			}
+			return ObjectUtils.nullSafeEquals(repositoryInterfaceName, that.repositoryInterfaceName);
+		}
+		/*
+		 * (non-Javadoc)
+		 * @see java.lang.Object#hashCode()
+		 */
+		@Override
+		public int hashCode() {
+			int result = ObjectUtils.nullSafeHashCode(repositoryInterfaceName);
+			result = 31 * result + (int) (compositionHash ^ (compositionHash >>> 32));
+			return result;
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * @see java.lang.Object#toString()
+		 */
+		@Override
+		public String toString() {
+			return "RepositoryFactorySupport.RepositoryInformationCacheKey(repositoryInterfaceName="
+					+ this.getRepositoryInterfaceName() + ", compositionHash=" + this.getCompositionHash() + ")";
+		}
+	}
+}

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="0.0" y="153.0">ghost.framework.websocket.plugin.server.WsFrameServer</node>
+    <node x="190.5" y="97.0">ghost.framework.websocket.plugin.server.WsFilter</node>
+    <node x="0.0" y="0.0">ghost.framework.websocket.plugin.server.WsServerContainer</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="ghost.framework.websocket.plugin.server.WsFilter" target="ghost.framework.websocket.plugin.server.WsServerContainer">
+      <point x="-34.0" y="-14.5" />
+      <point x="48.5" y="54.0" />
+      <point x="27.5" y="54.0" />
+      <point x="-55.0" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.websocket.plugin.server.WsServerContainer" target="ghost.framework.websocket.plugin.server.WsFilter">
+      <point x="55.0" y="14.5" />
+      <point x="137.5" y="54.0" />
+      <point x="116.5" y="54.0" />
+      <point x="34.0" y="-14.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="212.0" y="198.5" />
+  <SelectedNodes>
+    <node>ghost.framework.websocket.plugin.server.WsFilter</node>
+  </SelectedNodes>
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

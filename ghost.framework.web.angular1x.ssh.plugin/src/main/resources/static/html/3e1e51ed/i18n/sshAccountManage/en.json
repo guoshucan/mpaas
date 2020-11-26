@@ -1,0 +1,79 @@
+{
+  "operationMaintenance":"Operation Maintenance",
+  "error": "error！",
+  "complete": "Complete",
+  "disable": "Disable",
+  "enable": "Enable",
+  "startTime": "Start date",
+  "endTime": "End date",
+  "close": "Close",
+  "clear": "Clear",
+  "currentDate": "Current date",
+  "name": "Account",
+  "root": "Super account",
+  "status": "Status",
+  "date": "Date",
+  "open": "Open",
+  "submit": "Submit",
+  "back": "Back",
+  "repeat": "repeat！",
+  "statusComplete": "Status complete.",
+  "show":"Show",
+  "form":{
+    "account": {
+      "name": "Account Name:",
+      "placeholder": "Please fill in the name of the account..."
+    },
+    "description": {
+      "name": "Description:",
+      "placeholder": "Please fill in the name of the description..."
+    },
+    "status": "Enable:",
+    "root":"Super account:",
+    "password": {
+      "name":"Password:",
+      "placeholder": "Please fill in the password..."
+    }
+  },
+  "account": {
+    "name": "Account Name:"
+  },
+  "add": {
+    "name": "Add",
+    "account": "Add Account"
+  },
+  "edit": {
+    "name": "Edit",
+    "account": "Modify Account"
+  },
+  "content": {
+    "details": "Account Details",
+    "accountManagement": "Account Management"
+  },
+  "delete": {
+    "confirmDeletion": "Confirm deletion!",
+    "chooseIs": "Choose is:",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "selected": "Delete selected",
+    "name": "Delete",
+    "complete": "Delete complete",
+    "error": "Delete error！"
+  },
+  "search": {
+    "pleaseSelectStatus": "Please select status",
+    "key": "Please enter key words...",
+    "name": "Search"
+  },
+  "page": {
+    "perPage": "Per page",
+    "row": "row",
+    "show": "Show",
+    "article": "article",
+    "total": "Total",
+    "previous": "Previous",
+    "next": "Next",
+    "first": "First",
+    "last": "Last"
+  }
+}

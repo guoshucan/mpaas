@@ -1,0 +1,1308 @@
+public Metadata getMetadata() {
+	Artifact artifact = dependency.getArtifact();
+	String groupId = artifact.getGroupId();
+	String artifactId = artifact.getArtifactId();
+	String type = artifact.getExtension();
+	String version = artifact.getVersion();
+	Nature nature = version.contains(Nature.SNAPSHOT.name()) ? Nature.SNAPSHOT
+			: Nature.RELEASE;
+	Metadata metadata = new DefaultMetadata(groupId, artifactId, version,
+			type, nature);
+	MetadataRequest metadataRequest = new MetadataRequest(metadata);
+	Collection<MetadataRequest> requests = new ArrayList<MetadataRequest>();
+	requests.add(metadataRequest);
+	List<MetadataResult> resolveMetadata = repoSystem.resolveMetadata(
+			repoSession, requests);
+	if (!resolveMetadata.isEmpty()) {
+		MetadataResult metadataResult = resolveMetadata.get(0);
+		return metadataResult.getMetadata();
+	} else {
+		return null;
+	}
+}
+final File repo = this.session.getLocalRepository().getBasedir();
+final Collection<Artifact> deps = new Aether(this.getProject(),repo).resolve(
+  new DefaultArtifact("junit","junit-dep","","jar","4.10"),JavaScopes.RUNTIME
+);
+final File repo = new File(System.getProperty("java.io.tmpdir"),"my-repo");
+final MavenProject project = new MavenProject();
+project.setRemoteArtifactRepositories(
+  Arrays.asList(
+    new RemoteRepository(
+      "maven-central","default","http://repo1.maven.org/maven2/"
+    )
+  )
+);
+final Collection<Artifact> deps = new Aether(project,JavaScopes.RUNTIME
+);
+
+/**
+     *
+     * download the artifact.
+     *
+     * @param groupId
+     * @param artifactId
+     * @param version
+     * @param localRepositoryBaseDir 本地仓库目录，会下载到该目录
+     * @return
+     * @throws ArtifactResolutionException
+     * @since  1.0
+     */
+public static File downloadDirectDependency(String groupId, String artifactId, String version,
+            String localRepositoryBaseDir)
+            throws ArtifactResolutionException {
+
+
+        RepositorySystem system = Booter.newRepositorySystem();
+
+        RepositorySystemSession session =
+                Booter.newRepositorySystemSession(system, localRepositoryBaseDir);
+
+        Artifact artifact = new DefaultArtifact(groupId + ":" + artifactId + ":" + version);
+
+        ArtifactRequest artifactRequest = new ArtifactRequest();
+        artifactRequest.setArtifact(artifact);
+        // MVN_REPOSITORY_URL是远程仓库地址
+        artifactRequest.addRepository(Booter.newRepository(MVN_REPOSITORY_URL));
+
+        ArtifactResult artifactResult = system.resolveArtifact(session, artifactRequest);
+
+        artifact = artifactResult.getArtifact();
+        return artifact.getFile();
+    }
+————————————————
+版权声明：本文为CSDN博主「鼯鼠的柏拉图之洞」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/flysqrlboy/article/details/89443924
+public void downloadTransitiveDependencies(String groupId, String artifactId, String version,
+            String localRepositoryBaseDir)
+            throws DependencyResolutionException {
+
+        RepositorySystem system = Booter.newRepositorySystem();
+
+        RepositorySystemSession session =
+                Booter.newRepositorySystemSession(system, localRepositoryBaseDir);
+
+        Artifact artifact = new DefaultArtifact(groupId + ":" + artifactId + ":" + version);
+
+        DependencyFilter classpathFlter = DependencyFilterUtils.classpathFilter(JavaScopes.COMPILE);
+
+        CollectRequest collectRequest = new CollectRequest();
+        // 指定依赖范围为Compile
+        collectRequest.setRoot(new Dependency(artifact, JavaScopes.COMPILE));
+        collectRequest.addRepository(Booter.newRepository(MVN_REPOSITORY_URL));
+
+        DependencyRequest dependencyRequest = new DependencyRequest(collectRequest, classpathFlter);
+
+		 // system.resolveDependencies 获取传递依赖
+        List<ArtifactResult> artifactResults =
+                system.resolveDependencies(session, dependencyRequest).getArtifactResults();
+
+        for (ArtifactResult artifactResult : artifactResults) {
+            System.out.println(artifactResult.getArtifact() + " resolved to "
+                    + artifactResult.getArtifact().getFile());
+
+        }
+————————————————
+版权声明：本文为CSDN博主「鼯鼠的柏拉图之洞」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/flysqrlboy/article/details/89443924
+  public static Artifact createFoundArtifact(final File pomFile) {
+        try {
+            if (log.isLoggable(Level.FINE)) {
+                log.fine("Processing " + pomFile.getAbsolutePath() + " for classpath artifact resolution");
+            }
+            // TODO: load pom using Maven Model?
+            // This might include a cycle in graph reconstruction, to be investigated
+            final Document pom = loadPom(pomFile);
+            String groupId = getXPathGroupIdExpression().evaluate(pom);
+            String artifactId = getXPathArtifactIdExpression().evaluate(pom);
+            String type = getXPathTypeExpression().evaluate(pom);
+            String version = getXPathVersionExpression().evaluate(pom);
+            if (Validate.isNullOrEmpty(groupId)) {
+                groupId = getXPathParentGroupIdExpression().evaluate(pom);
+            }
+            if (Validate.isNullOrEmpty(type)) {
+                type = "jar";
+            }
+            if (version == null || version.equals("")) {
+                version = getXPathParentVersionExpression().evaluate(pom);
+            }
+            final Artifact foundArtifact = new DefaultArtifact(groupId + ":" + artifactId + ":" + type + ":" + version);
+            foundArtifact.setFile(pomFile);
+            return foundArtifact;
+        } catch (final Exception e) {
+            throw new RuntimeException("Could not parse pom.xml: " + pomFile, e);
+        }
+    }
+protected MavenArtifactInfoImpl(final Artifact artifact, final ScopeType scopeType,
+                                final List<DependencyNode> children, boolean optional) {
+    final PackagingType packaging = PackagingType.of(artifact.getProperty(ArtifactProperties.TYPE, artifact.getExtension()));
+    final String classifier = artifact.getClassifier().length() == 0 ? packaging.getClassifier() : artifact.getClassifier();
+    this.mavenCoordinate = MavenCoordinates.createCoordinate(artifact.getGroupId(), artifact.getArtifactId(),
+        artifact.getBaseVersion(), packaging, classifier);
+    this.resolvedVersion = artifact.getVersion();
+    this.snapshotVersion = artifact.isSnapshot();
+    this.extension = artifact.getExtension();
+    this.dependencies = parseDependencies(children);
+    this.scopeType = scopeType;
+    this.optional = optional;
+}
+private RemoteRepository selectRepositoryToDeploy(Artifact artifactToDeploy) {
+        if (artifactToDeploy == null) {
+                throw new IllegalArgumentException("artifactToDeploy should not be null");
+        }
+        RemoteRepository.Builder snapRepoBuilder =  new RemoteRepository.Builder("paas.push.snapshot.repo", "default", mvnConsumerConfigurer.getPushSnapshotRepositoryUrl());
+        RepositoryPolicy disabledRepo = null;
+        snapRepoBuilder.setReleasePolicy(disabledRepo);
+        Authentication snapshotRepositoryAuthen = new AuthenticationBuilder().addUsername(mvnConsumerConfigurer.getPushSnapshotRepositoryUser()).addPassword(
+                        mvnConsumerConfigurer.getPushSnapshotRepositoryPassword()).build();
+        snapRepoBuilder.setAuthentication(snapshotRepositoryAuthen);
+        RemoteRepository.Builder releaseRepoBuilder = new RemoteRepository.Builder("paas.push.release.repo", "default", mvnConsumerConfigurer.getPushReleaseRepositoryUrl());
+        releaseRepoBuilder.setReleasePolicy(disabledRepo);
+        Authentication releaseRepositoryAuthen = new AuthenticationBuilder().addUsername(mvnConsumerConfigurer.getPushReleaseRepositoryUser()).addPassword(
+                        mvnConsumerConfigurer.getPushReleaseRepositoryPassword()).build();
+        releaseRepoBuilder.setAuthentication(releaseRepositoryAuthen);
+        RemoteRepository result;
+        if (artifactToDeploy.isSnapshot()) {
+                result = snapRepoBuilder.build();
+        } else {
+                result = releaseRepoBuilder.build();
+        }
+        return result;
+}
+private String findVersion(List<DependencyNode> dependencies, String groupId, String artifactId) {
+    for (DependencyNode child : dependencies) {
+        Artifact childArtifact = child.getArtifact();
+        if (groupId.equals(childArtifact.getGroupId())
+            && artifactId.equals(childArtifact.getArtifactId())) {
+            return childArtifact.getBaseVersion();
+        } else {
+            String version = findVersion(child.getChildren(), groupId, artifactId);
+            if (version != null) {
+                return version;
+            }
+        }
+    }
+    return null;
+}
+
+
+package org.sonatype.aether.graph;
+ 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import org.sonatype.aether.artifact.Artifact;
+ 
+public final class Dependency
+{
+  private static final Exclusion[] NO_EXCLUSIONS = new Exclusion[0];
+  private final Artifact artifact;
+  private final String scope;
+  private final boolean optional;
+  private final Exclusion[] exclusions;
+ 
+  public Dependency(Artifact artifact, String scope)
+  {
+    this(artifact, scope, false);
+  }
+ 
+  public Dependency(Artifact artifact, String scope, boolean optional)
+  {
+    this(artifact, scope, optional, NO_EXCLUSIONS);
+  }
+ 
+  public Dependency(Artifact artifact, String scope, boolean optional, Collection<Exclusion> exclusions)
+  {
+    this(artifact, scope, optional, toArray(exclusions));
+  }
+ 
+  private static Exclusion[] toArray(Collection<Exclusion> exclusions)
+  {
+    if ((exclusions != null) && (!(exclusions.isEmpty())))
+    {
+      return ((Exclusion[])exclusions.toArray(new Exclusion[exclusions.size()]));
+    }
+    return NO_EXCLUSIONS;
+  }
+ 
+  private Dependency(Artifact artifact, String scope, boolean optional, Exclusion[] exclusions)
+  {
+    if (artifact == null)
+    {
+      throw new IllegalArgumentException("no artifact specified for dependency");
+    }
+    this.artifact = artifact;
+    this.scope = ((scope != null) ? scope : "");
+    this.optional = optional;
+    this.exclusions = exclusions;
+  }
+ 
+  public Artifact getArtifact()
+  {
+    return this.artifact;
+  }
+ 
+  public Dependency setArtifact(Artifact artifact)
+  {
+    if (this.artifact.equals(artifact))
+    {
+      return this;
+    }
+    return new Dependency(artifact, this.scope, this.optional, this.exclusions);
+  }
+ 
+  public String getScope()
+  {
+    return this.scope;
+  }
+ 
+  public Dependency setScope(String scope)
+  {
+    if ((this.scope.equals(scope)) || ((scope == null) && (this.scope.length() <= 0)))
+    {
+      return this;
+    }
+    return new Dependency(this.artifact, scope, this.optional, this.exclusions);
+  }
+ 
+  public boolean isOptional()
+  {
+    return this.optional;
+  }
+ 
+  public Dependency setOptional(boolean optional)
+  {
+    if (this.optional == optional)
+    {
+      return this;
+    }
+    return new Dependency(this.artifact, this.scope, optional, this.exclusions);
+  }
+ 
+  public Collection<Exclusion> getExclusions()
+  {
+    return Collections.unmodifiableCollection(Arrays.asList(this.exclusions));
+  }
+ 
+  public Dependency setExclusions(Collection<Exclusion> exclusions)
+  {
+    if ((getExclusions().equals(exclusions)) || ((exclusions == null) && (this.exclusions.length <= 0)))
+    {
+      return this;
+    }
+    return new Dependency(this.artifact, this.scope, this.optional, exclusions);
+  }
+ 
+  public String toString()
+  {
+    return String.valueOf(getArtifact()) + " (" + getScope() + ((isOptional()) ? "?" : "") + ")";
+  }
+ 
+  public boolean equals(Object obj)
+  {
+    if (obj == this)
+    {
+      return true;
+    }
+    if ((obj == null) || (!(super.getClass().equals(obj.getClass()))))
+    {
+      return false;
+    }
+ 
+    Dependency that = (Dependency)obj;
+ 
+    return ((this.artifact.equals(that.artifact)) && (this.scope.equals(that.scope)) && (this.optional == that.optional) && (new HashSet(Arrays.asList(this.exclusions)).equals(new HashSet(Arrays.asList(that.exclusions)))));
+  }
+ 
+  public int hashCode()
+  {
+    int hash = 17;
+    hash = hash * 31 + this.artifact.hashCode();
+    hash = hash * 31 + this.scope.hashCode();
+    hash = hash * 31 + ((this.optional) ? 1 : 0);
+    hash = hash * 31 + this.exclusions.length;
+    return hash;
+  }
+}
+
+package org.sonatype.aether.graph;
+ 
+public final class Exclusion
+{
+  private final String groupId;
+  private final String artifactId;
+  private final String classifier;
+  private final String extension;
+ 
+  public Exclusion(String groupId, String artifactId, String classifier, String extension)
+  {
+    this.groupId = ((groupId != null) ? groupId : "");
+    this.artifactId = ((artifactId != null) ? artifactId : "");
+    this.classifier = ((classifier != null) ? classifier : "");
+    this.extension = ((extension != null) ? extension : "");
+  }
+ 
+  public String getGroupId()
+  {
+    return this.groupId;
+  }
+ 
+  public String getArtifactId()
+  {
+    return this.artifactId;
+  }
+ 
+  public String getClassifier()
+  {
+    return this.classifier;
+  }
+ 
+  public String getExtension()
+  {
+    return this.extension;
+  }
+ 
+  public String toString()
+  {
+    return getGroupId() + ':' + getArtifactId() + ':' + getExtension() + ((getClassifier().length() > 0) ? ':' + getClassifier() : "");
+  }
+ 
+  public boolean equals(Object obj)
+  {
+    if (obj == this)
+    {
+      return true;
+    }
+    if ((obj == null) || (!(super.getClass().equals(obj.getClass()))))
+    {
+      return false;
+    }
+ 
+    Exclusion that = (Exclusion)obj;
+ 
+    return ((this.artifactId.equals(that.artifactId)) && (this.groupId.equals(that.groupId)) && (this.extension.equals(that.extension)) && (this.classifier.equals(that.classifier)));
+  }
+ 
+  public int hashCode()
+  {
+    int hash = 17;
+    hash = hash * 31 + this.artifactId.hashCode();
+    hash = hash * 31 + this.groupId.hashCode();
+    hash = hash * 31 + this.classifier.hashCode();
+    hash = hash * 31 + this.extension.hashCode();
+    return hash;
+  }
+}
+/**
+ * Creates a new service locator that already knows about all service implementations included this library.
+ */
+public DefaultServiceLocator() {
+    addService(ArtifactDescriptorReader.class, org.apache.maven.repository.internal.DefaultArtifactDescriptorReader.class);
+    addService(VersionResolver.class, org.apache.maven.repository.internal.DefaultVersionResolver.class);
+    addService(VersionRangeResolver.class, org.apache.maven.repository.internal.DefaultVersionRangeResolver.class);
+    addService(MetadataGeneratorFactory.class, org.apache.maven.repository.internal.SnapshotMetadataGeneratorFactory.class);
+    addService(MetadataGeneratorFactory.class, org.apache.maven.repository.internal.VersionsMetadataGeneratorFactory.class);
+}
+/**
+ * Creates a new service locator that already knows about all service implementations included in this library.
+ */
+public MavenServiceLocator()
+{
+    addService( ArtifactDescriptorReader.class, DefaultArtifactDescriptorReader.class );
+    addService( VersionResolver.class, DefaultVersionResolver.class );
+    addService( VersionRangeResolver.class, DefaultVersionRangeResolver.class );
+    addService( MetadataGeneratorFactory.class, SnapshotMetadataGeneratorFactory.class );
+    addService( MetadataGeneratorFactory.class, VersionsMetadataGeneratorFactory.class );
+}
+/**
+ * Creates a new service locator that already knows about all service implementations included this library.
+ */
+public DefaultServiceLocator()
+{
+    addService( ArtifactDescriptorReader.class, DefaultArtifactDescriptorReader.class );
+    addService( VersionResolver.class, DefaultVersionResolver.class );
+    addService( VersionRangeResolver.class, DefaultVersionRangeResolver.class );
+    addService( MetadataGeneratorFactory.class, SnapshotMetadataGeneratorFactory.class );
+    addService( MetadataGeneratorFactory.class, VersionsMetadataGeneratorFactory.class );
+}
+ public void testGetMetadataGeneratorFactories()
+ {
+     ServiceLocator locator = new MavenServiceLocator();
+     assertEquals( 2, locator.getServices( MetadataGeneratorFactory.class ).size() );
+ }
+ protected void publishArtifacts(Collection<Artifact> artifacts, RepositorySystem repositorySystem, RepositorySystemSession session) throws DeploymentException {
+     RemoteRepository gradleRepo = remoteRepository;
+     if (artifacts.iterator().next().isSnapshot() && remoteSnapshotRepository != null) {
+         gradleRepo = remoteSnapshotRepository;
+     }
+     if (gradleRepo == null) {
+         throw new GradleException("Must specify a repository for deployment");
+     }
+
+     org.sonatype.aether.repository.RemoteRepository aetherRepo = createRepository(gradleRepo);
+
+     DeployRequest request = new DeployRequest();
+     request.setRepository(aetherRepo);
+     for (Artifact artifact : artifacts) {
+         request.addArtifact(artifact);
+     }
+
+     LOGGER.info("Deploying to {}", gradleRepo.getUrl());
+     repositorySystem.deploy(session, request);
+ }
+  public static RepositorySystemSession newRepositorySystemSession(
+      RepositorySystem system, String localRepoPath) {
+    Validate.notNull(localRepoPath, "localRepoPath should have a value");
+
+    MavenRepositorySystemSession session = new MavenRepositorySystemSession();
+
+    LocalRepository localRepo = new LocalRepository(resolveLocalRepoPath(localRepoPath));
+    session.setLocalRepositoryManager(system.newLocalRepositoryManager(localRepo));
+
+    if (logger.isDebugEnabled()) {
+      session.setTransferListener(new TransferListener());
+      session.setRepositoryListener(new RepositoryListener());
+    }
+    // uncomment to generate dirty trees
+    // session.setDependencyGraphTransformer( null );
+
+    return session;
+  }
+  public void executeWithMavenSession(MavenExecutionRequest request, Runnable runnable) {
+    DefaultMaven maven = (DefaultMaven)getComponent(Maven.class);
+    RepositorySystemSession repositorySession = maven.newRepositorySession(request);
+
+    request.getProjectBuildingRequest().setRepositorySession(repositorySession);
+
+    MavenSession mavenSession = new MavenSession(myContainer, repositorySession, request, new DefaultMavenExecutionResult());
+    LegacySupport legacySupport = getComponent(LegacySupport.class);
+
+    MavenSession oldSession = legacySupport.getSession();
+
+    legacySupport.setSession(mavenSession);
+    try {
+      runnable.run();
+    }
+    finally {
+      legacySupport.setSession(oldSession);
+    }
+  }
+  public static ArtifactRepository buildArtifactRepository( Repository repo,
+                                                            ArtifactRepositoryFactory artifactRepositoryFactory,
+                                                            PlexusContainer c )
+      throws InvalidRepositoryException
+  {
+      RepositorySystem repositorySystem = rs( c );
+      RepositorySystemSession session = rss( c );
+
+      ArtifactRepository repository = repositorySystem.buildArtifactRepository( repo );
+
+      if ( session != null )
+      {
+          repositorySystem.injectMirror( session, Arrays.asList( repository ) );
+          repositorySystem.injectProxy( session, Arrays.asList( repository ) );
+          repositorySystem.injectAuthentication( session, Arrays.asList( repository ) );
+      }
+
+      return repository;
+  }
+  private Mirror getMirror( RepositorySystemSession session, ArtifactRepository repository )
+  {
+      if ( session != null )
+      {
+          org.sonatype.aether.repository.MirrorSelector selector = session.getMirrorSelector();
+          if ( selector != null )
+          {
+              RemoteRepository repo = selector.getMirror( RepositoryUtils.toRepo( repository ) );
+              if ( repo != null )
+              {
+                  Mirror mirror = new Mirror();
+                  mirror.setId( repo.getId() );
+                  mirror.setUrl( repo.getUrl() );
+                  mirror.setLayout( repo.getContentType() );
+                  return mirror;
+              }
+          }
+      }
+      return null;
+  }
+  private Authentication getAuthentication( RepositorySystemSession session, ArtifactRepository repository )
+  {
+      if ( session != null )
+      {
+          AuthenticationSelector selector = session.getAuthenticationSelector();
+          if ( selector != null )
+          {
+              org.sonatype.aether.repository.Authentication auth =
+                  selector.getAuthentication( RepositoryUtils.toRepo( repository ) );
+              if ( auth != null )
+              {
+                  Authentication result = new Authentication( auth.getUsername(), auth.getPassword() );
+                  result.setPrivateKey( auth.getPrivateKeyFile() );
+                  result.setPassphrase( auth.getPassphrase() );
+                  return result;
+              }
+          }
+      }
+      return null;
+  }
+  private Proxy getProxy( RepositorySystemSession session, ArtifactRepository repository )
+  {
+      if ( session != null )
+      {
+          ProxySelector selector = session.getProxySelector();
+          if ( selector != null )
+          {
+              org.sonatype.aether.repository.Proxy proxy = selector.getProxy( RepositoryUtils.toRepo( repository ) );
+              if ( proxy != null )
+              {
+                  Proxy p = new Proxy();
+                  p.setHost( proxy.getHost() );
+                  p.setProtocol( proxy.getType() );
+                  p.setPort( proxy.getPort() );
+                  if ( proxy.getAuthentication() != null )
+                  {
+                      p.setUserName( proxy.getAuthentication().getUsername() );
+                      p.setPassword( proxy.getAuthentication().getPassword() );
+                  }
+                  return p;
+              }
+          }
+      }
+      return null;
+  }
+  private ArtifactRepository injectSession( ArtifactRepository repository, boolean mirrors )
+  {
+      RepositorySystemSession session = legacySupport.getRepositorySession();
+
+      if ( session != null && repository != null && !isLocalRepository( repository ) )
+      {
+          List<ArtifactRepository> repositories = Arrays.asList( repository );
+
+          if ( mirrors )
+          {
+              repositorySystem.injectMirror( session, repositories );
+          }
+
+          repositorySystem.injectProxy( session, repositories );
+
+          repositorySystem.injectAuthentication( session, repositories );
+      }
+
+      return repository;
+  }
+
+   @Override
+   protected void setUp()
+       throws Exception
+   {
+       super.setUp();
+       artifactFactory = lookup( ArtifactFactory.class);
+       artifactRepositoryFactory = lookup( ArtifactRepositoryFactory.class );
+
+       RepositorySystemSession repoSession = initRepoSession();
+       MavenSession session =
+           new MavenSession( getContainer(), repoSession, new DefaultMavenExecutionRequest(),
+                             new DefaultMavenExecutionResult() );
+
+       LegacySupport legacySupport = lookup(LegacySupport.class);
+       legacySupport.setSession( session );
+   }
+
+    public RemoteSnapshotMetadataGenerator( RepositorySystemSession session, DeployRequest request )
+    {
+        legacyFormat = ConfigUtils.getBoolean( session.getConfigProperties(), false, "maven.metadata.legacy" );
+
+        snapshots = new LinkedHashMap<Object, RemoteSnapshotMetadata>();
+
+        /*
+         * NOTE: This should be considered a quirk to support interop with Maven's legacy ArtifactDeployer which
+         * processes one artifact at a time and hence cannot associate the artifacts from the same project to use the
+         * same timestamp+buildno for the snapshot versions. Allowing the caller to pass in metadata from a previous
+         * deployment allows to re-establish the association between the artifacts of the same project.
+         */
+        for ( Metadata metadata : request.getMetadata() )
+        {
+            if ( metadata instanceof RemoteSnapshotMetadata )
+            {
+                RemoteSnapshotMetadata snapshotMetadata = (RemoteSnapshotMetadata) metadata;
+                snapshots.put( snapshotMetadata.getKey(), snapshotMetadata );
+            }
+        }
+    }
+    private boolean isSafelyCacheable( RepositorySystemSession session, Artifact artifact )
+    {
+        /*
+         * The workspace/reactor is in flux so we better not assume definitive information for any of its
+         * artifacts/projects.
+         */
+
+        WorkspaceReader workspace = session.getWorkspaceReader();
+        if ( workspace == null )
+        {
+            return true;
+        }
+
+        Artifact pomArtifact = ArtifactDescriptorUtils.toPomArtifact( artifact );
+
+        return workspace.findArtifact( pomArtifact ) == null;
+    }
+
+    private void mergeMetadata( RepositorySystemSession session, RequestTrace trace, Versions versions,
+                                org.sonatype.aether.metadata.Metadata metadata, ArtifactRepository repository )
+    {
+        if ( metadata != null && metadata.getFile() != null && metadata.getFile().isFile() )
+        {
+            try
+            {
+                Map<String, ?> options = Collections.singletonMap( MetadataReader.IS_STRICT, Boolean.FALSE );
+
+                Metadata repoMetadata = metadataReader.read( metadata.getFile(), options );
+
+                mergeMetadata( versions, repoMetadata, repository );
+            }
+            catch ( IOException e )
+            {
+                invalidMetadata( session, trace, metadata, repository, e );
+            }
+        }
+    }
+    public LocalMetadataResult find( RepositorySystemSession session, LocalMetadataRequest request )
+    {
+        Metadata metadata = request.getMetadata();
+
+        String path;
+        if ( request.getRepository() == null )
+        {
+            path = getPathForLocalMetadata( metadata );
+        }
+        else
+        {
+            path = getPathForRemoteMetadata( metadata, request.getRepository(), request.getContext() );
+        }
+
+        File file = new File( getRepository().getBasedir(), path );
+
+        LocalMetadataResult result = new LocalMetadataResult( request );
+        if ( file.isFile() )
+        {
+            result.setFile( file );
+        }
+
+        return result;
+    }
+
+     @Override
+     protected void publishArtifacts(Collection<Artifact> artifacts, RepositorySystem repositorySystem, RepositorySystemSession session) throws InstallationException {
+         InstallRequest request = new InstallRequest();
+         for (Artifact artifact : artifacts) {
+             request.addArtifact(artifact);
+         }
+         repositorySystem.install(session, request);
+     }
+private Set<MavenProject> createNow(Settings settings, File pomFile) throws PlexusContainerException, PlexusConfigurationException, ComponentLookupException, MavenExecutionRequestPopulationException, ProjectBuildingException {
+    ContainerConfiguration containerConfiguration = new DefaultContainerConfiguration()
+            .setClassWorld(new ClassWorld("plexus.core", ClassWorld.class.getClassLoader()))
+            .setName("mavenCore");
+
+    DefaultPlexusContainer container = new DefaultPlexusContainer(containerConfiguration);
+    ProjectBuilder builder = container.lookup(ProjectBuilder.class);
+    MavenExecutionRequest executionRequest = new DefaultMavenExecutionRequest();
+    final Properties properties = new Properties();
+    properties.putAll(SystemProperties.getInstance().asMap());
+    executionRequest.setSystemProperties(properties);
+    MavenExecutionRequestPopulator populator = container.lookup(MavenExecutionRequestPopulator.class);
+    populator.populateFromSettings(executionRequest, settings);
+    populator.populateDefaults(executionRequest);
+    ProjectBuildingRequest buildingRequest = executionRequest.getProjectBuildingRequest();
+    buildingRequest.setProcessPlugins(false);
+    MavenProject mavenProject = builder.build(pomFile, buildingRequest).getProject();
+    Set<MavenProject> reactorProjects = new LinkedHashSet<MavenProject>();
+
+    //TODO adding the parent project first because the typeConverter needs it this way ATM. This is oversimplified.
+    //the typeConverter should not depend on the order of reactor projects.
+    //we should add coverage for nested multi-project builds with multiple parents.
+    reactorProjects.add(mavenProject);
+    List<ProjectBuildingResult> allProjects = builder.build(ImmutableList.of(pomFile), true, buildingRequest);
+    CollectionUtils.collect(allProjects, reactorProjects, new Transformer<MavenProject, ProjectBuildingResult>() {
+        public MavenProject transform(ProjectBuildingResult original) {
+            return original.getProject();
+        }
+    });
+
+    MavenExecutionResult result = new DefaultMavenExecutionResult();
+    result.setProject(mavenProject);
+    RepositorySystemSession repoSession = new DefaultRepositorySystemSession();
+    MavenSession session = new MavenSession(container, repoSession, executionRequest, result);
+    session.setCurrentProject(mavenProject);
+
+    return reactorProjects;
+}
+ @Override
+ public RepositoryConnector newInstance( RepositorySystemSession session, RemoteRepository repository )
+     throws NoRepositoryConnectorException
+ {
+     try
+     {
+         return super.newInstance( session, repository );
+     }
+     catch ( NoRepositoryConnectorException e )
+     {
+
+     }
+
+     return new RepositoryConnector()
+     {
+
+         private Logger log = LoggerFactory.getLogger( getClass() );
+
+         @Override
+         public void get( Collection<? extends ArtifactDownload> artifactDownloads,
+                          Collection<? extends MetadataDownload> metadataDownloads )
+         {
+             log.debug( "get" );
+         }
+
+         @Override
+         public void put( Collection<? extends ArtifactUpload> artifactUploads,
+                          Collection<? extends MetadataUpload> metadataUploads )
+         {
+             log.debug( "put" );
+         }
+
+         @Override
+         public void close()
+         {
+             log.debug( "close" );
+         }
+     };
+ }
+  private void resolve( ResolveRequest resolveRequest )
+  {
+
+      RepositorySystem system = newRepositorySystem();
+
+      RepositorySystemSession session = newRepositorySystemSession( system, resolveRequest.localRepoDir );
+
+      org.sonatype.aether.artifact.Artifact artifact = new DefaultArtifact(
+          resolveRequest.groupId + ":" + resolveRequest.artifactId + ":" + resolveRequest.version );
+
+      CollectRequest collectRequest = new CollectRequest();
+      collectRequest.setRoot( new Dependency( artifact, "" ) );
+
+      // add remote repositories
+      for ( RemoteRepository remoteRepository : resolveRequest.remoteRepositories )
+      {
+          collectRequest.addRepository(
+              new org.sonatype.aether.repository.RemoteRepository( remoteRepository.getId(), "default",
+                                                                   remoteRepository.getUrl() ) );
+      }
+      collectRequest.setRequestContext( "project" );
+
+      //collectRequest.addRepository( repo );
+
+      try
+      {
+          CollectResult collectResult = system.collectDependencies( session, collectRequest );
+          collectResult.getRoot().accept( resolveRequest.dependencyVisitor );
+          log.debug( "test" );
+      }
+      catch ( DependencyCollectionException e )
+      {
+          log.error( e.getMessage(), e );
+      }
+
+
+  }
+   private RepositorySystemSession newRepositorySystemSession( RepositorySystem system, String localRepoDir )
+   {
+       MavenRepositorySystemSession session = new MavenRepositorySystemSession();
+
+       DependencySelector depFilter = new AndDependencySelector( new ExclusionDependencySelector() );
+       session.setDependencySelector( depFilter );
+
+       session.setLocalRepositoryManager(
+           new SimpleLocalRepositoryManager( localRepoDir ) );
+
+       return session;
+   }
+
+ public static RepositorySystemSession newRepositorySystemSession(
+     RepositorySystem system, String localRepoPath) {
+   MavenRepositorySystemSession session = new MavenRepositorySystemSession();
+
+   // find homedir
+   String home = System.getenv("ZEPPELIN_HOME");
+   if (home == null) {
+     home = System.getProperty("zeppelin.home");
+   }
+   if (home == null) {
+     home = "..";
+   }
+
+   String path = home + "/" + localRepoPath;
+
+   LocalRepository localRepo =
+       new LocalRepository(new File(path).getAbsolutePath());
+   session.setLocalRepositoryManager(system.newLocalRepositoryManager(localRepo));
+
+   // session.setTransferListener(new ConsoleTransferListener());
+   // session.setRepositoryListener(new ConsoleRepositoryListener());
+
+   // uncomment to generate dirty trees
+   // session.setDependencyGraphTransformer( null );
+
+   return session;
+ }
+ private void resolve( Artifact artifact, List<ArtifactRepository> remoteRepositories, RepositorySystemSession session )
+   throws ArtifactResolutionException, ArtifactNotFoundException {
+   if (resolveAsModule(artifact)) return;
+   try {
+     resolveOld(artifact, remoteRepositories, session);
+   }
+   catch (AbstractArtifactResolutionException e) {
+     myUnresolvedCollector.collectAndSetResolved(artifact);
+   }
+ }
+ public ResolveTask( ClassLoader classLoader, CountDownLatch latch, Artifact artifact, RepositorySystemSession session,
+                     List<ArtifactRepository> remoteRepositories, ArtifactResolutionResult result )
+ {
+   this.classLoader = classLoader;
+   this.latch = latch;
+   this.artifact = artifact;
+   this.session = session;
+   this.remoteRepositories = remoteRepositories;
+   this.result = result;
+ }
+ public void executeWithMavenSession(MavenExecutionRequest request, Runnable runnable) {
+   DefaultMaven maven = (DefaultMaven)getComponent(Maven.class);
+   RepositorySystemSession repositorySession = maven.newRepositorySession(request);
+
+   request.getProjectBuildingRequest().setRepositorySession(repositorySession);
+
+   MavenSession mavenSession = new MavenSession(myContainer, repositorySession, request, new DefaultMavenExecutionResult());
+   LegacySupport legacySupport = getComponent(LegacySupport.class);
+
+   MavenSession oldSession = legacySupport.getSession();
+
+   legacySupport.setSession(mavenSession);
+
+   /** adapted from {@link DefaultMaven#doExecute(MavenExecutionRequest)} */
+   try {
+     for (AbstractMavenLifecycleParticipant listener : getLifecycleParticipants(Collections.<MavenProject>emptyList())) {
+       listener.afterSessionStart(mavenSession);
+     }
+   }
+   catch (MavenExecutionException e) {
+     throw new RuntimeException(e);
+   }
+
+   try {
+     runnable.run();
+   }
+   finally {
+     legacySupport.setSession(oldSession);
+   }
+ }/**
+   * copied from {@link DefaultProjectBuilder#resolveDependencies(MavenProject, RepositorySystemSession)}
+   */
+  private DependencyResolutionResult resolveDependencies(MavenProject project, RepositorySystemSession session) {
+    DependencyResolutionResult resolutionResult;
+
+    try {
+      ProjectDependenciesResolver dependencyResolver = getComponent(ProjectDependenciesResolver.class);
+      DefaultDependencyResolutionRequest resolution = new DefaultDependencyResolutionRequest(project, session);
+      resolutionResult = dependencyResolver.resolve(resolution);
+    }
+    catch (DependencyResolutionException e) {
+      resolutionResult = e.getResult();
+    }
+
+    Set<Artifact> artifacts = new LinkedHashSet<Artifact>();
+    if (resolutionResult.getDependencyGraph() != null) {
+      RepositoryUtils.toArtifacts(artifacts, resolutionResult.getDependencyGraph().getChildren(),
+                                  Collections.singletonList(project.getArtifact().getId()), null);
+
+      // Maven 2.x quirk: an artifact always points at the local repo, regardless whether resolved or not
+      LocalRepositoryManager lrm = session.getLocalRepositoryManager();
+      for (Artifact artifact : artifacts) {
+        if (!artifact.isResolved()) {
+          String path = lrm.getPathForLocalArtifact(RepositoryUtils.toArtifact(artifact));
+          artifact.setFile(new File(lrm.getRepository().getBasedir(), path));
+        }
+      }
+    }
+    project.setResolvedArtifacts(artifacts);
+    project.setArtifacts(artifacts);
+
+    return resolutionResult;
+  }
+  private void resolve( Artifact artifact, List<ArtifactRepository> remoteRepositories, RepositorySystemSession session )
+    throws ArtifactResolutionException, ArtifactNotFoundException {
+    if (resolveAsModule(artifact)) return;
+    try {
+      resolveOld(artifact, remoteRepositories, session);
+    }
+    catch (AbstractArtifactResolutionException e) {
+      myUnresolvedCollector.collectAndSetResolved(artifact);
+    }
+  }
+  public ResolveTask( ClassLoader classLoader, CountDownLatch latch, Artifact artifact, RepositorySystemSession session,
+                      List<ArtifactRepository> remoteRepositories, ArtifactResolutionResult result )
+  {
+    this.classLoader = classLoader;
+    this.latch = latch;
+    this.artifact = artifact;
+    this.session = session;
+    this.remoteRepositories = remoteRepositories;
+    this.result = result;
+  }
+  @Override
+  public RepositoryConnector newInstance( RepositorySystemSession session, RemoteRepository repository )
+      throws NoRepositoryConnectorException
+  {
+      try
+      {
+          return super.newInstance( session, repository );
+      }
+      catch ( NoRepositoryConnectorException e )
+      {
+
+      }
+
+      return new RepositoryConnector()
+      {
+
+          private Logger log = LoggerFactory.getLogger( getClass() );
+
+          @Override
+          public void get( Collection<? extends ArtifactDownload> artifactDownloads,
+                           Collection<? extends MetadataDownload> metadataDownloads )
+          {
+              log.debug( "get" );
+          }
+
+          @Override
+          public void put( Collection<? extends ArtifactUpload> artifactUploads,
+                           Collection<? extends MetadataUpload> metadataUploads )
+          {
+              log.debug( "put" );
+          }
+
+          @Override
+          public void close()
+          {
+              log.debug( "close" );
+          }
+      };
+  }
+  private void resolve( ResolveRequest resolveRequest )
+  {
+
+      RepositorySystem system = newRepositorySystem();
+
+      RepositorySystemSession session = newRepositorySystemSession( system, resolveRequest.localRepoDir );
+
+      org.sonatype.aether.artifact.Artifact artifact = new DefaultArtifact(
+          resolveRequest.groupId + ":" + resolveRequest.artifactId + ":" + resolveRequest.version );
+
+      CollectRequest collectRequest = new CollectRequest();
+      collectRequest.setRoot( new Dependency( artifact, "" ) );
+
+      // add remote repositories
+      for ( RemoteRepository remoteRepository : resolveRequest.remoteRepositories )
+      {
+          collectRequest.addRepository(
+              new org.sonatype.aether.repository.RemoteRepository( remoteRepository.getId(), "default",
+                                                                   remoteRepository.getUrl() ) );
+      }
+      collectRequest.setRequestContext( "project" );
+
+      //collectRequest.addRepository( repo );
+
+      try
+      {
+          CollectResult collectResult = system.collectDependencies( session, collectRequest );
+          collectResult.getRoot().accept( resolveRequest.dependencyVisitor );
+          log.debug( "test" );
+      }
+      catch ( DependencyCollectionException e )
+      {
+          log.error( e.getMessage(), e );
+      }
+
+
+  }
+  private RepositorySystemSession newRepositorySystemSession( RepositorySystem system, String localRepoDir )
+  {
+      MavenRepositorySystemSession session = new MavenRepositorySystemSession();
+
+      DependencySelector depFilter = new AndDependencySelector( new ExclusionDependencySelector() );
+      session.setDependencySelector( depFilter );
+
+      session.setLocalRepositoryManager(
+          new SimpleLocalRepositoryManager( localRepoDir ) );
+
+      return session;
+  }
+
+   public static RepositorySystemSession repositorySystemSession(RepositorySystem system)
+   {
+   	MavenRepositorySystemSession session = new MavenRepositorySystemSession();
+   	session.setLocalRepositoryManager(system.newLocalRepositoryManager(LOCAL_REPO));
+
+   	session.setTransferListener(new LoggingTransferListener());
+   	session.setRepositoryListener(new LoggingRepositoryListener());
+
+   	session.setChecksumPolicy(RepositoryPolicy.CHECKSUM_POLICY_WARN);
+
+   	return session;
+   }
+   public static Model getModel(Artifact artifact) throws ModelBuildingException, ComponentLookupException
+   {
+   	RepositorySystem system = repositorySystem();
+   	RepositorySystemSession session = repositorySystemSession(system);
+   	Metadata metadata = getMetadata(system, session, artifact);
+   	return createModel(metadata.getFile());
+   }
+
+    public static Metadata getMetadata(RepositorySystem system, RepositorySystemSession session, Artifact artifact)
+    {
+    	Metadata metadata = new DefaultMetadata(
+    			artifact.getGroupId(),
+    			artifact.getArtifactId(),
+    			artifact.getVersion(),
+    			artifact.getArtifactId() + "-" + artifact.getBaseVersion() + ".pom",
+    			Metadata.Nature.RELEASE_OR_SNAPSHOT);
+    	MetadataRequest request = new MetadataRequest(metadata, central(), null);
+    	MetadataResult result = system.resolveMetadata(session, Collections.singleton(request)).get(0);
+    	return result.getMetadata();
+    }
+public static RepositorySystemSession newRepositorySystemSession( RepositorySystem system, File localRepoDir )
+{
+    MavenRepositorySystemSession session = new MavenRepositorySystemSession();
+
+    LocalRepository localRepo = new LocalRepository(localRepoDir);
+    session.setLocalRepositoryManager( system.newLocalRepositoryManager( localRepo ) );
+
+    session.setTransferListener( new TransferListener() );
+    session.setRepositoryListener( new RepositoryListener() );
+
+    return session;
+}
+private static RepositorySystemSession rss( PlexusContainer c )
+{
+    try
+    {
+        LegacySupport legacySupport = c.lookup( LegacySupport.class );
+
+        return legacySupport.getRepositorySession();
+    }
+    catch ( ComponentLookupException e )
+    {
+        throw new IllegalStateException( e );
+    }
+}
+public void injectMirror( RepositorySystemSession session, List<ArtifactRepository> repositories )
+{
+    if ( repositories != null && session != null )
+    {
+        for ( ArtifactRepository repository : repositories )
+        {
+            Mirror mirror = getMirror( session, repository );
+            injectMirror( repository, mirror );
+        }
+    }
+}
+public void injectAuthentication( RepositorySystemSession session, List<ArtifactRepository> repositories )
+{
+    if ( repositories != null && session != null )
+    {
+        for ( ArtifactRepository repository : repositories )
+        {
+            repository.setAuthentication( getAuthentication( session, repository ) );
+        }
+    }
+}
+public ResolveTask( ClassLoader classLoader, CountDownLatch latch, Artifact artifact, RepositorySystemSession session,
+                    List<ArtifactRepository> remoteRepositories, ArtifactResolutionResult result )
+{
+    this.classLoader = classLoader;
+    this.latch = latch;
+    this.artifact = artifact;
+    this.session = session;
+    this.remoteRepositories = remoteRepositories;
+    this.result = result;
+}
+public LocalArtifactResult find( RepositorySystemSession session, LocalArtifactRequest request )
+  {
+    String path = getPathForLocalArtifact( request.getArtifact() );
+    File file = new File( getRepository().getBasedir(), path );
+      LocalArtifactResult result = new LocalArtifactResult( request );
+    if ( file.isFile() )
+      {
+        result.setFile( file );
+        result.setAvailable( true );
+    }
+    return result;
+}
+protected RepositorySystemSession initRepoSession()
+    throws Exception
+{
+    DefaultRepositorySystemSession session = new DefaultRepositorySystemSession();
+    session.setIgnoreMissingArtifactDescriptor( true );
+    session.setIgnoreInvalidArtifactDescriptor( true );
+    DependencyTraverser depTraverser = new FatArtifactTraverser();
+    session.setDependencyTraverser( depTraverser );
+
+    DependencyManager depManager = new ClassicDependencyManager();
+    session.setDependencyManager( depManager );
+
+    DependencySelector depFilter =
+        new AndDependencySelector( new ScopeDependencySelector( "test", "provided" ),
+                                   new OptionalDependencySelector(), new ExclusionDependencySelector() );
+    session.setDependencySelector( depFilter );
+
+    DependencyGraphTransformer transformer =
+        new ChainedDependencyGraphTransformer( new ConflictMarker(), new JavaEffectiveScopeCalculator(),
+                                               new NearestVersionConflictResolver(),
+                                               new JavaDependencyContextRefiner() );
+    session.setDependencyGraphTransformer( transformer );
+
+    session.setLocalRepositoryManager( new SimpleLocalRepositoryManager( localRepository().getBasedir() ) );
+
+    return session;
+}
+public DefaultModelResolver( RepositorySystemSession session, RequestTrace trace, String context,
+                             ArtifactResolver resolver, RemoteRepositoryManager remoteRepositoryManager,
+                             List<RemoteRepository> repositories )
+{
+    this.session = session;
+    this.trace = trace;
+    this.context = context;
+    this.resolver = resolver;
+    this.remoteRepositoryManager = remoteRepositoryManager;
+    this.repositories = repositories;
+    this.repositoryIds = new HashSet<String>();
+}
+private void invalidMetadata( RepositorySystemSession session, RequestTrace trace, Metadata metadata,
+                              ArtifactRepository repository, Exception exception )
+{
+    DefaultRepositoryEvent event = new DefaultRepositoryEvent( EventType.METADATA_INVALID, session, trace );
+    event.setMetadata( metadata );
+    event.setException( exception );
+    event.setRepository( repository );
+
+    repositoryEventDispatcher.dispatch( event );
+}
+protected MavenArtifactInfoImpl(final Artifact artifact, final ScopeType scopeType,
+                                final List<DependencyNode> children, boolean optional) {
+    final PackagingType packaging = PackagingType.of(artifact.getProperty(ArtifactProperties.TYPE, artifact.getExtension()));
+    final String classifier = artifact.getClassifier().length() == 0 ? packaging.getClassifier() : artifact.getClassifier();
+    this.mavenCoordinate = MavenCoordinates.createCoordinate(artifact.getGroupId(), artifact.getArtifactId(),
+        artifact.getBaseVersion(), packaging, classifier);
+    this.resolvedVersion = artifact.getVersion();
+    this.snapshotVersion = artifact.isSnapshot();
+    this.extension = artifact.getExtension();
+    this.dependencies = parseDependencies(children);
+    this.scopeType = scopeType;
+    this.optional = optional;
+}
+ private Artifact createFoundArtifact(final File pomFile) {
+     try {
+         if (log.isLoggable(Level.FINE)) {
+             log.fine("Processing " + pomFile.getAbsolutePath() + " for classpath artifact resolution");
+         }
+         // TODO: load pom using Maven Model?
+         // This might include a cycle in graph reconstruction, to be investigated
+         final Document pom = loadPom(pomFile);
+         String groupId = getXPathGroupIdExpression().evaluate(pom);
+         String artifactId = getXPathArtifactIdExpression().evaluate(pom);
+         String type = getXPathTypeExpression().evaluate(pom);
+         String version = getXPathVersionExpression().evaluate(pom);
+         if (Validate.isNullOrEmpty(groupId)) {
+             groupId = getXPathParentGroupIdExpression().evaluate(pom);
+         }
+         if (Validate.isNullOrEmpty(type)) {
+             type = "jar";
+         }
+         if (version == null || version.equals("")) {
+             version = getXPathParentVersionExpression().evaluate(pom);
+         }
+         final Artifact foundArtifact = new DefaultArtifact(groupId + ":" + artifactId + ":" + type + ":" + version);
+         foundArtifact.setFile(pomFile);
+         return foundArtifact;
+     } catch (final Exception e) {
+         throw new RuntimeException("Could not parse pom.xml: " + pomFile, e);
+     }
+ }
+ @Test
+ public void testFindArtifactUsesTimestampedVersion()
+     throws Exception
+ {
+     Artifact artifact = new DefaultArtifact( "g.i.d:a.i.d:1.0-SNAPSHOT" );
+     File file = new File( basedir, manager.getPathForLocalArtifact( artifact ) );
+     TestFileUtils.writeString( file, "test" );
+     artifact = artifact.setVersion( "1.0-20110329.221805-4" );
+     LocalArtifactRequest request = new LocalArtifactRequest();
+     request.setArtifact( artifact );
+     LocalArtifactResult result = manager.find( session, request );
+     assertNull( result.toString(), result.getFile() );
+     assertFalse( result.toString(), result.isAvailable() );
+ }
+ private RemoteRepository selectRepositoryToDeploy(Artifact artifactToDeploy) {
+         if (artifactToDeploy == null) {
+                 throw new IllegalArgumentException("artifactToDeploy should not be null");
+         }
+         RemoteRepository.Builder snapRepoBuilder =  new RemoteRepository.Builder("paas.push.snapshot.repo", "default", mvnConsumerConfigurer.getPushSnapshotRepositoryUrl());
+         RepositoryPolicy disabledRepo = null;
+         snapRepoBuilder.setReleasePolicy(disabledRepo);
+         Authentication snapshotRepositoryAuthen = new AuthenticationBuilder().addUsername(mvnConsumerConfigurer.getPushSnapshotRepositoryUser()).addPassword(
+                         mvnConsumerConfigurer.getPushSnapshotRepositoryPassword()).build();
+         snapRepoBuilder.setAuthentication(snapshotRepositoryAuthen);
+         RemoteRepository.Builder releaseRepoBuilder = new RemoteRepository.Builder("paas.push.release.repo", "default", mvnConsumerConfigurer.getPushReleaseRepositoryUrl());
+         releaseRepoBuilder.setReleasePolicy(disabledRepo);
+         Authentication releaseRepositoryAuthen = new AuthenticationBuilder().addUsername(mvnConsumerConfigurer.getPushReleaseRepositoryUser()).addPassword(
+                         mvnConsumerConfigurer.getPushReleaseRepositoryPassword()).build();
+         releaseRepoBuilder.setAuthentication(releaseRepositoryAuthen);
+         RemoteRepository result;
+         if (artifactToDeploy.isSnapshot()) {
+                 result = snapRepoBuilder.build();
+         } else {
+                 result = releaseRepoBuilder.build();
+         }
+         return result;
+ }
+ private String findVersion(List<DependencyNode> dependencies, String groupId, String artifactId) {
+     for (DependencyNode child : dependencies) {
+         Artifact childArtifact = child.getArtifact();
+         if (groupId.equals(childArtifact.getGroupId())
+             && artifactId.equals(childArtifact.getArtifactId())) {
+             return childArtifact.getBaseVersion();
+         } else {
+             String version = findVersion(child.getChildren(), groupId, artifactId);
+             if (version != null) {
+                 return version;
+             }
+         }
+     }
+     return null;
+ }
+ @Override
+ public void apply(DefaultRepositorySystemSession session,
+                 RepositorySystem repositorySystem) {
+         if (session.getLocalRepositoryManager() == null) {
+                 LocalRepository localRepository = new LocalRepository(getM2RepoDirectory());
+                 LocalRepositoryManager localRepositoryManager = repositorySystem
+                                 .newLocalRepositoryManager(session, localRepository);
+                 session.setLocalRepositoryManager(localRepositoryManager);
+         }
+         ProxySelector existing = session.getProxySelector();
+         if (existing == null || !(existing instanceof CompositeProxySelector)) {
+                 JreProxySelector fallback = new JreProxySelector();
+                 ProxySelector selector = existing == null ? fallback
+                                 : new CompositeProxySelector(Arrays.asList(existing, fallback));
+                 session.setProxySelector(selector);
+         }
+ }

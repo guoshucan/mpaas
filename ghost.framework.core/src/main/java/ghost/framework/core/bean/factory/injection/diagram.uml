@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="67.8545386904766" y="249.0">ghost.framework.core.event.injection.factory.parameter.InjectionParameterEventTargetHandle</node>
+    <node x="726.25" y="700.0">ghost.framework.core.event.injection.value.targetHandle.ValueAnnotationEventTargetHandle</node>
+    <node x="1038.6045386904766" y="428.0">ghost.framework.core.event.injection.value.built.IAutowiredEventFactory</node>
+    <node x="312.90351055194833" y="0.0">ghost.framework.core.event.injection.factory.parameter.IInjectionParameterEventTargetHandle</node>
+    <node x="1540.4170386904766" y="547.0">ghost.framework.core.event.injection.value.built.DefaultValueEventFactory</node>
+    <node x="1856.714488636364" y="0.0">ghost.framework.core.event.injection.factory.method.IInjectionMethodEventTargetHandle</node>
+    <node x="734.3545386904765" y="428.0">ghost.framework.core.event.injection.value.built.ITempDirectoryEventFactory</node>
+    <node x="369.8545386904766" y="428.0">ghost.framework.core.event.injection.value.built.AbstractInjectionValueAutowiredParser</node>
+    <node x="2676.6045386904766" y="0.0">ghost.framework.core.event.injection.factory.IInjectionObjectEventTargetHandle</node>
+    <node x="2295.521205357143" y="547.0">ghost.framework.core.event.injection.factory.method.ParameterOrMethodEventTargetHandle</node>
+    <node x="392.8545386904766" y="249.0">ghost.framework.core.event.injection.value.built.IInjectionValueAutowiredParser</node>
+    <node x="722.75" y="621.0">ghost.framework.core.event.injection.value.targetHandle.IValueAnnotationEventTargetHandle</node>
+    <node x="3.5" y="779.0">ghost.framework.core.event.injection.factory.method.AbstractInjectionMethodEventFactory</node>
+    <node x="0.0" y="700.0">ghost.framework.core.event.injection.factory.method.IAbstractInjectionMethodEventFactory</node>
+    <node x="653.8545386904765" y="547.0">ghost.framework.core.event.injection.value.built.DefaultTempDirectoryEventFactory</node>
+    <node x="1578.0781250000002" y="428.0">ghost.framework.core.event.injection.container.ParameterOrFieldInjectorContainer</node>
+    <node x="2513.271205357143" y="249.0">ghost.framework.core.event.injection.factory.method.InjectionMethodEventTargetHandle</node>
+    <node x="338.0" y="621.0">ghost.framework.core.event.injection.factory.method.IInjectionMethodEventFactory</node>
+    <node x="1333.2160105519483" y="428.0">ghost.framework.core.event.injection.value.built.IValueEventFactory</node>
+    <node x="1120.5420386904766" y="249.0">ghost.framework.core.event.injection.value.factory.IValueAnnotationEventFactory</node>
+    <node x="2795.271205357143" y="249.0">ghost.framework.core.event.injection.factory.InjectionObjectEventTargetHandle</node>
+    <node x="353.5" y="547.0">ghost.framework.core.event.injection.value.built.DefaultAutowiredObjectParser</node>
+    <node x="1375.5420386904766" y="249.0">ghost.framework.core.event.injection.factory.field.InjectionFieldEventTargetHandle</node>
+    <node x="389.75" y="779.0">ghost.framework.core.event.injection.container.InjectionMethodEventFactoryContainer</node>
+    <node x="2292.021205357143" y="428.0">ghost.framework.core.event.injection.factory.method.IParameterOrMethodEventTargetHandle</node>
+    <node x="308.0" y="700.0">ghost.framework.core.event.injection.container.IInjectionMethodEventFactoryContainer</node>
+    <node x="934.8545386904766" y="547.0">ghost.framework.core.event.injection.value.built.DefaultAutowiredEventFactoryContainer</node>
+    <node x="1070.3410105519483" y="0.0">ghost.framework.core.event.injection.factory.field.IInjectionFieldEventTargetHandle</node>
+    <node x="1986.0212053571431" y="249.0">ghost.framework.core.event.injection.container.IParameterOrFieldInjectorContainer</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="ghost.framework.core.event.injection.container.ParameterOrFieldInjectorContainer" target="ghost.framework.core.event.injection.factory.field.IInjectionFieldEventTargetHandle">
+      <point x="-22.333333333333258" y="-14.5" />
+      <point x="1689.744791666667" y="348.0" />
+      <point x="1742.68787202381" y="348.0" />
+      <point x="1742.68787202381" y="129.0" />
+      <point x="1272.0228287337663" y="129.0" />
+      <point x="71.18181818181816" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.value.built.AbstractInjectionValueAutowiredParser" target="ghost.framework.core.event.injection.value.built.IInjectionValueAutowiredParser">
+      <point x="0.0" y="-14.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.container.ParameterOrFieldInjectorContainer" target="ghost.framework.core.event.injection.container.IParameterOrFieldInjectorContainer">
+      <point x="67.0" y="-14.5" />
+      <point x="1779.0781250000002" y="398.0" />
+      <point x="2031.6878720238099" y="398.0" />
+      <point x="-91.33333333333337" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.container.ParameterOrFieldInjectorContainer" target="ghost.framework.core.event.injection.factory.IInjectionObjectEventTargetHandle">
+      <point x="111.66666666666674" y="-14.5" />
+      <point x="1823.744791666667" y="408.0" />
+      <point x="2784.771205357143" y="408.0" />
+      <point x="2784.771205357143" y="229.0" />
+      <point x="2810.6045386904766" y="229.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.factory.method.AbstractInjectionMethodEventFactory" target="ghost.framework.core.event.injection.factory.method.IAbstractInjectionMethodEventFactory">
+      <point x="0.0" y="-14.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.value.built.IInjectionValueAutowiredParser" target="ghost.framework.core.event.injection.factory.field.IInjectionFieldEventTargetHandle">
+      <point x="62.0" y="-14.5" />
+      <point x="578.8545386904766" y="189.0" />
+      <point x="1082.2046469155846" y="189.0" />
+      <point x="-118.63636363636363" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.factory.method.ParameterOrMethodEventTargetHandle" target="ghost.framework.core.event.injection.factory.method.IParameterOrMethodEventTargetHandle">
+      <point x="0.0" y="-14.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.value.built.IValueEventFactory" target="ghost.framework.core.event.injection.value.factory.IValueAnnotationEventFactory">
+      <point x="-20.875" y="-14.5" />
+      <point x="1395.8410105519483" y="318.0" />
+      <point x="1266.7920386904766" y="318.0" />
+      <point x="29.25" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.factory.field.InjectionFieldEventTargetHandle" target="ghost.framework.core.event.injection.factory.field.IInjectionFieldEventTargetHandle">
+      <point x="0.0" y="-14.5" />
+      <point x="1502.5420386904766" y="149.0" />
+      <point x="1224.5682832792209" y="149.0" />
+      <point x="23.72727272727272" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.value.built.DefaultTempDirectoryEventFactory" target="ghost.framework.core.event.injection.factory.method.IInjectionMethodEventTargetHandle">
+      <point x="97.875" y="-14.5" />
+      <point x="882.2295386904765" y="507.0" />
+      <point x="1954.3281250000002" y="507.0" />
+      <point x="1954.3281250000002" y="219.0" />
+      <point x="1990.714488636364" y="219.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.value.targetHandle.ValueAnnotationEventTargetHandle" target="ghost.framework.core.event.injection.value.targetHandle.IValueAnnotationEventTargetHandle">
+      <point x="0.0" y="-14.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.value.built.DefaultValueEventFactory" target="ghost.framework.core.event.injection.factory.parameter.IInjectionParameterEventTargetHandle">
+      <point x="-78.0" y="-14.5" />
+      <point x="1566.4170386904766" y="487.0" />
+      <point x="359.3545386904766" y="487.0" />
+      <point x="359.3545386904766" y="199.0" />
+      <point x="404.53987418831184" y="199.0" />
+      <point x="-52.36363636363649" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.value.built.DefaultValueEventFactory" target="ghost.framework.core.event.injection.factory.method.IInjectionMethodEventTargetHandle">
+      <point x="78.0" y="-14.5" />
+      <point x="1722.4170386904766" y="527.0" />
+      <point x="2270.521205357143" y="527.0" />
+      <point x="2270.521205357143" y="69.0" />
+      <point x="2063.805397727273" y="69.0" />
+      <point x="73.09090909090901" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.value.built.DefaultTempDirectoryEventFactory" target="ghost.framework.core.event.injection.factory.parameter.IInjectionParameterEventTargetHandle">
+      <point x="-97.875" y="-14.5" />
+      <point x="686.4795386904765" y="517.0" />
+      <point x="0.0" y="517.0" />
+      <point x="0.0" y="169.0" />
+      <point x="325.99441964285734" y="169.0" />
+      <point x="-130.909090909091" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.container.IParameterOrFieldInjectorContainer" target="ghost.framework.core.event.injection.factory.IInjectionObjectEventTargetHandle">
+      <point x="102.75" y="-14.5" />
+      <point x="2225.771205357143" y="229.0" />
+      <point x="2721.271205357143" y="229.0" />
+      <point x="-89.33333333333331" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.value.built.IInjectionValueAutowiredParser" target="ghost.framework.core.event.injection.factory.parameter.IInjectionParameterEventTargetHandle">
+      <point x="-62.0" y="-14.5" />
+      <point x="454.8545386904766" y="229.0" />
+      <point x="483.0853287337666" y="229.0" />
+      <point x="26.181818181818244" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.factory.method.IAbstractInjectionMethodEventFactory" target="ghost.framework.core.event.injection.factory.method.IInjectionMethodEventFactory">
+      <point x="5.6843418860808015E-14" y="-14.5" />
+      <point x="144.00000000000006" y="675.0" />
+      <point x="367.25" y="675.0" />
+      <point x="-87.75" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.value.built.DefaultAutowiredEventFactoryContainer" target="ghost.framework.core.event.injection.factory.parameter.IInjectionParameterEventTargetHandle">
+      <point x="-110.25" y="-14.5" />
+      <point x="971.6045386904766" y="497.0" />
+      <point x="57.3545386904766" y="497.0" />
+      <point x="57.3545386904766" y="179.0" />
+      <point x="352.1762378246756" y="179.0" />
+      <point x="-104.72727272727275" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.value.factory.IValueAnnotationEventFactory" target="ghost.framework.core.event.injection.factory.method.IInjectionMethodEventTargetHandle">
+      <point x="78.0" y="-14.5" />
+      <point x="1315.5420386904766" y="229.0" />
+      <point x="1868.8963068181824" y="229.0" />
+      <point x="-121.81818181818176" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.value.factory.IValueAnnotationEventFactory" target="ghost.framework.core.event.injection.factory.parameter.IInjectionParameterEventTargetHandle">
+      <point x="-78.0" y="-14.5" />
+      <point x="1159.5420386904766" y="169.0" />
+      <point x="535.4489650974028" y="169.0" />
+      <point x="78.5454545454545" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.value.built.DefaultAutowiredEventFactoryContainer" target="ghost.framework.core.event.injection.value.built.IAutowiredEventFactory">
+      <point x="36.75" y="-14.5" />
+      <point x="1118.6045386904766" y="497.0" />
+      <point x="1135.6045386904766" y="497.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.factory.method.InjectionMethodEventTargetHandle" target="ghost.framework.core.event.injection.factory.method.IInjectionMethodEventTargetHandle">
+      <point x="0.0" y="-14.5" />
+      <point x="2643.771205357143" y="49.0" />
+      <point x="2112.532670454546" y="49.0" />
+      <point x="121.81818181818198" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.factory.method.ParameterOrMethodEventTargetHandle" target="ghost.framework.core.event.injection.factory.method.InjectionMethodEventTargetHandle">
+      <point x="91.33333333333348" y="-14.5" />
+      <point x="2523.8545386904766" y="527.0" />
+      <point x="2643.771205357143" y="527.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.container.InjectionMethodEventFactoryContainer" target="ghost.framework.core.event.injection.factory.method.IInjectionMethodEventFactory">
+      <point x="72.0" y="-14.5" />
+      <point x="605.75" y="754.0" />
+      <point x="612.5" y="754.0" />
+      <point x="612.5" y="675.0" />
+      <point x="542.75" y="675.0" />
+      <point x="87.75" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.value.built.DefaultTempDirectoryEventFactory" target="ghost.framework.core.event.injection.factory.field.IInjectionFieldEventTargetHandle">
+      <point x="-32.625" y="-14.5" />
+      <point x="751.7295386904765" y="527.0" />
+      <point x="723.8545386904765" y="527.0" />
+      <point x="723.8545386904765" y="199.0" />
+      <point x="1105.9319196428573" y="199.0" />
+      <point x="-94.90909090909088" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.factory.InjectionObjectEventTargetHandle" target="ghost.framework.core.event.injection.factory.IInjectionObjectEventTargetHandle">
+      <point x="0.0" y="-14.5" />
+      <point x="2925.771205357143" y="229.0" />
+      <point x="2899.93787202381" y="229.0" />
+      <point x="89.33333333333326" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.container.ParameterOrFieldInjectorContainer" target="ghost.framework.core.event.injection.value.factory.IValueAnnotationEventFactory">
+      <point x="-111.66666666666663" y="-14.5" />
+      <point x="1600.4114583333335" y="308.0" />
+      <point x="1325.2920386904766" y="308.0" />
+      <point x="87.75" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.value.built.DefaultValueEventFactory" target="ghost.framework.core.event.injection.factory.field.IInjectionFieldEventTargetHandle">
+      <point x="26.0" y="-14.5" />
+      <point x="1670.4170386904766" y="497.0" />
+      <point x="1899.3281250000002" y="497.0" />
+      <point x="1899.3281250000002" y="119.0" />
+      <point x="1295.750101461039" y="119.0" />
+      <point x="94.90909090909088" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.container.IInjectionMethodEventFactoryContainer" target="ghost.framework.core.event.injection.factory.method.IInjectionMethodEventFactory">
+      <point x="73.5" y="-14.5" />
+      <point x="528.5" y="675.0" />
+      <point x="484.25" y="675.0" />
+      <point x="29.25" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.value.built.IAutowiredEventFactory" target="ghost.framework.core.event.injection.value.factory.IValueAnnotationEventFactory">
+      <point x="24.25" y="-14.5" />
+      <point x="1159.8545386904766" y="348.0" />
+      <point x="1208.2920386904766" y="348.0" />
+      <point x="-29.25" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.value.factory.IValueAnnotationEventFactory" target="ghost.framework.core.event.injection.factory.field.IInjectionFieldEventTargetHandle">
+      <point x="0.0" y="-14.5" />
+      <point x="1237.5420386904766" y="229.0" />
+      <point x="1200.8410105519483" y="229.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.factory.method.IParameterOrMethodEventTargetHandle" target="ghost.framework.core.event.injection.factory.method.IInjectionMethodEventTargetHandle">
+      <point x="70.25" y="-14.5" />
+      <point x="2502.771205357143" y="59.0" />
+      <point x="2088.1690340909095" y="59.0" />
+      <point x="97.4545454545455" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.value.built.IValueEventFactory" target="ghost.framework.core.event.injection.factory.parameter.IInjectionParameterEventTargetHandle">
+      <point x="-62.625" y="-14.5" />
+      <point x="1354.0910105519483" y="328.0" />
+      <point x="668.1670386904765" y="328.0" />
+      <point x="668.1670386904765" y="179.0" />
+      <point x="509.2671469155846" y="179.0" />
+      <point x="52.36363636363626" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.value.built.IValueEventFactory" target="ghost.framework.core.event.injection.factory.method.IInjectionMethodEventTargetHandle">
+      <point x="62.625" y="-14.5" />
+      <point x="1479.3410105519483" y="378.0" />
+      <point x="1932.3281250000002" y="378.0" />
+      <point x="1932.3281250000002" y="199.0" />
+      <point x="1941.9872159090914" y="199.0" />
+      <point x="-48.72727272727275" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.value.built.DefaultAutowiredEventFactoryContainer" target="ghost.framework.core.event.injection.factory.field.IInjectionFieldEventTargetHandle">
+      <point x="-36.75" y="-14.5" />
+      <point x="1045.1045386904766" y="497.0" />
+      <point x="1028.1045386904766" y="497.0" />
+      <point x="1028.1045386904766" y="219.0" />
+      <point x="1153.3864650974028" y="219.0" />
+      <point x="-47.45454545454544" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.factory.method.ParameterOrMethodEventTargetHandle" target="ghost.framework.core.event.injection.container.IParameterOrFieldInjectorContainer">
+      <point x="-91.33333333333326" y="-14.5" />
+      <point x="2341.18787202381" y="527.0" />
+      <point x="2281.521205357143" y="527.0" />
+      <point x="2281.521205357143" y="398.0" />
+      <point x="2123.021205357143" y="398.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.value.built.DefaultAutowiredEventFactoryContainer" target="ghost.framework.core.event.injection.factory.method.IInjectionMethodEventTargetHandle">
+      <point x="110.25" y="-14.5" />
+      <point x="1192.1045386904766" y="517.0" />
+      <point x="1975.5212053571431" y="517.0" />
+      <point x="1975.5212053571431" y="229.0" />
+      <point x="2015.0781250000005" y="229.0" />
+      <point x="24.363636363636488" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.container.IParameterOrFieldInjectorContainer" target="ghost.framework.core.event.injection.factory.parameter.IInjectionParameterEventTargetHandle">
+      <point x="-102.75" y="-14.5" />
+      <point x="2020.2712053571431" y="99.0" />
+      <point x="587.8126014610393" y="99.0" />
+      <point x="130.909090909091" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.container.ParameterOrFieldInjectorContainer" target="ghost.framework.core.event.injection.factory.parameter.IInjectionParameterEventTargetHandle">
+      <point x="-67.0" y="-14.5" />
+      <point x="1645.0781250000002" y="298.0" />
+      <point x="1365.0420386904766" y="298.0" />
+      <point x="1365.0420386904766" y="159.0" />
+      <point x="561.6307832792211" y="159.0" />
+      <point x="104.72727272727275" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.value.built.IAutowiredEventFactory" target="ghost.framework.core.event.injection.factory.parameter.IInjectionParameterEventTargetHandle">
+      <point x="-72.75" y="-14.5" />
+      <point x="1062.8545386904766" y="338.0" />
+      <point x="381.8545386904766" y="338.0" />
+      <point x="381.8545386904766" y="219.0" />
+      <point x="456.90351055194833" y="219.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.value.built.DefaultTempDirectoryEventFactory" target="ghost.framework.core.event.injection.value.built.ITempDirectoryEventFactory">
+      <point x="32.625" y="-14.5" />
+      <point x="816.9795386904765" y="527.0" />
+      <point x="844.8545386904765" y="527.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.container.IParameterOrFieldInjectorContainer" target="ghost.framework.core.event.injection.factory.method.IInjectionMethodEventTargetHandle">
+      <point x="34.25" y="-14.5" />
+      <point x="2157.271205357143" y="79.0" />
+      <point x="2039.441761363637" y="79.0" />
+      <point x="48.72727272727275" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.value.built.IAutowiredEventFactory" target="ghost.framework.core.event.injection.factory.method.IInjectionMethodEventTargetHandle">
+      <point x="72.75" y="-14.5" />
+      <point x="1208.3545386904766" y="368.0" />
+      <point x="1921.3281250000002" y="368.0" />
+      <point x="1921.3281250000002" y="229.0" />
+      <point x="1917.623579545455" y="229.0" />
+      <point x="-73.09090909090912" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.value.built.DefaultValueEventFactory" target="ghost.framework.core.event.injection.value.built.IValueEventFactory">
+      <point x="-26.0" y="-14.5" />
+      <point x="1618.4170386904766" y="477.0" />
+      <point x="1416.7160105519483" y="477.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.factory.method.IParameterOrMethodEventTargetHandle" target="ghost.framework.core.event.injection.container.IParameterOrFieldInjectorContainer">
+      <point x="-70.25" y="-14.5" />
+      <point x="2362.271205357143" y="388.0" />
+      <point x="2214.3545386904766" y="388.0" />
+      <point x="91.33333333333337" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.value.built.ITempDirectoryEventFactory" target="ghost.framework.core.event.injection.factory.parameter.IInjectionParameterEventTargetHandle">
+      <point x="-82.875" y="-14.5" />
+      <point x="761.9795386904765" y="408.0" />
+      <point x="370.8545386904766" y="408.0" />
+      <point x="370.8545386904766" y="209.0" />
+      <point x="430.7216923701301" y="209.0" />
+      <point x="-26.181818181818244" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.value.built.IValueEventFactory" target="ghost.framework.core.event.injection.factory.field.IInjectionFieldEventTargetHandle">
+      <point x="20.875" y="-14.5" />
+      <point x="1437.5910105519483" y="348.0" />
+      <point x="1640.0420386904766" y="348.0" />
+      <point x="1640.0420386904766" y="139.0" />
+      <point x="1248.2955560064936" y="139.0" />
+      <point x="47.45454545454544" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.container.ParameterOrFieldInjectorContainer" target="ghost.framework.core.event.injection.factory.method.IInjectionMethodEventTargetHandle">
+      <point x="22.33333333333337" y="-14.5" />
+      <point x="1734.4114583333335" y="388.0" />
+      <point x="1943.3281250000002" y="388.0" />
+      <point x="1943.3281250000002" y="209.0" />
+      <point x="1966.3508522727275" y="209.0" />
+      <point x="-24.363636363636488" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.factory.parameter.InjectionParameterEventTargetHandle" target="ghost.framework.core.event.injection.factory.parameter.IInjectionParameterEventTargetHandle">
+      <point x="0.0" y="-14.5" />
+      <point x="208.3545386904766" y="189.0" />
+      <point x="378.3580560064938" y="189.0" />
+      <point x="-78.5454545454545" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.container.IParameterOrFieldInjectorContainer" target="ghost.framework.core.event.injection.factory.field.IInjectionFieldEventTargetHandle">
+      <point x="-34.25" y="-14.5" />
+      <point x="2088.771205357143" y="89.0" />
+      <point x="1319.4773741883118" y="89.0" />
+      <point x="118.6363636363636" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.value.built.ITempDirectoryEventFactory" target="ghost.framework.core.event.injection.factory.field.IInjectionFieldEventTargetHandle">
+      <point x="-27.625" y="-14.5" />
+      <point x="817.2295386904765" y="209.0" />
+      <point x="1129.65919237013" y="209.0" />
+      <point x="-71.18181818181819" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.value.built.ITempDirectoryEventFactory" target="ghost.framework.core.event.injection.value.factory.IValueAnnotationEventFactory">
+      <point x="27.625" y="-14.5" />
+      <point x="872.4795386904765" y="348.0" />
+      <point x="1149.7920386904766" y="348.0" />
+      <point x="-87.75" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.value.built.DefaultAutowiredObjectParser" target="ghost.framework.core.event.injection.value.built.AbstractInjectionValueAutowiredParser">
+      <point x="0.0" y="-14.5" />
+      <point x="470.5" y="527.0" />
+      <point x="516.8545386904766" y="527.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.value.built.ITempDirectoryEventFactory" target="ghost.framework.core.event.injection.factory.method.IInjectionMethodEventTargetHandle">
+      <point x="82.875" y="-14.5" />
+      <point x="927.7295386904765" y="358.0" />
+      <point x="1910.3281250000002" y="358.0" />
+      <point x="1910.3281250000002" y="109.0" />
+      <point x="1893.2599431818185" y="109.0" />
+      <point x="-97.4545454545455" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.container.InjectionMethodEventFactoryContainer" target="ghost.framework.core.event.injection.container.IInjectionMethodEventFactoryContainer">
+      <point x="-72.0" y="-14.5" />
+      <point x="461.75" y="754.0" />
+      <point x="455.0" y="754.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.event.injection.value.built.IAutowiredEventFactory" target="ghost.framework.core.event.injection.factory.field.IInjectionFieldEventTargetHandle">
+      <point x="-24.25" y="-14.5" />
+      <point x="1111.3545386904766" y="338.0" />
+      <point x="1086.4795386904766" y="338.0" />
+      <point x="1086.4795386904766" y="229.0" />
+      <point x="1177.1137378246756" y="229.0" />
+      <point x="-23.72727272727272" y="14.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="420.0" y="156.0" />
+  <SelectedNodes>
+    <node>ghost.framework.core.event.injection.container.IParameterOrFieldInjectorContainer</node>
+  </SelectedNodes>
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

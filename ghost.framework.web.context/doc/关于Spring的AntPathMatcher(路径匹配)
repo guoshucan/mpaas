@@ -1,0 +1,33 @@
+import ghost.framework.util.AntPathMatcher;
+import ghost.framework.util.PathMatcher;
+
+import junit.framework.TestCase;
+
+public class AntPathMatcherTest extends TestCase{
+
+	public void testMatch() {
+
+		PathMatcher matcher = new AntPathMatcher();
+
+        //完全路径匹配
+		//String requestPath="/user/list.htm?username=aaa&id=2&no=1&page=20";
+		//String patternPath="/user/list.htm**";
+
+        //不完整路径匹配
+		//String requestPath="/app/pub/login.do";
+		//String patternPath="/**/login.do";
+
+        //模糊路径匹配
+        //String requestPath="/app/pub/login.do";
+        //String patternPath="/**/*.do";
+
+        //模糊单字符路径匹配
+        String requestPath = "/app/pub/login.do";
+        String patternPath = "/**/lo?in.do";
+
+        boolean result = matcher.match(patternPath, requestPath);
+
+        assertTrue(result);
+    }
+
+}

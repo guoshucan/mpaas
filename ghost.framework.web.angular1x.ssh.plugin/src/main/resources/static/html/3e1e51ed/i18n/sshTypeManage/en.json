@@ -1,0 +1,75 @@
+{
+  "operationMaintenance":"Operation Maintenance",
+  "error": "error！",
+  "complete": "Complete",
+  "disable": "Disable",
+  "enable": "Enable",
+  "startTime": "Start date",
+  "endTime": "End date",
+  "close": "Close",
+  "clear": "Clear",
+  "currentDate": "Current date",
+  "name": "Type",
+  "version" : "Version",
+  "status": "Status",
+  "date": "Date",
+  "open": "Open",
+  "submit": "Submit",
+  "back": "Back",
+  "repeat": "repeat！",
+  "statusComplete": "Status complete.",
+  "show":"Show",
+  "form":{
+    "type": {
+      "name": "Type:",
+      "placeholder": "Please fill in the name of the type..."
+    },
+    "description": {
+      "name": "Description:",
+      "placeholder": "Please fill in the name of the description..."
+    },
+    "status": "Enable:",
+    "version" :{
+      "name": "Version:",
+      "placeholder": "Please fill in the version..."
+    }
+  },
+  "add": {
+    "name": "Add",
+    "type": "Add Type"
+  },
+  "edit": {
+    "name": "Edit",
+    "type": "Modify Type"
+  },
+  "content": {
+    "details": "Type Details",
+    "typeManagement": "Type Management"
+  },
+  "delete": {
+    "confirmDeletion": "Confirm deletion!",
+    "chooseIs": "Choose is:",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "selected": "Delete selected",
+    "name": "Delete",
+    "complete": "Delete complete",
+    "error": "Delete error！"
+  },
+  "search": {
+    "pleaseSelectStatus": "Please select status",
+    "key": "Please enter key words...",
+    "name": "Search"
+  },
+  "page": {
+    "perPage": "Per page",
+    "row": "row",
+    "show": "Show",
+    "article": "article",
+    "total": "Total",
+    "previous": "Previous",
+    "next": "Next",
+    "first": "First",
+    "last": "Last"
+  }
+}

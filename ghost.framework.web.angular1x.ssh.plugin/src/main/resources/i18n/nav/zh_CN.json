@@ -1,0 +1,36 @@
+{
+  "header": {
+    "navbar": {
+    }
+  },
+  "aside": {
+    "nav": {
+      "ff0a5895": {
+        "name": "运维",
+        "757f5216": {
+          "name": "SSH",
+          "7fb4cee1": {
+            "name": "Ssh账号",
+            "title": "Ssh 账号管理"
+          },
+          "48c99035": {
+            "name": "Ssh类型",
+            "title": "Ssh 类型管理"
+          },
+          "391cc586": {
+            "name": "Ssh区域",
+            "title": "Ssh 区域管理"
+          },
+          "51bcedf6": {
+            "name": "Ssh组",
+            "title": "Ssh 组管理"
+          },
+          "9fb14bff": {
+            "name": "Ssh服务器",
+            "title": "Ssh 服务器管理"
+          }
+        }
+      }
+    }
+  }
+}

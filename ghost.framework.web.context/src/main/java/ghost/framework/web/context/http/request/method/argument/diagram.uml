@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="1234.9114583333333" y="326.0">ghost.framework.web.context.http.request.method.argument.AbstractRequestMethodArgumentAnnotationConverterResolver</node>
+    <node x="360.0" y="247.0">ghost.framework.web.context.http.request.method.argument.IRequestMethodArgumentClassConverterResolver</node>
+    <node x="648.3958333333334" y="158.0">ghost.framework.web.context.http.request.method.argument.AbstractRequestMethodArgumentResolver</node>
+    <node x="1524.875" y="247.0">ghost.framework.web.context.http.request.method.argument.IRequestMethodArgumentAnnotationConverterResolver</node>
+    <node x="1356.6614583333333" y="158.0">ghost.framework.web.context.http.request.method.argument.IRequestMethodArgumentAnnotationResolver</node>
+    <node x="624.0" y="0.0">ghost.framework.web.context.http.request.method.argument.IRequestMethodArgumentResolver</node>
+    <node x="0.0" y="400.0">ghost.framework.web.context.http.request.method.argument.IRequestMethodArgumentResolverContainer</node>
+    <node x="88.41145833333326" y="326.0">ghost.framework.web.context.http.request.method.argument.AbstractRequestMethodArgumentClassConverterResolver</node>
+    <node x="734.0" y="247.0">ghost.framework.web.context.http.request.method.argument.AbstractRequestMethodArgumentConverterResolver</node>
+    <node x="0.0" y="247.0">ghost.framework.web.context.http.request.method.argument.AbstractRequestMethodArgumentClassResolver</node>
+    <node x="973.3958333333334" y="158.0">ghost.framework.web.context.http.request.method.argument.IRequestMethodArgumentConverterResolver</node>
+    <node x="1129.875" y="247.0">ghost.framework.web.context.http.request.method.argument.AbstractRequestMethodArgumentAnnotationResolver</node>
+    <node x="303.0" y="79.0">ghost.framework.web.context.http.request.method.argument.IRequestMethodArgumentClassResolver</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="ghost.framework.web.context.http.request.method.argument.AbstractRequestMethodArgumentClassConverterResolver" target="ghost.framework.web.context.http.request.method.argument.AbstractRequestMethodArgumentClassResolver">
+      <point x="-100.75" y="-14.5" />
+      <point x="189.16145833333326" y="301.0" />
+      <point x="170.0" y="301.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.web.context.http.request.method.argument.IRequestMethodArgumentAnnotationResolver" target="ghost.framework.web.context.http.request.method.argument.IRequestMethodArgumentClassResolver">
+      <point x="0.0" y="-14.5" />
+      <point x="1519.6614583333333" y="128.0" />
+      <point x="545.5" y="128.0" />
+      <point x="97.0" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.web.context.http.request.method.argument.AbstractRequestMethodArgumentConverterResolver" target="ghost.framework.web.context.http.request.method.argument.IRequestMethodArgumentConverterResolver">
+      <point x="92.0" y="-14.5" />
+      <point x="1010.0" y="227.0" />
+      <point x="1132.8958333333335" y="227.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.web.context.http.request.method.argument.IRequestMethodArgumentAnnotationConverterResolver" target="ghost.framework.web.context.http.request.method.argument.IRequestMethodArgumentConverterResolver">
+      <point x="-97.25" y="-14.5" />
+      <point x="1622.125" y="217.0" />
+      <point x="1239.2291666666667" y="217.0" />
+      <point x="106.33333333333331" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.web.context.http.request.method.argument.IRequestMethodArgumentClassConverterResolver" target="ghost.framework.web.context.http.request.method.argument.IRequestMethodArgumentConverterResolver">
+      <point x="88.5" y="-14.5" />
+      <point x="625.5" y="217.0" />
+      <point x="1026.5625" y="217.0" />
+      <point x="-106.33333333333333" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.web.context.http.request.method.argument.AbstractRequestMethodArgumentAnnotationConverterResolver" target="ghost.framework.web.context.http.request.method.argument.AbstractRequestMethodArgumentAnnotationResolver">
+      <point x="-109.5" y="-14.5" />
+      <point x="1344.4114583333333" y="301.0" />
+      <point x="1317.375" y="301.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.web.context.http.request.method.argument.IRequestMethodArgumentAnnotationConverterResolver" target="ghost.framework.web.context.http.request.method.argument.IRequestMethodArgumentAnnotationResolver">
+      <point x="97.25" y="-14.5" />
+      <point x="1816.625" y="207.0" />
+      <point x="1601.1614583333333" y="207.0" />
+      <point x="81.5" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.web.context.http.request.method.argument.AbstractRequestMethodArgumentConverterResolver" target="ghost.framework.web.context.http.request.method.argument.AbstractRequestMethodArgumentResolver">
+      <point x="-92.0" y="-14.5" />
+      <point x="826.0" y="207.0" />
+      <point x="800.8958333333334" y="207.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.web.context.http.request.method.argument.AbstractRequestMethodArgumentResolver" target="ghost.framework.web.context.http.request.method.argument.IRequestMethodArgumentResolver">
+      <point x="0.0" y="-14.5" />
+      <point x="800.8958333333334" y="138.0" />
+      <point x="845.1614583333333" y="138.0" />
+      <point x="845.1614583333333" y="59.0" />
+      <point x="752.0" y="59.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.web.context.http.request.method.argument.AbstractRequestMethodArgumentClassConverterResolver" target="ghost.framework.web.context.http.request.method.argument.IRequestMethodArgumentClassConverterResolver">
+      <point x="100.75" y="-14.5" />
+      <point x="390.66145833333326" y="301.0" />
+      <point x="537.0" y="301.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.web.context.http.request.method.argument.IRequestMethodArgumentClassConverterResolver" target="ghost.framework.web.context.http.request.method.argument.IRequestMethodArgumentClassResolver">
+      <point x="-88.5" y="-14.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.web.context.http.request.method.argument.AbstractRequestMethodArgumentClassResolver" target="ghost.framework.web.context.http.request.method.argument.IRequestMethodArgumentClassResolver">
+      <point x="-85.0" y="-14.5" />
+      <point x="85.0" y="138.0" />
+      <point x="351.5" y="138.0" />
+      <point x="-97.0" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.web.context.http.request.method.argument.AbstractRequestMethodArgumentAnnotationConverterResolver" target="ghost.framework.web.context.http.request.method.argument.IRequestMethodArgumentAnnotationConverterResolver">
+      <point x="109.5" y="-14.5" />
+      <point x="1563.4114583333333" y="301.0" />
+      <point x="1719.375" y="301.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.web.context.http.request.method.argument.IRequestMethodArgumentConverterResolver" target="ghost.framework.web.context.http.request.method.argument.IRequestMethodArgumentResolver">
+      <point x="0.0" y="-14.5" />
+      <point x="1132.8958333333335" y="138.0" />
+      <point x="1177.1614583333333" y="138.0" />
+      <point x="1177.1614583333333" y="49.0" />
+      <point x="837.3333333333333" y="49.0" />
+      <point x="85.33333333333326" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.web.context.http.request.method.argument.AbstractRequestMethodArgumentAnnotationResolver" target="ghost.framework.web.context.http.request.method.argument.AbstractRequestMethodArgumentResolver">
+      <point x="-93.75" y="-14.5" />
+      <point x="1223.625" y="207.0" />
+      <point x="902.5625" y="207.0" />
+      <point x="101.66666666666669" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.web.context.http.request.method.argument.IRequestMethodArgumentClassResolver" target="ghost.framework.web.context.http.request.method.argument.IRequestMethodArgumentResolver">
+      <point x="0.0" y="-14.5" />
+      <point x="448.5" y="59.0" />
+      <point x="666.6666666666667" y="59.0" />
+      <point x="-85.33333333333331" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.web.context.http.request.method.argument.AbstractRequestMethodArgumentClassResolver" target="ghost.framework.web.context.http.request.method.argument.AbstractRequestMethodArgumentResolver">
+      <point x="85.0" y="-14.5" />
+      <point x="255.0" y="207.0" />
+      <point x="699.2291666666667" y="207.0" />
+      <point x="-101.66666666666667" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.web.context.http.request.method.argument.AbstractRequestMethodArgumentAnnotationResolver" target="ghost.framework.web.context.http.request.method.argument.IRequestMethodArgumentAnnotationResolver">
+      <point x="93.75" y="-14.5" />
+      <point x="1411.125" y="227.0" />
+      <point x="1438.1614583333333" y="227.0" />
+      <point x="-81.5" y="14.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="616.5" y="288.5" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

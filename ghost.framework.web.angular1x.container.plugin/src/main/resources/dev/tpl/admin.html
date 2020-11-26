@@ -1,0 +1,497 @@
+<!--
+	作者：27048384@qq.com
+	时间：2020-04-10
+	描述：重置密码弹框
+-->
+<script type="text/ng-template" id="27f61412">
+	<div class="modal-header">
+		<h4 class="modal-title">{{i18n.reset}}[{{rows.adminUser}}]{{i18n.accountPassword}}</h4>
+	</div>
+	<div class="modal-body">
+
+		<div class="form-group pull-in clearfix">
+			<div class="col-sm-6">
+				<label>{{i18n.newPassword}}:{{rows.password}}</label>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-primary" ng-click="ok()">{{i18n.close}}</button>
+	</div>
+</script>
+<!--
+	作者：27048384@qq.com
+	时间：2020-04-06
+	描述：修改密码弹框
+-->
+<script type="text/ng-template" id="b8bba39c">
+	<form name="editPasswordform" class="form-validation">
+		<div class="modal-header">
+			<h4 class="modal-title">{{i18n.edit}}[{{rows.adminUser}}]{{i18n.accountPassword}}</h4>
+		</div>
+		<div class="modal-body">
+
+			<div class="form-group pull-in clearfix">
+				<div class="col-sm-6">
+					<label>{{i18n.password}}</label>
+					<input type="password" class="form-control" name="password" ng-model="password" ng-pattern="/^[0-9a-zA-Z]{5,32}$/" maxlength="32" minlength="6" required>
+				</div>
+				<div class="col-sm-6">
+					<label>{{i18n.resetPassword}}</label>
+					<input type="password" class="form-control" name="confirm_password" required ng-model="confirm_password" ng-pattern="/^[0-9a-zA-Z]{5,32}$/" maxlength="32" minlength="6" ui-validate=" '$value==password' " ui-validate-watch=" 'password' ">
+					<span ng-show='editPasswordform.confirm_password.$error.validator'>{{i18n.passwordsAreInconsistent}}</span>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-default" ng-click="cancel()">{{i18n.cancel}}</button>
+			<button class="btn btn-primary" ng-disabled="editPasswordform.$invalid" ng-click="ok()">{{i18n.submit}}</button>
+		</div>
+	</form>
+</script>
+<!--
+	作者：27048384@qq.com
+	时间：2020-04-06
+	描述：删除确认弹框
+-->
+<script type="text/ng-template" id="aae9de1f">
+	<div class="modal-header">
+		<h4 class="modal-title">{{i18n.delete.confirmDeletion}}</h4>
+	</div>
+	<div class="modal-body">
+		<ul>
+			<li ng-repeat="item in rows" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+				{{i18n.chooseIs}}<b>{{ item.adminName }}</b>
+			</li>
+		</ul>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-default" ng-click="cancel()">{{i18n.cancel}}</button>
+		<button class="btn btn-primary" ng-click="ok()">{{i18n.confirm}}</button>
+	</div>
+</script>
+<!--
+	作者：27048384@qq.com
+	时间：2020-04-06
+	描述：查看管理员详情弹框
+-->
+<script type="text/ng-template" id="d933d3e7">
+	<div class="modal-header">
+		<h4 class="modal-title">{{i18n.adminDetails}}</h4>
+	</div>
+	<div class="modal-body" style="padding: 2px;">
+		<ul>
+			<li>
+				&nbsp&nbsp&nbsp&nbsp&nbspId:<b>{{ rows.adminId }}</b>
+			</li>
+			<li>
+				{{i18n.name}}:<b>{{ rows.adminName }}</b>
+			</li>
+			<li>
+				{{i18n.account}}:<b>{{ rows.adminUser }}</b>
+			</li>
+			<li>
+				{{i18n.status}}:
+				<b>
+					<label class="i-switch m-t-xs m-r" style="height: 15px;margin-top: 0px;">
+						<input type="checkbox" ng-model="rows.status" disabled="disabled"><i></i>
+					</label>
+				</b>
+			</li>
+			<li>
+				{{i18n.mobilePhone}}:<b>{{ rows.mobilePhone }}</b>
+			</li>
+			<li>
+				{{i18n.email}}:<b>{{ rows.email }}</b>
+			</li>
+			<li>
+				&nbsp&nbsp&nbspQQ:<b>{{ rows.qq }}</b>
+			</li>
+			<li>
+				{{i18n.weixin}}:<b>{{ rows.weixin }}</b>
+			</li>
+			<li style="text-overflow:ellipsis;white-space:normal;">
+				{{i18n.address}}:<b>{{ rows.address }}</b>
+			</li>
+		</ul>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-default" ng-click="cancel()">{{i18n.close}}</button>
+	</div>
+</script>
+<!--管理组弹框模块-->
+<script type="text/ng-template" id="299137d7">
+	<div class="modal-header">
+		<h4 class="modal-title">{{p.i18n.selectGroup}}</h4>
+	</div>
+	<div class="modal-body" style="padding: 2px;">
+		<div class="row wrapper" style="padding-top: 0px;padding-bottom: 2px;">
+
+			<div style="margin: 0px;width: auto;" class="form-group col-sm-2">
+				<div class="input-group">
+					<select class="form-control inline v-middle" ng-model="p.group.selectRequest.status">
+						<option value="-1">{{p.i18n.search.pleaseSelectStatus}}</option>
+						<option value="0">{{p.i18n.disable}}</option>
+						<option value="1">{{p.i18n.enable}}</option>
+					</select>
+				</div>
+			</div>
+
+			<div style="margin: 0px;width: 170px;" class="form-group col-sm-2" ng-controller="02fdff6a">
+				<div class="input-group">
+					<input type="text" class="form-control" datepicker-popup="{{format}}" ng-click="close()" ng-model="p.group.selectRequest.startTime" is-open="opened" min-date="1980-1-1" max-date="'2100-12-31'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="{{p.i18n.close}}" clear-text="{{p.i18n.clear}}" current-text="{{p.i18n.currentDate}}" format-date placeholder="{{p.i18n.startTime}}" />
+					<span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+				</div>
+			</div>
+
+			<div style="margin: 0px;width: 170px;" class="form-group col-sm-2" ng-controller="02fdff6a">
+				<div class="input-group">
+					<input type="text" class="form-control" datepicker-popup="{{format}}" ng-click="close()" ng-model="p.group.selectRequest.endTime" is-open="opened" min-date="1980-1-1" max-date="'2100-12-31'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="{{p.i18n.close}}" clear-text="{{p.i18n.clear}}" current-text="{{p.i18n.currentDate}}" format-date placeholder="{{p.i18n.endTime}}" />
+					<span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+				</div>
+			</div>
+
+			<div style="margin: 0px;width: 250px;" class="form-group col-sm-2">
+				<div class="input-group">
+					<input type="text" class="form-control" ng-model="p.group.selectRequest.key" placeholder="{{p.i18n.search.key}}">
+					<span class="input-group-btn"><button class="btn btn-info" type="button" ng-click="p.group.search(false)">{{p.i18n.search.name}}</button></span>
+				</div>
+			</div>
+			<div style="margin: 0px;width: auto;width: 50px;" class="form-group col-sm-2">
+				<div class="input-group">
+					<button class="btn btn-dark" ng-click="p.group.search(true)">{{p.i18n.clear}}</button>
+				</div>
+			</div>
+		</div>
+		<div class="table-responsive">
+			<table class="table table-striped b-t b-light" style="margin-bottom: 0px;">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>{{p.i18n.name}}</th>
+						<th>{{p.i18n.status}}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-click="p.click(item)" ng-repeat="item in p.group.page.data" style="cursor:pointer;">
+						<td><span class="text-ellipsis">{{item.groupId}}</span></td>
+						<td><span class="text-ellipsis">{{item.groupName}}</span></td>
+						<td>
+							<label class="i-switch m-t-xs m-r">
+								<input type="checkbox" ng-model="item.statusCheck" disabled="disabled"><i></i>
+						    </label>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<footer class="panel-footer" style="padding: 0;">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="col-sm-4 text-center">
+						<small class="text-muted inline m-t-sm m-b-sm">{{p.i18n.page.perPage}}&nbsp;{{p.group.page.data.length}}&nbsp;{{p.i18n.page.article}}， {{p.i18n.page.total}}&nbsp;{{p.group.page.count}}&nbsp;{{p.i18n.page.article}}</small>
+					</div>
+					<div style="height: 29px;padding-top: 5px; width: 66%; " class="col-sm-4 text-right text-center-xs">
+						<pagination ng-change="p.group.pageChange()" total-items="p.group.page.count" ng-model="p.group.selectRequest.start" max-size="p.group.page.maxSize" class="pagination-sm m-t-none m-b" boundary-links="true" boundary-link-numbers="true" rotate="false" items-per-page="p.group.selectRequest.length" num-pages="p.group.page.pages" previous-text="{{p.i18n.page.previous}} " next-text="{{p.i18n.page.next}} " first-text="{{p.i18n.page.first}} " last-text="{{p.i18n.page.last}} "></pagination>
+					</div>
+				</div>
+			</div>
+		</footer>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-default" ng-click="cancel()">{{p.i18n.cancel}}</button>
+	</div>
+</script>
+<!--管理员控制器-->
+<div ng-controller="a87b955f" ng-init="init()">
+	<div class="bg-light lter b-b wrapper-md page_header" style="padding: 10px;">{{i18n.systemManagement}}&nbsp;&nbsp;>&nbsp;&nbsp;<strong style="color: rgb(25,158,216);">{{i18n.adminManagement}}</strong></div>
+	<div class="wrapper-md">
+		<div ng-controller="ToasterCtrl" ng-init="init()">
+			<!-- toaster directive -->
+			<toaster-container toaster-options="{'position-class': 'toast-top-center', 'close-button':true}"></toaster-container>
+			<!-- / toaster directive -->
+		</div>
+		<!--列表-->
+		<div class="panel panel-default" ng-show="tableContent">
+			<div class="panel-heading">{{i18n.managementGroup}}</div>
+			<div class="row wrapper">
+
+				<div style="margin-bottom: 2px;width: auto;" class="form-group col-sm-2">
+					<div class="input-group">
+						<select class="form-control inline v-middle" ng-model="selectRequest.status">
+							<option value="-1">{{i18n.search.pleaseSelectStatus}}</option>
+							<option value="0">{{i18n.disable}}</option>
+							<option value="1">{{i18n.enable}}</option>
+						</select>
+					</div>
+				</div>
+
+				<div style="margin-bottom: 2px;" class="form-group col-sm-2" ng-controller="f341fa72" ng-init="init()">
+					<div class="input-group">
+						<input readonly="true" type="text" class="form-control" ng-model="selectGroup.groupName" ng-required="true" placeholder="{{i18n.search.placeholder}}" />
+						<span class="input-group-btn">
+                       <button type="button" class="btn btn-default" ng-click="open('lg')"><i class="icon-users"></i></button>
+                    </span>
+					</div>
+				</div>
+
+				<div style="margin-bottom: 2px;width: 170px;" class="form-group col-sm-2" ng-controller="DatepickerCtrl">
+					<div class="input-group">
+						<input type="text" class="form-control" datepicker-popup="{{format}}" ng-click="close()" ng-model="selectRequest.startTime" is-open="opened" min-date="1980-1-1" max-date="'2100-12-31'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="{{i18n.close}}" clear-text="{{i18n.clear}}" current-text="{{i18n.currentDate}}" format-date placeholder="{{i18n.startTime}}" />
+						<span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+					</div>
+				</div>
+
+				<div style="margin-bottom: 2px;width: 170px;" class="form-group col-sm-2" ng-controller="DatepickerCtrl">
+					<div class="input-group">
+						<input type="text" class="form-control" datepicker-popup="{{format}}" ng-click="close()" ng-model="selectRequest.endTime" is-open="opened" min-date="1980-1-1" max-date="'2100-12-31'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="{{i18n.close}}" clear-text="{{i18n.clear}}" current-text="{{i18n.currentDate}}" format-date placeholder="{{i18n.endTime}}" />
+						<span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+					</div>
+				</div>
+
+				<div style="margin-bottom: 2px;" class="form-group col-sm-2">
+					<div class="input-group">
+						<input type="text" class="form-control" ng-model="selectRequest.key" placeholder="{{i18n.search.key}}">
+						<span class="input-group-btn"><button class="btn btn-info" type="button" ng-click="search(false)">{{i18n.search.name}}</button></span>
+					</div>
+				</div>
+				<div style="margin-bottom: 2px;width: auto;" class="form-group col-sm-2">
+					<div class="input-group">
+						<button class="btn btn-dark" ng-click="search(true)">{{i18n.clear}}</button>
+					</div>
+				</div>
+
+				<div style="margin-bottom: 2px;width: auto;" class="form-group col-sm-2">
+					<div class="input-group">
+						<button class="btn btn-primary" ng-click="add()">{{i18n.add}}</button>
+					</div>
+				</div>
+
+				<div style="margin-bottom: 2px;width: auto;" class="form-group col-sm-2">
+					<div class="input-group" ng-controller="944fee3a" ng-init="init('aae9de1f',null)">
+						<button class="btn btn-danger" ng-disabled="deleteAllDisabled" ng-click="open()">{{i18n.delete.selected}}</button>
+					</div>
+				</div>
+			</div>
+			<div class="table-responsive">
+				<table class="table table-striped b-t b-light">
+					<thead>
+						<tr>
+							<th style="width:20px;">
+								<label class="i-checks m-b-none">
+							<input type="checkbox" ng-model="selectAll" ng-click="checkboxAll(selectAll)" ng-checked="selectAll" ng-disabled="page.data.length==0"><i></i>
+						</label>
+							</th>
+							<th>Id</th>
+							<th>{{i18n.managementGroup}}</th>
+							<th>{{i18n.account}}</th>
+							<th>{{i18n.name}}</th>
+							<th>{{i18n.status}}</th>
+							<th>{{i18n.date}}</th>
+							<th style="text-align: center;">{{i18n.open}}</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="item in page.data">
+							<td><label class="i-checks m-b-none"><input type="checkbox" value="{{item.groupId}}" ng-click="checkboxSelected($event,item.userId)" ng-checked="item.check" ng-model="item.check"><i></i></label></td>
+							<td><span class="text-ellipsis">{{item.adminId}}</span></td>
+							<td><span class="text-ellipsis">{{item.groupName}}</span></td>
+							<td><span class="text-ellipsis">{{item.adminUser}}</span></td>
+							<td><span class="text-ellipsis">{{item.adminName}}</span></td>
+							<td>
+								<label class="i-switch m-t-xs m-r">
+								<input type="checkbox" ng-model="item.statusCheck" ng-click="statusUpdate(item);"><i></i>
+							</label>
+							</td>
+							<td><span class="text-ellipsis">{{item.createTime}}</span></td>
+							<td style="text-align: center;">
+								<button style="height: 24px;padding: 2px;" class="btn btn-info btn-sm" style="margin-left:5px;" 
+									ng-controller="93719063" ng-init="init('d933d3e7',null);" ng-click="show(item)">{{i18n.show}}</button>
+								<button style="height: 24px;padding: 2px;" class="btn btn-success btn-sm" style="margin-left:5px;" ng-controller="c38fa735" ng-click="editPassword(item)">{{i18n.editPassword}}</button>
+								<button style="height: 24px;padding: 2px;" class="btn btn-success btn-sm" style="margin-left:5px;" ng-controller="6fb41bc1" ng-click="resetPassword(item)">{{i18n.resetPassword}}</button>
+								<button style="height: 24px;padding: 2px;" class="btn btn-success btn-sm" style="margin-left:5px;" ng-click="edit(item)">修改</button>
+								<button style="height: 24px;padding: 2px;" class="btn btn-danger btn-sm" style="margin-left:5px;" 
+									ng-controller="d50d4f45" ng-init="init('aae9de1f',null)" ng-click="open(item)">{{i18n.delete.name}}</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<footer class="panel-footer">
+				<div class="row">
+					<div class="col-sm-3 hidden-xs">
+						<select class="input-sm form-control w-xs inline v-middle" ng-model="selectRequest.length" ng-change="selectRowLengthChange();">
+							<option value="10">10</option>
+							<option value="25">25</option>
+							<option value="50">50</option>
+							<option value="100">100</option>
+						</select>
+						<small class="text-muted inline m-t-sm m-b-sm">{{i18n.page.perPage}}&nbsp;{{selectRequest.length}}&nbsp;{{i18n.page.row}}</small>
+					</div>
+					<div class="col-sm-7">
+						<div class="col-sm-4 text-center">
+							<small class="text-muted inline m-t-sm m-b-sm">{{i18n.page.show}}&nbsp;{{page.data.length}}&nbsp;{{i18n.page.article}}， {{i18n.page.total}}&nbsp;{{page.count}}&nbsp;{{i18n.page.article}}</small>
+						</div>
+						<div style="height: 29px;padding-top: 5px; width: 66%;" class="col-sm-4 text-right text-center-xs">
+							<pagination ng-change="pageChange()" total-items="page.count" ng-model="selectRequest.start" max-size="page.maxSize" class="pagination-sm m-t-none m-b" boundary-links="true" boundary-link-numbers="true" rotate="false" items-per-page="selectRequest.length" num-pages="page.pages" previous-text="{{i18n.page.previous}}" next-text="{{i18n.page.next}}" first-text="{{i18n.page.first}}" last-text="{{i18n.page.last}}"></pagination>
+						</div>
+					</div>
+				</div>
+			</footer>
+		</div>
+		<!--添加-->
+		<div class="panel panel-default" ng-show="addContent">
+			<form name="formValidateAdd" class="form-horizontal form-validation">
+				<div class="panel-heading">
+					<strong>{{i18n.addAdmin}}</strong>
+				</div>
+				<div class="panel-body">
+					<div class="form-group" ng-controller="f341fa72" ng-init="init()">
+						<label class="col-sm-2 control-label">{{i18n.groupName}}：</label>
+						<div class="col-sm-9 input-group">
+							<input readonly="true" type="text" class="form-control" ng-click="open('lg')" placeholder="{{i18n.groupPlaceholder}}" ng-model="openSelectGroup.groupName" maxlength="50" minlength="2" required>
+							<span class="input-group-btn">
+                           <button type="button" class="btn btn-default" ng-click="open('lg')"><i class="icon-users"></i></button>
+                        </span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">{{i18n.adminName}}：</label>
+						<div class="col-sm-9 input-group">
+							<input type="text" class="form-control" placeholder="{{i18n.adminPlaceholder}}" ng-model="addData.adminName" maxlength="50" minlength="2" required>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">{{i18n.adminAccount}}：</label>
+						<div class="col-sm-9 input-group">
+							<input type="text" class="form-control" placeholder="{{i18n.adminAccountPlaceholder}}" ng-model="addData.adminUser" ng-pattern="/^[a-zA-Z0-9]{4,10}$/" maxlength="32" minlength="2" required>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">{{i18n.adminPassword}}：</label>
+						<div class="col-sm-9 input-group">
+							<input type="password" class="form-control" placeholder="{{i18n.adminPasswordPlaceholder}" ng-model="addData.password" name="addPassword" ng-pattern="/^[0-9a-zA-Z]{5,32}$/" maxlength="32" minlength="6" required>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">{{i18n.mobilePhone}}：</label>
+						<div class="col-sm-9 input-group">
+							<input type="text" class="form-control" placeholder="{{i18n.mobilePhonePlaceholder}}" ng-model="addData.mobilePhone" maxlength="15" minlength="11" ng-pattern="/1[0-9]{2} ?[0-9]{4} ?[0-9]{4}$/">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">{{i18n.email}}：</label>
+						<div class="col-sm-9 input-group">
+							<input type="text" class="form-control" placeholder="{{i18n.emailPlaceholder}}" ng-model="addData.email" maxlength="64" minlength="8">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">QQ：</label>
+						<div class="col-sm-9 input-group">
+							<input type="text" class="form-control" placeholder="{{i18n.qqPlaceholder}}" ng-model="addData.qq" maxlength="20" minlength="5">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">{{i18n.weixin}}：</label>
+						<div class="col-sm-9 input-group">
+							<input type="text" class="form-control" placeholder="{{i18n.weixinPlaceholder}}" ng-model="addData.weixin" maxlength="32" minlength="2">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">{{i18n.address}}：</label>
+						<div class="col-sm-9 input-group">
+							<input type="text" class="form-control" placeholder="{{i18n.addressPlaceholder}}" ng-model="addData.address" maxlength="128" minlength="2">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">{{i18n.enable}}：</label>
+						<div class="col-sm-9 input-group">
+							<label class="checkbox i-checks">
+                    <input type="checkbox" ng-model="addData.status"><i></i>
+                  </label>
+						</div>
+					</div>
+				</div>
+				<footer class="panel-footer text-center bg-light lter">
+					<button type="submit" class="btn btn-success" ng-disabled="formValidateAdd.$invalid" ng-click="add();">{{i18n.submit}}</button>
+					<button type="button" class="btn btn-danger" style="margin-left: 50px;" ng-click="back();">{{i18n.back}}</button>
+				</footer>
+			</form>
+		</div>
+		<!--修改-->
+		<div class="panel panel-default" ng-show="editContent">
+			<form name="formValidateEdit" class="form-horizontal form-validation">
+				<div class="panel-heading">
+					<strong>{{i18n.editAdmin}}</strong>
+				</div>
+				<div class="panel-body">
+					<div class="form-group" ng-controller="f341fa72" ng-init="init()">
+						<label class="col-sm-2 control-label">{{i18n.groupName}}：</label>
+						<div class="col-sm-9 input-group">
+							<input readonly="true" type="text" class="form-control" ng-click="open('lg')" ng-model="openSelectGroup.groupName" maxlength="50" minlength="2" required>
+							<span class="input-group-btn">
+                           <button type="button" class="btn btn-default" ng-click="open('lg')"><i class="icon-users"></i></button>
+                        </span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">{{i18n.adminName}}：</label>
+						<div class="col-sm-9 input-group">
+							<input type="text" class="form-control" placeholder="{{i18n.adminNamePlaceholder}}" ng-model="editRow.adminName" maxlength="50" minlength="2" required>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">{{i18n.mobilePhone}}：</label>
+						<div class="col-sm-9 input-group">
+							<input type="text" class="form-control" placeholder="{{i18n.mobilePhonePlaceholder}}" ng-model="editRow.mobilePhone" maxlength="15" minlength="11" ng-pattern="/1[0-9]{2} ?[0-9]{4} ?[0-9]{4}$/">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">{{i18n.email}}：</label>
+						<div class="col-sm-9 input-group">
+							<input type="text" class="form-control" placeholder="{{i18n.emailPlaceholder}}" ng-model="editRow.email" maxlength="64" minlength="8">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">QQ：</label>
+						<div class="col-sm-9 input-group">
+							<input type="text" class="form-control" placeholder="{{i18n.qqPlaceholder}}" ng-model="editRow.qq" maxlength="20" minlength="5">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">{{i18n.weixin}}：</label>
+						<div class="col-sm-9 input-group">
+							<input type="text" class="form-control" placeholder="{{i18n.weixinPlaceholder}}" ng-model="editRow.weixin" maxlength="32" minlength="2">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">{{i18n.address}}：</label>
+						<div class="col-sm-9 input-group">
+							<input type="text" class="form-control" placeholder="{{i18n.addressPlaceholder}}" ng-model="editRow.address" maxlength="128" minlength="2">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">{{i18n.enable}}：</label>
+						<div class="col-sm-9 input-group">
+							<label class="checkbox i-checks">
+                    <input type="checkbox" ng-model="editRow.status"><i></i>
+                  </label>
+						</div>
+					</div>
+				</div>
+				<footer class="panel-footer text-center bg-light lter">
+					<button type="submit" class="btn btn-info" ng-disabled="formValidateEdit.$invalid" ng-click="edit(null);">{{i18n.submit}}</button>
+					<button type="button" class="btn btn-danger" style="margin-left: 50px;" ng-click="back();">{{i18n.back}}</button>
+				</footer>
+			</form>
+		</div>
+	</div>
+</div>

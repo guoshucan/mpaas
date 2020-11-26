@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<#include "/common.html"/>
+<style type="text/css">
+.group{
+	width: 550px;
+	height: 300px;
+	float: left;
+}
+</style>
+</head>
+<body class="layui-layout-body">
+	<div class="layui-layout layui-layout-admin">
+
+		<#include "/header.html"/>
+		<#include "/menu.html"/>
+
+		<div class="layui-body">
+			<!-- 内容主体区域 -->
+			<div style="padding: 15px">
+				<fieldset class="layui-elem-field layui-field-title">
+					<legend>${menuStr.log}</legend>
+				</fieldset>
+
+				<form action="${ctx}/adminPage/log" id="searchForm" method="post">
+					<div class="layui-inline">
+						<button type="button" class="layui-btn layui-btn-danger" onclick="delAll()">${logStr.delAll}</button>
+						
+						<button type="button" class="layui-btn" onclick="analysis()">${logStr.analysis}</button>
+					</div>
+					
+					<div class="layui-inline">
+						<div class="layui-form-mid layui-word-aux">${logStr.tips}</div>
+					</div>
+					<input type="hidden" name="current" value="${page.current}">
+					<input type="hidden" name="limit" value="${page.limit}">
+				</form>
+
+				<table class="layui-table">
+					<thead>
+						<tr>
+							<th>${logStr.recordTime}</th>
+							<th>${commonStr.operation}</th>
+						</tr>
+					</thead>
+					<tbody>
+						<#list page.records as log>
+						<tr>
+							<td>${log.date}</td>
+							<td>
+								<button class="layui-btn layui-btn-sm" onclick="detail('${log.id}')">${logStr.detail}</button>
+								<button class="layui-btn layui-btn-sm layui-btn-danger" onclick="del('${log.id}')">${commonStr.del}</button>
+							</td>
+						</tr>
+						</#list>
+					</tbody>
+				</table>
+				<div id="pageInfo"></div>
+			</div>
+		</div>
+	</div>
+
+	<div style="height: 0px; width: 0px; overflow: hidden;">
+		<!-- 弹出框 -->
+		<div id="windowDiv" style="padding: 15px;">
+		
+			<div id="statusDiv" class="group"></div>
+			
+			<div id="browser" class="group"></div>
+			
+			<div id="pvuv" class="group"></div>
+
+			<div id="httpReferer" class="group"></div>
+		</div>
+
+	</div>
+	<#include '/script.html'/>
+	<script src="${ctx}/js/adminPage/log/index.js?v=${jsrandom}" type="text/javascript"></script>
+	
+	
+</body>
+
+
+</html>

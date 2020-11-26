@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="0.0" y="0.0">ghost.framework.app.core.loader.ApplicationMavenDepositoryLoader</node>
+    <node x="0.0" y="265.0">ghost.framework.app.core.loader.ApplicationMavenBeanDependencyLoader</node>
+    <node x="0.0" y="386.0">ghost.framework.app.core.loader.ApplicationMavenDependencyLoader</node>
+    <node x="0.0" y="144.0">ghost.framework.app.core.loader.ApplicationMavenModuleDependencyLoader</node>
+    <node x="385.0" y="386.0">ghost.framework.app.core.loader.ApplicationMavenLoader</node>
+  </nodes>
+  <notes />
+  <edges />
+  <settings layout="Hierarchic Group" zoom="1.0" x="301.0" y="120.0" />
+  <SelectedNodes>
+    <node>ghost.framework.app.core.loader.ApplicationMavenModuleDependencyLoader</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Inner Classes</Category>
+    <Category>Properties</Category>
+    <Category>Methods</Category>
+    <Category>Constructors</Category>
+    <Category>Fields</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

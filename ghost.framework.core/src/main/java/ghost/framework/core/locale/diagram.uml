@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="197.0" y="73.0">ghost.framework.core.locale.I18nDomainContainer</node>
+    <node x="268.5" y="147.0">ghost.framework.core.locale.LocaleContainer</node>
+    <node x="261.5" y="-6.0">ghost.framework.core.locale.AbstractLocaleDomainContainer</node>
+    <node x="197.0" y="226.0">ghost.framework.core.locale.I18nContainer</node>
+    <node x="396.0" y="73.0">ghost.framework.core.locale.L10nDomainContainer</node>
+    <node x="354.0" y="226.0">ghost.framework.core.locale.L10nContainer</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="ghost.framework.core.locale.L10nDomainContainer" target="ghost.framework.core.locale.AbstractLocaleDomainContainer">
+      <point x="0.0" y="-14.5" />
+      <point x="485.5" y="48.0" />
+      <point x="448.25" y="48.0" />
+      <point x="62.25" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.locale.I18nContainer" target="ghost.framework.core.locale.LocaleContainer">
+      <point x="0.0" y="-14.5" />
+      <point x="265.5" y="201.0" />
+      <point x="306.25" y="201.0" />
+      <point x="-37.75" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.locale.L10nContainer" target="ghost.framework.core.locale.LocaleContainer">
+      <point x="0.0" y="-14.5" />
+      <point x="422.5" y="201.0" />
+      <point x="381.75" y="201.0" />
+      <point x="37.75" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.core.locale.I18nDomainContainer" target="ghost.framework.core.locale.AbstractLocaleDomainContainer">
+      <point x="0.0" y="-14.5" />
+      <point x="286.5" y="48.0" />
+      <point x="323.75" y="48.0" />
+      <point x="-62.25" y="14.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="502.0" y="147.5" />
+  <SelectedNodes>
+    <node>ghost.framework.core.locale.I18nDomainContainer</node>
+    <node>ghost.framework.core.locale.LocaleContainer</node>
+    <node>ghost.framework.core.locale.AbstractLocaleDomainContainer</node>
+    <node>ghost.framework.core.locale.I18nContainer</node>
+    <node>ghost.framework.core.locale.L10nDomainContainer</node>
+    <node>ghost.framework.core.locale.L10nContainer</node>
+  </SelectedNodes>
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

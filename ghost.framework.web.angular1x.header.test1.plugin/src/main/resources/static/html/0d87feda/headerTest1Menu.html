@@ -1,0 +1,39 @@
+<!-- link and dropdown -->
+<ul class="nav navbar-nav hidden-sm" ng-controller="8e3e784c" ng-init="init()">
+	<li class="dropdown" dropdown>
+		<a href class="dropdown-toggle" dropdown-toggle>
+			<i class="fa fa-fw fa-plus visible-xs-inline-block"></i>
+			<span translate="header.navbar.new.NEW">New</span> <span class="caret"></span>
+		</a>
+		<ul class="dropdown-menu" role="menu">
+			<li>
+				<a href="#" translate="header.navbar.new.PROJECT">Projects</a>
+			</li>
+			<li>
+				<a href>
+					<span class="badge bg-info pull-right">5</span>
+					<span translate="header.navbar.new.TASK">Task</span>
+				</a>
+			</li>
+			<li>
+				<a href translate="header.navbar.new.USER">User</a>
+			</li>
+			<li class="divider"></li>
+			<li>
+				<a href>
+					<span class="badge bg-danger pull-right">4</span>
+					<span translate="header.navbar.new.EMAIL">Email</span>
+				</a>
+			</li>
+		</ul>
+	</li>
+</ul>
+<script type="text/javascript">
+    //显示控制器
+    angular.module('app').controller('8e3e784c', ['$scope', function($s) {
+        $s.init = function() {
+            console.log('$s.init = function(8e3e784c)');
+        };
+    }]);
+</script>
+<!-- / link and dropdown -->

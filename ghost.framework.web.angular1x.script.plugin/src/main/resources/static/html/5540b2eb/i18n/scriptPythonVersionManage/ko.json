@@ -1,0 +1,52 @@
+{
+  "operationMaintenance":"운영 및 유지 보수",
+  "error": "오류！",
+  "complete": "수행하다",
+  "clear": "명확한",
+  "close": "종료",
+  "version": "버전",
+  "date": "데이트",
+  "open": "운영",
+  "submit": "제출",
+  "back": "반환",
+  "repeat": "반복!",
+  "script": "스크립트",
+  "form":{
+    "version": {
+      "name": "버전:",
+      "placeholder": "버전을 입력하세요 ..."
+    }
+  },
+  "add": {
+    "name": "더하다",
+    "version": "버전 추가"
+  },
+  "edit": {
+    "name": "수정",
+    "version": "수정 된 버전"
+  },
+  "content": {
+    "versionManagement": "Python버전 관리"
+  },
+  "delete": {
+    "confirmDeletion": "삭제를 확인하십시오!",
+    "chooseIs": "선택:",
+    "cancel": "취소",
+    "confirm": "확인하다",
+    "selected": "선택된 것을 지워 라",
+    "name": "지우다",
+    "complete": "삭제 완료",
+    "error": "오류를 삭제하십시오!"
+  },
+  "page": {
+    "perPage": "페이지 당",
+    "row": "열",
+    "show": "디스플레이",
+    "article": "조",
+    "total": "합계",
+    "previous": "이전",
+    "next": "다음 페이지",
+    "first": "첫 페이지",
+    "last": "마지막 페이지"
+  }
+}

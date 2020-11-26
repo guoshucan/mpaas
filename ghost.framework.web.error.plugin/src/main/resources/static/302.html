@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>302</title>
+</head>
+<body>
+302 Found 类似301，但新的URL应该被视为临时性的替代，而不是永久性的，注意，在HTTP1.0中对应的状态信息moved Temporatily。出现该状态码，浏览器能够给自动访问新的URL，因此他是一个很有用的状态代码。
+
+　　　　注意这个状态代码有时候可以和301替换使用，例如，如果浏览器错误的请求http：// host/~user（缺少了后面的斜杠，有的服务器返回301，有的返回302）。严格的说，我们只能假定原来的请求是GET时浏览器才会自动重定向。
+</body>
+</html>

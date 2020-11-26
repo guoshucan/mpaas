@@ -1,0 +1,475 @@
+<!--
+	作者：27048384@qq.com
+	时间：2020-04-24
+	描述：包信息弹框
+-->
+<script type="text/ng-template" id="b97e1ba1-3884-4bb2-a93a-c6cf19695780">
+	<div class="modal-header">
+		<h4 class="modal-title">模块信息</h4>
+	</div>
+	<div class="modal-body" style="padding: 2px;">
+		<ul>
+			<li>
+				&nbsp&nbspGroupId:<b>{{ rows.groupId }}</b>
+			</li>
+			<li>
+				ArtifactId:<b>{{ rows.artifactId }}</b>
+			</li>
+			<li>
+				&nbsp&nbsp&nbsp&nbspVersion:<b>{{ rows.version }}</b>
+			</li>
+			<li ng-hide="rows.status==undefined">
+				状态:
+				<b>
+					<label class="i-switch m-t-xs m-r" style="height: 15px;margin-top: 0px;">
+						<input type="checkbox" ng-model="rows.status==1" disabled="disabled"><i></i>
+					</label>
+				</b>
+			</li>
+		</ul>
+	</div>
+	<div class="modal-body" style="padding: 2px;">
+		<ul>
+			<h5 class="modal-title">attributes</h5>
+			<li ng-repeat="(x,y) in rows.attributes">
+				{{x}}:<b>{{y}}</b>
+			</li>
+		</ul>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-info" ng-click="cancel()">关闭</button>
+	</div>
+</script>
+<!--
+	作者：27048384@qq.com
+	时间：2020-04-06
+	描述：删除确认弹框
+-->
+<script type="text/ng-template" id="d305fb00-49d3-4b0c-9af0-268e9bf0e2be">
+	<div class="modal-header">
+		<h4 class="modal-title">确认删除!</h4>
+	</div>
+	<div class="modal-body">
+		<ul>
+			<li ng-repeat="item in rows" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+				选择的是: <b>{{ item.groupName }}</b>
+			</li>
+		</ul>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-default" ng-click="cancel()">取消</button>
+		<button class="btn btn-primary" ng-click="ok()">确定</button>
+	</div>
+</script>
+<!--
+	作者：27048384@qq.com
+	时间：2020-04-06
+	描述：管理组内容
+-->
+<div class="bg-light lter b-b wrapper-md page_header" style="padding: 10px;">系统管理 ><strong style="color: rgb(25,158,216);">模块管理</strong></div>
+<div class="wrapper-md" ng-controller="0154db82-1925-4185-912a-5c730b9e31a2" ng-init="init()">
+	<div ng-controller="ToasterCtrl" ng-init="init()">
+		<!-- toaster directive -->
+		<toaster-container toaster-options="{'position-class': 'toast-top-center', 'close-button':true}"></toaster-container>
+		<!-- / toaster directive -->
+	</div>
+	<!--模块列表-->
+	<div class="panel panel-default" ng-show="tableContent">
+		<div class="panel-heading">模块管理</div>
+		<div class="row wrapper">
+
+			<div style="margin-bottom: 0px;width: auto;" class="form-group col-sm-2">
+				<div class="input-group">
+					<select class="form-control inline v-middle" ng-model="selectRequest.internal">
+						<option value="0">内置模块</option>
+						<option value="1">加载模块</option>
+						<option value="2">仓库模块</option>
+					</select>
+				</div>
+			</div>
+
+			<div style="margin-bottom: 0px;width: auto;" class="form-group col-sm-2" ng-hide="selectRequest.internal=='0'">
+				<div class="input-group">
+					<select class="form-control inline v-middle" ng-model="selectRequest.status">
+						<option value="-1">请选择状态</option>
+						<option value="0">禁用</option>
+						<option value="1">启用</option>
+					</select>
+				</div>
+			</div>
+
+			<div style="margin-bottom: 0px;" class="form-group col-sm-2" ng-controller="02fdff6a" ng-init="init('startTime')" ng-hide="selectRequest.internal=='0'">
+				<div class="input-group">
+					<input type="text" class="form-control" datepicker-popup="{{format}}" id="startTime" ng-model="selectRequest.startTime" is-open="opened" min-date="'1980-1-1'" max-date="'2100-12-31'" datepicker-options="dateOptions" ng-required="true" close-text="关闭" clear-text="清除" current-text="今天" format-date placeholder="开始日期" />
+					<span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open($event, 'startTime')"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+				</div>
+			</div>
+
+			<div style="margin-bottom: 0px;" class="form-group col-sm-2" ng-controller="02fdff6a" ng-init="init('endTime')" ng-hide="selectRequest.internal=='0'">
+				<div class="input-group">
+					<input type="text" class="form-control" datepicker-popup="{{format}}" id="endTime" ng-model="selectRequest.endTime" is-open="opened" min-date="'1980-1-1'" max-date="'2100-12-31'" datepicker-options="dateOptions" ng-required="true" close-text="关闭" clear-text="清除" current-text="今天" format-date placeholder="结束日期" />
+					<span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open($event, 'endTime')"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+				</div>
+			</div>
+
+			<div style="margin-bottom: 0px;" class="form-group col-sm-2" ng-hide="selectRequest.internal=='0'">
+				<div class="input-group">
+					<input type="text" class="form-control" ng-model="selectRequest.key" placeholder="请输入关键字...">
+					<span class="input-group-btn"><button class="btn btn-info" type="button" ng-click="search(false)">搜索</button></span>
+				</div>
+			</div>
+			<div style="margin-bottom: 0px;width: auto;" class="form-group col-sm-2" ng-hide="selectRequest.internal=='0'">
+				<div class="input-group">
+					<button class="btn btn-dark" ng-click="search(true)">清除</button>
+				</div>
+			</div>
+
+			<div style="margin-bottom: 0px;width: auto;" class="form-group col-sm-2" ng-hide="selectRequest.internal=='0'">
+				<div class="input-group">
+					<button class="btn btn-primary" ng-click="add()">新增</button>
+				</div>
+			</div>
+
+			<div style="margin-bottom: 0px;width: auto;" class="form-group col-sm-2" ng-hide="selectRequest.internal=='0'">
+				<div class="input-group" ng-controller="ff6f79f6">
+					<button class="btn btn-danger" ng-disabled="deleteAllDisabled" ng-click="open()">删除所选</button>
+				</div>
+			</div>
+		</div>
+		<div class="table-responsive">
+			<table class="table table-striped b-t b-light">
+				<thead>
+					<tr>
+						<th style="width:20px;">
+							<label class="i-checks m-b-none" ng-hide="selectRequest.internal=='0'">
+                            <input type="checkbox" ng-model="selectAll" ng-click="checkboxAll(selectAll)" ng-checked="selectAll" ng-disabled="page.data.length==0"><i></i>
+                        </label>
+						</th>
+						<th>Id</th>
+						<th>GroupId</th>
+						<th>ArtifactId</th>
+						<th>Version</th>
+						<th>状态</th>
+						<th>日期</th>
+						<th style="text-align: center;">操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="item in page.data" title="{{item.description}}">
+						<td><label class="i-checks m-b-none" ng-hide="selectRequest.internal=='0'"><input type="checkbox" value="{{item.moduleId}}" ng-click="checkboxSelected($event,item.moduleId)" ng-checked="item.check" ng-model="item.check"><i></i></label></td>
+						<td><span class="text-ellipsis">{{item.moduleId}}</span></td>
+						<td><span class="text-ellipsis">{{item.groupId}}</span></td>
+						<td><span class="text-ellipsis">{{item.artifactId}}</span></td>
+						<td><span class="text-ellipsis">{{item.version}}</span></td>
+						<td>
+							<label class="i-switch m-t-xs m-r" ng-hide="selectRequest.internal=='0'">
+                        	<input type="checkbox" ng-model="item.statusCheck" ng-click="statusUpdate(item);">
+                            <i></i>
+                        </label>
+						</td>
+						<td><span class="text-ellipsis">{{item.createTime}}</span></td>
+						<td style="text-align: center;" ng-controller="0ebf2e8e-9269-4661-8b34-e8364c0e59d5">
+							<button style="height: 24px;padding: 2px;" class="btn btn-info btn-sm" style="margin-left:5px;" ng-click="info(item)">查看</button>
+							<button style="height: 24px;padding: 2px;" class="btn btn-info btn-sm" style="margin-left:5px;" ng-click="plugin(item)">插件管理</button>
+							<button ng-hide="selectRequest.internal=='0'" style="height: 24px;padding: 2px;" class="btn btn-success btn-sm" style="margin-left:5px;" ng-click="edit(item)">修改</button>
+							<button ng-hide="selectRequest.internal=='0'" style="height: 24px;padding: 2px;" class="btn btn-danger btn-sm" style="margin-left:5px;" ng-click="open(item)">删除</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<footer class="panel-footer" ng-hide="selectRequest.internal=='0'">
+			<div class="row">
+				<div class="col-sm-3 hidden-xs">
+					<select class="input-sm form-control w-sm inline v-middle" ng-model="selectRequest.length" ng-change="selectRowLengthChange();">
+						<option value="10">10</option>
+						<option value="25">25</option>
+						<option value="50">50</option>
+						<option value="100">100</option>
+					</select>
+					<small class="text-muted inline m-t-sm m-b-sm">每页{{selectRequest.length}}行</small>
+				</div>
+				<div class="col-sm-7">
+					<div class="col-sm-4 text-center">
+						<small class="text-muted inline m-t-sm m-b-sm">显示 {{page.data.length}}条， 共 {{page.count}} 条</small>
+					</div>
+					<div style="height: 29px;padding-top: 5px; width: 66%;" class="col-sm-4 text-right text-center-xs">
+						<pagination ng-change="pageChange()" total-items="page.count" ng-model="selectRequest.start" max-size="page.maxSize" class="pagination-sm m-t-none m-b" boundary-links="true" boundary-link-numbers="true" rotate="false" items-per-page="selectRequest.length" num-pages="page.pages" previous-text="上一页" next-text="下一页" first-text="第一页" last-text="尾页"></pagination>
+					</div>
+				</div>
+			</div>
+		</footer>
+	</div>
+	<!--插件管理-->
+	<div class="panel panel-default" ng-show="pluginTableContent">
+		<div class="panel-heading">模块[{{currentModule.groupId}}:{{currentModule.artifactId}}:{{currentModule.version}}]>插件管理</div>
+		<div class="row wrapper">
+
+			<div style="margin-bottom: 0px;width: auto;" class="form-group col-sm-2">
+				<div class="input-group">
+					<select class="form-control inline v-middle" ng-model="selectRequest.internalPlugin">
+						<option value="0">内置插件</option>
+						<option value="1">加载插件</option>
+						<option value="2">仓库插件</option>
+					</select>
+				</div>
+			</div>
+
+			<div style="margin-bottom: 0px;width: auto;" class="form-group col-sm-2" ng-hide="selectRequest.internalPlugin=='0'">
+				<div class="input-group">
+					<select class="form-control inline v-middle" ng-model="selectRequest.status">
+						<option value="-1">请选择状态</option>
+						<option value="0">禁用</option>
+						<option value="1">启用</option>
+					</select>
+				</div>
+			</div>
+
+			<div style="margin-bottom: 0px;" class="form-group col-sm-2" ng-controller="02fdff6a" ng-init="init('startTime')" ng-hide="selectRequest.internalPlugin=='0'">
+				<div class="input-group">
+					<input type="text" class="form-control" datepicker-popup="{{format}}" id="startTime" ng-model="selectRequest.startTime" is-open="opened" min-date="'1980-1-1'" max-date="'2100-12-31'" datepicker-options="dateOptions" ng-required="true" close-text="关闭" clear-text="清除" current-text="今天" format-date placeholder="开始日期" />
+					<span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open($event, 'startTime')"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+				</div>
+			</div>
+
+			<div style="margin-bottom: 0px;" class="form-group col-sm-2" ng-controller="02fdff6a" ng-init="init('endTime')" ng-hide="selectRequest.internalPlugin=='0'">
+				<div class="input-group">
+					<input type="text" class="form-control" datepicker-popup="{{format}}" id="endTime" ng-model="selectRequest.endTime" is-open="opened" min-date="'1980-1-1'" max-date="'2100-12-31'" datepicker-options="dateOptions" ng-required="true" close-text="关闭" clear-text="清除" current-text="今天" format-date placeholder="结束日期" />
+					<span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open($event, 'endTime')"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+				</div>
+			</div>
+
+			<div style="margin-bottom: 0px;" class="form-group col-sm-2" ng-hide="selectRequest.internalPlugin=='0'">
+				<div class="input-group">
+					<input type="text" class="form-control" ng-model="selectRequest.key" placeholder="请输入关键字...">
+					<span class="input-group-btn"><button class="btn btn-info" type="button" ng-click="search(false)">搜索</button></span>
+				</div>
+			</div>
+			<div style="margin-bottom: 0px;width: auto;" class="form-group col-sm-2" ng-hide="selectRequest.internalPlugin=='0'">
+				<div class="input-group">
+					<button class="btn btn-dark" ng-click="search(true)">清除</button>
+				</div>
+			</div>
+
+			<div style="margin-bottom: 0px;width: auto;" class="form-group col-sm-2" ng-hide="selectRequest.internalPlugin=='0'">
+				<div class="input-group">
+					<button class="btn btn-primary" ng-click="add()">新增</button>
+				</div>
+			</div>
+
+			<div style="margin-bottom: 0px;width: auto;" class="form-group col-sm-2" ng-hide="selectRequest.internalPlugin=='0'">
+				<div class="input-group" ng-controller="ff6f79f6">
+					<button class="btn btn-danger" ng-disabled="deleteAllDisabled" ng-click="open()">删除所选</button>
+				</div>
+			</div>
+		</div>
+		<div class="table-responsive">
+			<table class="table table-striped b-t b-light">
+				<thead>
+					<tr>
+						<th style="width:20px;">
+							<label class="i-checks m-b-none" ng-hide="selectRequest.internalPlugin=='0'">
+                            <input type="checkbox" ng-model="selectAll" ng-click="checkboxAll(selectAll)" ng-checked="selectAll" ng-disabled="page.data.length==0"><i></i>
+                        </label>
+						</th>
+						<th>Id</th>
+						<th>GroupId</th>
+						<th>ArtifactId</th>
+						<th>Version</th>
+						<th>状态</th>
+						<th>日期</th>
+						<th style="text-align: center;">操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="item in page.data" title="{{item.description}}">
+						<td><label class="i-checks m-b-none" ng-hide="selectRequest.internalPlugin=='0'"><input type="checkbox" value="{{item.moduleId}}" ng-click="checkboxSelected($event,item.moduleId)" ng-checked="item.check" ng-model="item.check"><i></i></label></td>
+						<td><span class="text-ellipsis">{{item.moduleId}}</span></td>
+						<td><span class="text-ellipsis">{{item.groupId}}</span></td>
+						<td><span class="text-ellipsis">{{item.artifactId}}</span></td>
+						<td><span class="text-ellipsis">{{item.version}}</span></td>
+						<td>
+							<label class="i-switch m-t-xs m-r" ng-hide="selectRequest.internalPlugin=='0'">
+                        	<input type="checkbox" ng-model="item.statusCheck" ng-click="statusUpdate(item);">
+                            <i></i>
+                        </label>
+						</td>
+						<td><span class="text-ellipsis">{{item.createTime}}</span></td>
+						<td style="text-align: center;" ng-controller="0ebf2e8e-9269-4661-8b34-e8364c0e59d5">
+							<button style="height: 24px;padding: 2px;" class="btn btn-info btn-sm" style="margin-left:5px;" ng-click="info(item)">查看</button>
+							<button style="height: 24px;padding: 2px;" class="btn btn-info btn-sm" style="margin-left:5px;" ng-click="plugin(item)">插件管理</button>
+							<button ng-hide="selectRequest.internalPlugin=='0'" style="height: 24px;padding: 2px;" class="btn btn-success btn-sm" style="margin-left:5px;" ng-click="edit(item)">修改</button>
+							<button ng-hide="selectRequest.internalPlugin=='0'" style="height: 24px;padding: 2px;" class="btn btn-danger btn-sm" style="margin-left:5px;" ng-click="open(item)">删除</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<footer class="panel-footer" ng-hide="selectRequest.internalPlugin=='0'">
+			<div class="row">
+				<div class="col-sm-3 hidden-xs">
+					<select class="input-sm form-control w-sm inline v-middle" ng-model="selectRequest.length" ng-change="selectRowLengthChange();">
+						<option value="10">10</option>
+						<option value="25">25</option>
+						<option value="50">50</option>
+						<option value="100">100</option>
+					</select>
+					<small class="text-muted inline m-t-sm m-b-sm">每页{{selectRequest.length}}行</small>
+				</div>
+				<div class="col-sm-7">
+					<div class="col-sm-4 text-center">
+						<small class="text-muted inline m-t-sm m-b-sm">显示 {{page.data.length}}条， 共 {{page.count}} 条</small>
+					</div>
+					<div style="height: 29px;padding-top: 5px; width: 66%;" class="col-sm-4 text-right text-center-xs">
+						<pagination ng-change="pageChange()" total-items="page.count" ng-model="selectRequest.start" max-size="page.maxSize" class="pagination-sm m-t-none m-b" boundary-links="true" boundary-link-numbers="true" rotate="false" items-per-page="selectRequest.length" num-pages="page.pages" previous-text="上一页" next-text="下一页" first-text="第一页" last-text="尾页"></pagination>
+					</div>
+				</div>
+			</div>
+		</footer>
+	</div>
+	<!--添加-->
+	<div class="panel panel-default" ng-show="addContent" ng-controller="7de94d9f-ffb7-4898-a2cf-82b089071dfc"  nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter">
+		<form name="formValidateAdd" class="form-horizontal form-validation">
+			<div class="panel-heading">
+				<strong>添加模块</strong>
+			</div>
+			<div class="panel-body">
+				<!--<div class="form-group">
+                    <label class="col-sm-3 control-label">管理组名称：</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" placeholder="请填写管理组名称..." ng-model="addData.groupName" maxlength="50" minlength="2" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">是否启用：</label>
+                    <div class="col-sm-9">
+                        <label class="checkbox i-checks">
+                            <input type="checkbox" ng-model="addData.status"><i></i>
+                        </label>
+                    </div>
+                </div>-->
+				<div class="wrapper-md bg-light dk b-b" style="padding: 5px;">
+					<span class="pull-right m-t-xs" style="margin-top: 0px;">对列长度: <b class="badge bg-info">{{ uploader.queue.length }}</b></span>
+					<h5 class="m-n font-thin">上传对列</h5>
+				</div>
+				<div class="wrapper-md">
+					<table class="table bg-white-only b-a">
+						<thead>
+							<tr>
+								<th width="50%">文件名</th>
+								<th ng-show="uploader.isHTML5">大小</th>
+								<th ng-show="uploader.isHTML5">进度</th>
+								<th>状态</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="item in uploader.queue">
+								<td><strong>{{ item.file.name }}</strong></td>
+								<td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+								<td ng-show="uploader.isHTML5">
+									<div class="progress progress-sm m-b-none m-t-xs">
+										<div class="progress-bar bg-info" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+									</div>
+								</td>
+								<td class="text-center">
+									<span ng-show="item.isSuccess" class="text-success"><i class="glyphicon glyphicon-ok"></i></span>
+									<span ng-show="item.isCancel" class="text-warning"><i class="glyphicon glyphicon-ban-circle"></i></span>
+									<span ng-show="item.isError" class="text-danger"><i class="glyphicon glyphicon-remove"></i></span>
+								</td>
+								<td nowrap>
+									<button type="button" class="btn btn-default btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                          上传
+                      </button>
+									<button type="button" class="btn btn-default btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">
+                          取消
+                      </button>
+									<button type="button" class="btn btn-default btn-xs" ng-click="item.remove()">
+                          移除
+                      </button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<div>
+						<div>
+							<p>队列上传进度:</p>
+							<div class="progress bg-light dker" style="">
+								<div class="progress-bar progress-bar-striped bg-info" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
+							</div>
+						</div>
+        <p>多选</p>
+        <input type="file" nv-file-select="" uploader="uploader" multiple
+               ui-jq="filestyle" class="filestyle"
+               data-icon="true" data-input="false" data-badge="false"
+               data-buttontext="选择多个文件上传">
+
+        <p class="m-t-md">单选</p>
+        <input type="file" nv-file-select="" uploader="uploader"
+               ui-jq="filestyle" class="filestyle"
+               data-icon="true" data-input="false" data-badge="false"
+               data-buttontext="选择一个文件上传">
+						<p class="text-muted m-t-xl">
+							说明:
+							<ul>
+								<li>请在<code>Web容器</code>下运行此示例，比如在<code>IIS</code>、<code tooltip="用 Visual Studio 以网站形式打开此项目，按F5运行网站即可">IIS Express</code>、<code>Tomcat</code>下运行</li>
+								<li>官方原版写了一个 <code tooltip="src/js/controllers/upload.php">upload.php</code>，我编写了一个.net版本的 <code tooltip="src/js/controllers/upload.aspx">upload.aspx</code></li>
+								<li>我已改用.net版了，如果想换回php版，请修改 <code>"src/js/controllers/file-upload.js"</code></li>
+								<li>文件最终会上传到此文件夹 <code>"src/js/controllers/uploads"</code></li>
+							</ul>
+						</p>
+					</div>
+				</div>
+			</div>
+			<footer class="panel-footer text-center bg-light lter">
+				<button type="button" class="btn btn-addon btn-success" ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">
+          <i class="fa fa-arrow-circle-o-up"></i> 全部上传
+        </button>
+				<button type="button" class="btn btn-addon btn-warning" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">
+          <i class="fa fa-ban"></i> 全部取消
+        </button>
+				<button type="button" class="btn btn-addon btn-danger" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
+            <i class="fa fa-trash-o"></i> 全部移除
+        </button>
+        
+        <button type="button" class="btn btn-addon btn-danger" ng-click="back()"> 返回</button>
+			</footer>
+		</form>
+	</div>
+	<!--修改-->
+	<div class="panel panel-default" ng-show="editContent">
+		<form name="formValidateEdit" class="form-horizontal form-validation">
+			<div class="panel-heading">
+				<strong>修改管理组</strong>
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">管理组名称：</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" placeholder="请填写管理组名称..." ng-model="editRow.groupName" maxlength="50" minlength="2" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">是否启用：</label>
+					<div class="col-sm-9">
+						<label class="checkbox i-checks">
+                            <input type="checkbox" ng-model="editRow.status"><i></i>
+                        </label>
+					</div>
+				</div>
+			</div>
+			<footer class="panel-footer text-center bg-light lter">
+				<button type="submit" class="btn btn-info" ng-click="edit(null);">提交</button>
+				<button type="button" class="btn btn-danger" style="margin-left: 50px;" ng-click="back();">返回</button>
+			</footer>
+		</form>
+	</div>
+</div>

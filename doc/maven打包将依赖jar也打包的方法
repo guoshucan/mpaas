@@ -1,0 +1,109 @@
+maven是目前很常用的管理jar的工具，使用maven可以直接将java项目打包成一个可运行的jar，但是有时候有些依赖的jar没有包含在里面，这时候就需要早pom文件中build里面添加下面的配置
+
+<plugins>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<!--这里要替换成jar包main方法所在类 -->
+							<mainClass>xx.tt.mainClass</mainClass>
+						</manifest>
+						<manifestEntries>
+							<Class-Path>.</Class-Path>
+						</manifestEntries>
+					</archive>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id> <!-- this is used for inheritance merges -->
+						<phase>package</phase> <!-- 指定在打包节点执行jar包合并操作 -->
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+</plugins>
+
+还有一种是jar放到相对路径下
+
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/lib</outputDirectory>
+							<overWriteReleases>false</overWriteReleases>
+							<overWriteSnapshots>false</overWriteSnapshots>
+							<overWriteIfNewer>true</overWriteIfNewer>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>xx.tt.mainClass</mainClass>
+						</manifest>
+						<manifestEntries>
+							<Class-Path>.</Class-Path>
+						</manifestEntries>
+					</archive>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+
+
+配置完成后，如果使用的是IDE工具，右键项目选择run as,选择maven install。
+
+如果是maven直接打包mvn clean install
+
+下面简单给出这个命令执行的过程
+
+ 执行顺序：
+
+1、使用清理插件：maven-clean-plugin:2.5执行清理删除已有target目录（版本2.5）；
+
+2、使用资源插件：maven-resources-plugin:2.6执行资源文件的处理（版本2.6）；
+
+3、使用编译插件：maven-compiler-plugin:3.1编译所有源文件生成class文件至target\classes目录下（版本3.1）；
+
+4、使用资源插件：maven-resources-plugin:2.6执行测试资源文件的处理（版本2.6）；
+
+5、使用编译插件：maven-compiler-plugin:3.1编译测试目录下的所有源代码（版本3.1）；
+
+6、使用插件：maven-surefire-plugin:2.12运行测试用例（版本2.12）；
+
+7、使用插件：maven-jar-plugin:2.4对编译后生成的文件进行打包，包名称默认为：artifactId-version，比如本例生成的jar文件：rtp-front-1.0-SNAPSHOT，包文件保存在target目录下；
+
+8、使用maven-install-plugin:2.4把上述打包生成的jar包和pom文件安装到本地的仓库中（一般默认的路径为：%HOMEPATH%\.m2\repository\pom中groupId按.分隔的目录层次\pom中的artifactId\pom中的version\jar包的名称）。

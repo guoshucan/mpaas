@@ -1,0 +1,36 @@
+{
+  "header": {
+    "navbar": {
+    }
+  },
+  "aside": {
+    "nav": {
+      "ff0a5895": {
+        "name": "運維",
+        "757f5216": {
+          "name": "SSH",
+          "7fb4cee1": {
+            "name": "Ssh賬號",
+            "title": "Ssh 賬號管理"
+          },
+          "48c99035": {
+            "name": "Ssh類型",
+            "title": "Ssh 類型管理"
+          },
+          "391cc586": {
+            "name": "Ssh區域",
+            "title": "Ssh 區域管理"
+          },
+          "51bcedf6": {
+            "name": "Ssh組",
+            "title": "Ssh 組管理"
+          },
+          "9fb14bff": {
+            "name": "Ssh服務器",
+            "title": "Ssh 服務器管理"
+          }
+        }
+      }
+    }
+  }
+}

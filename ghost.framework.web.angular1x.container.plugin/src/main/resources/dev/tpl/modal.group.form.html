@@ -1,0 +1,85 @@
+<div class="modal-header">
+	<h3 class="modal-title">选择管理员</h3>
+</div>
+<div class="modal-body" style="padding: 2px;">
+	<div class="row wrapper" style="padding-top: 0px;padding-bottom: 2px;">
+
+		<div style="margin: 0px;width: auto;" class="form-group col-sm-2">
+			<div class="input-group">
+				<select class="form-control inline v-middle" ng-model="p.group.selectRequest.status">
+					<option value="-1">请选择状态</option>
+					<option value="0">禁用</option>
+					<option value="1">启用</option>
+				</select>
+			</div>
+		</div>
+
+		<div style="margin: 0px;width: 150px;" class="form-group col-sm-2" ng-controller="DatepickerCtrl">
+			<div class="input-group">
+				<input type="text" class="form-control" datepicker-popup="{{format}}" ng-click="close()" ng-model="p.group.selectRequest.startTime" is-open="opened" min-date="1980-1-1" max-date="'2100-12-31'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="关闭" clear-text="清除" current-text="今天" format-date placeholder="开始日期" />
+				<span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+			</div>
+		</div>
+
+		<div style="margin: 0px;width: 150px;" class="form-group col-sm-2" ng-controller="DatepickerCtrl">
+			<div class="input-group">
+				<input type="text" class="form-control" datepicker-popup="{{format}}" ng-click="close()" ng-model="p.group.selectRequest.endTime" is-open="opened" min-date="1980-1-1" max-date="'2100-12-31'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="关闭" clear-text="清除" current-text="今天" format-date placeholder="结束日期" />
+				<span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+			</div>
+		</div>
+
+		<div style="margin: 0px;width: 250px;" class="form-group col-sm-2">
+			<div class="input-group">
+				<input type="text" class="form-control" ng-model="p.group.selectRequest.key" placeholder="请输入关键字...">
+				<span class="input-group-btn"><button class="btn btn-info" type="button" ng-click="p.group.search(false)">搜索</button></span>
+			</div>
+		</div>
+		<div style="margin: 0px;width: auto;width: 50px;" class="form-group col-sm-2">
+			<div class="input-group">
+				<button class="btn btn-dark" ng-click="p.group.search(true)">清除</button>
+			</div>
+		</div>
+	</div>
+	<div class="table-responsive">
+		<table class="table table-striped b-t b-light" style="margin-bottom: 0px;">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>名称</th>
+					<th>状态</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-click="p.click(item)" ng-repeat="item in p.group.page.data" style="cursor:pointer;">
+					<td><span class="text-ellipsis">{{item.groupId}}</span></td>
+					<td><span class="text-ellipsis">{{item.groupName}}</span></td>
+					<td>
+						<label class="i-switch m-t-xs m-r">
+								<input type="checkbox" ng-model="item.statusCheck" disabled="disabled"><i></i>
+						</label>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<footer class="panel-footer" style="padding: 0;">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="col-sm-4 text-center">
+					<small class="text-muted inline m-t-sm m-b-sm">显示 {{p.group.page.length}}条， 共 {{p.group.page.count}} 条</small>
+				</div>
+				<div style="height: 29px;padding-top: 5px; width: 66%; " class="col-sm-4 text-right text-center-xs">
+					<pagination ng-change="p.group.pageChange()" total-items="p.group.page.count" ng-model="p.group.page.start" max-size="p.group.page.maxSize" class="pagination-sm m-t-none m-b" boundary-links="true" boundary-link-numbers="true" rotate="false" items-per-page="p.group.selectRequest.length" num-pages="p.group.page.start" previous-text="上一页 " next-text="下一页 " first-text="第一页 " last-text="尾页 "></pagination>
+				</div>
+			</div>
+		</div>
+	</footer>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-default" ng-click="cancel()">取消</button>
+	<!--<button class="btn btn-primary " ng-click="ok() ">确定</button>-->
+</div>

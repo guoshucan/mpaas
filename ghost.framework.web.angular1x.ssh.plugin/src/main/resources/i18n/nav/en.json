@@ -1,0 +1,31 @@
+{
+  "header": {
+    "navbar": {
+    }
+  },
+  "aside": {
+    "nav": {
+      "ff0a5895": {
+        "name": "Operation Maintenance",
+        "757f5216": {
+          "name": "SSH",
+          "7fb4cee1": {
+            "name": "Ssh Account"
+          },
+          "48c99035": {
+            "name": "Ssh Type"
+          },
+          "391cc586": {
+            "name": "Ssh Region"
+          },
+          "51bcedf6": {
+            "name": "Ssh Group"
+          },
+          "9fb14bff": {
+            "name": "Ssh Server"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,61 @@
+<div class="bg-light lter b-b wrapper-md page_header" style="padding: 10px;">系统管理 ><strong style="color: rgb(25,158,216);">基本信息设置</strong></div>
+<div class="wrapper-md" ng-controller="a5034bc0" ng-init="init()">
+	<div ng-controller="ToasterCtrl" ng-init="init()">
+		<!-- toaster directive -->
+		<toaster-container toaster-options="{'position-class': 'toast-top-center', 'close-button':true}"></toaster-container>
+		<!-- / toaster directive -->
+	</div>
+	<!--修改-->
+	<div class="panel panel-default">
+		<form name="formValidateEdit" class="form-horizontal form-validation">
+			<div class="panel-heading">
+				<strong>修改Logo</strong>
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-sm-2 control-label">网站Logo：</label>
+					<div class="col-sm-9 input-group">
+						<input readonly="true" type="text" class="form-control" ng-click="uploadLogo()" placeholder="请选择网站Logo..." ng-model="data.logo">
+						<span class="input-group-btn">
+                           <button type="button" class="btn btn-default" ng-click="uploadLogo()"><i class="icon-cloud-upload"></i></button>
+                        </span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Logo：</label>
+					<div class="col-sm-9 input-group">
+						<img />
+					</div>
+				</div>
+			</div>
+		</form>
+		<form name="formValidateEdit" class="form-horizontal form-validation">
+			<div class="panel-heading">
+				<strong>基本信息设置修改</strong>
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-sm-2 control-label">标题：</label>
+					<div class="col-sm-9 input-group">
+						<input type="text" class="form-control" placeholder="请填写标题..." ng-model="data.title" maxlength="128" minlength="1" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">网址：</label>
+					<div class="col-sm-9 input-group">
+						<input type="text" class="form-control" placeholder="请填写网址..." ng-model="data.url" maxlength="255">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">版权：</label>
+					<div class="col-sm-9 input-group">
+						<textarea class="form-control" style="resize: none;height: 80px;" rows="6" placeholder="请填写版权..." ng-model="data.copyright" maxlength="255"></textarea>
+					</div>
+				</div>
+			</div>
+			<footer class="panel-footer text-center bg-light lter">
+				<button type="submit" class="btn btn-info" ng-disabled="formValidateEdit.$invalid" aria-disabled="false" ng-click="edit(null);">提交</button>
+			</footer>
+		</form>
+	</div>
+</div>

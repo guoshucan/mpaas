@@ -1,0 +1,5 @@
+ghost\framework\plugin\bean\annotation\PluginPackage.class
+ghost\framework\plugin\exception\PluginLoaderException.class
+ghost\framework\plugin\exception\PluginException.class
+ghost\framework\plugin\PluginConstant.class
+ghost\framework\plugin\event\PluginApplicationEvent.class

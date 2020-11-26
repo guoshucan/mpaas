@@ -1,0 +1,38 @@
+<!-- search form -->
+<form ng-controller="e7a1375f" ng-init="init()" class="navbar-form navbar-form-sm navbar-left shift" ui-shift="prependTo" target=".navbar-collapse">
+	<div class="form-group">
+		<div class="input-group">
+			<input type="text" ng-model="selected" typeahead="state for state in states | filter:$viewValue | limitTo:8" class="form-control input-sm bg-light no-border rounded padder" placeholder="搜索项目...">
+			<span class="input-group-btn">
+                <button type="submit" class="btn btn-sm bg-light rounded"><i class="fa fa-search"></i></button>
+              </span>
+		</div>
+	</div>
+</form>
+<script type="text/javascript">
+    angular.module('app').controller('e7a1375f', ['$scope', '$http', '$state', '$rootScope', '$compile', '$translate',
+        function($s, $h, $st, $rs, $c, $t) {
+            $s.i18n = {
+                key: "",
+            };
+            //初始化类型
+            $s.initLocale = function() {
+                app.getJsonObject("a440a0d8/i18n/headerSearchMenu/" + $t.use() + ".json", function(r) {
+                    if(r) {
+                        $s.i18n = r;
+                    }
+                }, function(r) {
+                });
+            };
+            $s.init = function() {
+                $s.initLocale();
+                //区域变动监听
+                $rs.$on('$translateChangeSuccess', function() {
+                    console.log($t.use());
+                    $s.initLocale();
+                })
+                console.log('$s.init = function(e7a1375f)');
+            };
+        }]);
+</script>
+<!-- / search form -->

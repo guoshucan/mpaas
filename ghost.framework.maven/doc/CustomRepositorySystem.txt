@@ -1,0 +1,31 @@
+package ghost.framework.maven;//package ghost.framework.maven;
+//
+//import org.eclipse.aether.RepositorySystem;
+//import org.eclipse.aether.RepositorySystemSession;
+//import org.eclipse.aether.internal.impl.DefaultRepositorySystem;
+//import org.eclipse.aether.resolution.*;
+//import org.eclipse.aether.spi.locator.Service;
+//
+///**
+// * @Author: 郭树灿{guoshucan-pc}
+// * @link: 手机:13715848993, QQ 27048384
+// * @Description:
+// * @Date: 20:51 2019-06-01
+// */
+//public class CustomRepositorySystem extends DefaultRepositorySystem implements RepositorySystem, Service {
+//    @Override
+//    public ArtifactDescriptorResult readArtifactDescriptor(RepositorySystemSession session, ArtifactDescriptorRequest request) throws ArtifactDescriptorException {
+//        return super.readArtifactDescriptor(session, request);
+//    }
+//
+//    @Override
+//    public ArtifactResult resolveArtifact(RepositorySystemSession session, ArtifactRequest request) throws ArtifactResolutionException {
+//        return super.resolveArtifact(session, request);
+//    }
+//
+//    @Override
+//    public DependencyResult resolveDependencies(RepositorySystemSession session, DependencyRequest request) throws DependencyResolutionException {
+//        System.out.println(request.toString());
+//        return super.resolveDependencies(session, request);
+//    }
+//}

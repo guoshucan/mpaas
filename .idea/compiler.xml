@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="ghost.framework.data.jdbc.template.plugin" />
+        <module name="ghost.framework.jsr303.valid.plugin" />
+        <module name="ghost.framework.util.tests" />
+        <module name="ghost.framework.data.orm.eclipse.jpa.plugin" />
+        <module name="ghost.framework.transaction.jca" />
+        <module name="ghost.framework.data.hibernate.plugin" />
+        <module name="ghost.framework.resource.container.context" />
+        <module name="ghost.framework.jsr310.converter" />
+        <module name="ghost.framework.web.webssh.resources.plugin" />
+        <module name="ghost.framework.jsr250.plugin" />
+        <module name="ghost.framework.web.angular1x.module.repositories.manage.plugin" />
+        <module name="ghost.framework.util" />
+        <module name="ghost.framework.nginx.content" />
+        <module name="ghost.framework.thread" />
+        <module name="ghost.framework.data.jdbc.jpa.plugin.test" />
+        <module name="ghost.framework.web.angular1x.script.plugin" />
+        <module name="ghost.framework.data.hibernate" />
+        <module name="ghost.framework.data.transaction.jta" />
+        <module name="ghost.framework.admin.entity" />
+        <module name="ghost.framework.data.jdbc.jpa" />
+        <module name="ghost.framework.nginx.agent.plugin" />
+        <module name="ghost.framework.web.angular1x.header.test2.plugin" />
+        <module name="ghost.framework.web.socket.test.plugin" />
+        <module name="ghost.framework.web.angular1x.docker.plugin" />
+        <module name="ghost.framework.web.angular1x.header.message.plugin" />
+        <module name="ghost.framework.data.transaction.jts" />
+        <module name="ghost.framework.expression" />
+        <module name="ghost.framework.web.angular1x.login.plugin" />
+        <module name="ghost.framework.web.angular1x.init.plugin" />
+        <module name="ghost.framework.web.angular1x.admin.plugin" />
+        <module name="ghost.framework.data.orm.jpa.plugin" />
+        <module name="ghost.framework.data.orm.hibernate5.jpa" />
+        <module name="ghost.framework.web.angular1x.aliyun.plugin" />
+        <module name="ghost.framework.data.jdbc" />
+        <module name="ghost.framework.oxm" />
+        <module name="ghost.framework.data.querydsl" />
+        <module name="ghost.framework.json" />
+        <module name="ghost.framework.data.orm" />
+        <module name="ghost.framework.data.orm.hibernate5.jpa.plugin" />
+        <module name="ghost.framework.data.datasource.hikaricp.plugin" />
+        <module name="ghost.framework.beans" />
+        <module name="ghost.framework.undertow.web.module" />
+        <module name="ghost.framework.core" />
+        <module name="ghost.framework.web.angular1x.header.search.plugin" />
+        <module name="ghost.framework.web.angular1x.deploy.manage.plugin" />
+        <module name="ghost.framework.data.transaction.reactive" />
+        <module name="ghost.framework.web.angular1x.pc.container.plugin" />
+        <module name="ghost.framework.data.jdbc.jpa.plugin" />
+        <module name="ghost.framework.web.test.plugin" />
+        <module name="ghost.framework.data.cache" />
+        <module name="ghost.framework.web.angular1x.context" />
+        <module name="ghost.framework.datasource.entity" />
+        <module name="ghost.framework.agent.content" />
+        <module name="ghost.framework.transaction" />
+        <module name="ghost.framework.web.angular1x.nginx.plugin" />
+        <module name="ghost.framework.data.transaction.ejb3" />
+        <module name="ghost.framework.locale.entity" />
+        <module name="ghost.framework.web.session.core" />
+        <module name="ghost.framework.aop" />
+        <module name="ghost.framework.web.login.plugin" />
+        <module name="ghost.framework.software.entity" />
+        <module name="ghost.framework.web.angular1x.admin.info.plugin" />
+        <module name="ghost.framework.web.module.repositories.api.plugin" />
+        <module name="ghost.framework.agent.plugin" />
+        <module name="ghost.framework.web.angular1x.picture.drag.verify.plugin" />
+        <module name="ghost.framework.web.angular1x.cloud.tencent.plugin" />
+        <module name="ghost.framework.tencent.cloud.cos.plugin" />
+        <module name="ghost.framework.data.orm.eclipse.jpa" />
+        <module name="ghost.framework.data.transaction" />
+        <module name="ghost.framework.gradle.plugin" />
+        <module name="ghost.framework.web.gateway.module" />
+        <module name="ghost.framework.web.angular1x.container.plugin" />
+        <module name="ghost.framework.undertow.web.context" />
+        <module name="ghost.framework.jndi" />
+        <module name="ghost.framework.aliyun.oss.plugin" />
+        <module name="ghost.framework.web.error.plugin" />
+        <module name="ghost.framework.web.angular1x.ssh.software.plugin" />
+        <module name="ghost.framework.web.context" />
+        <module name="ghost.framework.json.plugin" />
+        <module name="ghost.framework.web.angular1x.maven.repository.plugin" />
+        <module name="ghost.framework.ssh" />
+        <module name="ghost.framework.data.geo" />
+        <module name="ghost.framework.web.angular1x.resource.container.manage.plugin" />
+        <module name="ghost.framework.jsr310.converter.plugin" />
+        <module name="ghost.framework.data.dao" />
+        <module name="ghost.framework.local.derby.config.context" />
+        <module name="ghost.framework.log" />
+        <module name="ghost.framework.web.angular1x.maintenance.manage.plugin" />
+        <module name="ghost.framework.web.setting.entity" />
+        <module name="ghost.framework.web.codemirror.resources.plugin" />
+        <module name="ghost.framework.data.mapping" />
+        <module name="ghost.framework.web.module" />
+        <module name="ghost.framework.web.session.data.jdbc.plugin" />
+        <module name="ghost.framework.web.angular1x.header.user.plugin" />
+        <module name="ghost.framework.web.angular1x.module.manage.plugin" />
+        <module name="ghost.framework.data.commons" />
+        <module name="ghost.framework.web.angular1x.setting.plugin" />
+        <module name="ghost.framework.gateway.plugin" />
+        <module name="ghost.framework.data.jdbc.test" />
+        <module name="ghost.framework.maven" />
+        <module name="ghost.framework.web.socket.plugin" />
+        <module name="ghost.framework.web.angular1x.datasource.plugin" />
+        <module name="ghost.framework.data.transaction.jta.weblogic" />
+        <module name="ghost.framework.resource.container.plugin" />
+        <module name="ghost.framework.web.angular1x.cerebro.plugin" />
+        <module name="ghost.framework.web.activiti.resources.plugin" />
+        <module name="ghost.framework.web.angular1x.header.test1.plugin" />
+        <module name="ghost.framework.resource.container.entity" />
+        <module name="ghost.framework.web.angular1x.header.locale.plugin" />
+        <module name="ghost.framework.maven.plugin" />
+        <module name="ghost.framework.web.angular1x.monitor.plugin" />
+        <module name="ghost.framework.data.jdbc.template.plugin.test" />
+        <module name="ghost.framework.web.angular1x.header.settings.plugin" />
+        <module name="ghost.framework.web.image.code.plugin" />
+        <module name="ghost.framework.web.jquery.resources.plugin" />
+        <module name="ghost.framework.scheduling.plugin" />
+        <module name="ghost.framework.web.angular1x.ssh.plugin" />
+        <module name="ghost.framework.scheduling" />
+        <module name="ghost.framework.data.domain" />
+        <module name="ghost.framework.platform" />
+        <module name="ghost.framework.application.core" />
+        <module name="ghost.framework.nginx.plugin" />
+        <module name="ghost.framework.scanner.plugin" />
+        <module name="ghost.framework.monitor.entity" />
+        <module name="ghost.framework.local.derby.config.plugin" />
+        <module name="ghost.framework.context" />
+        <module name="ghost.framework.web.angular1x.header.fullscreen.plugin" />
+        <module name="ghost.framework.web.angular1x.header.logo.plugin" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="ghost-framework-mpaas-project" target="1.8" />
+      <module name="ghost-framework-mpaas-project.gitee" target="1.8" />
+      <module name="ghost.framework.admin.entity" target="1.8" />
+      <module name="ghost.framework.agent.content" target="1.8" />
+      <module name="ghost.framework.agent.plugin" target="1.8" />
+      <module name="ghost.framework.aliyun.oss.plugin" target="1.8" />
+      <module name="ghost.framework.aop" target="1.8" />
+      <module name="ghost.framework.application.core" target="1.8" />
+      <module name="ghost.framework.aspectj.plugin" target="1.8" />
+      <module name="ghost.framework.beans" target="1.8" />
+      <module name="ghost.framework.bus" target="1.8" />
+      <module name="ghost.framework.bus.client.plugin" target="1.8" />
+      <module name="ghost.framework.bus.plugin.test" target="1.8" />
+      <module name="ghost.framework.bus.server.plugin" target="1.8" />
+      <module name="ghost.framework.context" target="1.8" />
+      <module name="ghost.framework.core" target="1.8" />
+      <module name="ghost.framework.data.cache" target="1.8" />
+      <module name="ghost.framework.data.commons" target="1.8" />
+      <module name="ghost.framework.data.dao" target="1.8" />
+      <module name="ghost.framework.data.datasource.hikaricp.plugin" target="1.8" />
+      <module name="ghost.framework.data.domain" target="1.8" />
+      <module name="ghost.framework.data.geo" target="1.8" />
+      <module name="ghost.framework.data.hibernate" target="1.8" />
+      <module name="ghost.framework.data.hibernate.plugin" target="1.8" />
+      <module name="ghost.framework.data.jdbc" target="1.8" />
+      <module name="ghost.framework.data.jdbc.jpa" target="1.8" />
+      <module name="ghost.framework.data.jdbc.jpa.plugin" target="1.8" />
+      <module name="ghost.framework.data.jdbc.jpa.plugin.test" target="1.8" />
+      <module name="ghost.framework.data.jdbc.template.plugin" target="1.8" />
+      <module name="ghost.framework.data.jdbc.template.plugin.test" target="1.8" />
+      <module name="ghost.framework.data.jdbc.test" target="1.8" />
+      <module name="ghost.framework.data.mapping" target="1.8" />
+      <module name="ghost.framework.data.orm" target="1.8" />
+      <module name="ghost.framework.data.orm.eclipse.jpa" target="1.8" />
+      <module name="ghost.framework.data.orm.eclipse.jpa.plugin" target="1.8" />
+      <module name="ghost.framework.data.orm.hibernate5.jpa" target="1.8" />
+      <module name="ghost.framework.data.orm.hibernate5.jpa.plugin" target="1.8" />
+      <module name="ghost.framework.data.orm.jpa.plugin" target="1.8" />
+      <module name="ghost.framework.data.querydsl" target="1.8" />
+      <module name="ghost.framework.data.transaction" target="1.8" />
+      <module name="ghost.framework.data.transaction.ejb3" target="1.8" />
+      <module name="ghost.framework.data.transaction.jta" target="1.8" />
+      <module name="ghost.framework.data.transaction.jta.weblogic" target="1.8" />
+      <module name="ghost.framework.data.transaction.jts" target="1.8" />
+      <module name="ghost.framework.data.transaction.reactive" target="1.8" />
+      <module name="ghost.framework.datasource.entity" target="1.8" />
+      <module name="ghost.framework.expression" target="1.8" />
+      <module name="ghost.framework.gateway.plugin" target="1.8" />
+      <module name="ghost.framework.gradle.plugin" target="1.8" />
+      <module name="ghost.framework.jndi" target="1.8" />
+      <module name="ghost.framework.json" target="1.8" />
+      <module name="ghost.framework.json.plugin" target="1.8" />
+      <module name="ghost.framework.jsr250.plugin" target="1.8" />
+      <module name="ghost.framework.jsr303.valid.plugin" target="1.8" />
+      <module name="ghost.framework.jsr310.converter" target="1.8" />
+      <module name="ghost.framework.jsr310.converter.plugin" target="1.8" />
+      <module name="ghost.framework.local.derby.config.context" target="1.8" />
+      <module name="ghost.framework.local.derby.config.plugin" target="1.8" />
+      <module name="ghost.framework.locale.entity" target="1.8" />
+      <module name="ghost.framework.log" target="1.8" />
+      <module name="ghost.framework.maven" target="1.8" />
+      <module name="ghost.framework.maven.plugin" target="1.8" />
+      <module name="ghost.framework.monitor.entity" target="1.8" />
+      <module name="ghost.framework.nginx.agent.plugin" target="1.8" />
+      <module name="ghost.framework.nginx.content" target="1.8" />
+      <module name="ghost.framework.nginx.plugin" target="1.8" />
+      <module name="ghost.framework.oxm" target="1.8" />
+      <module name="ghost.framework.platform" target="1.8" />
+      <module name="ghost.framework.range.entity" target="1.8" />
+      <module name="ghost.framework.resource.container.context" target="1.8" />
+      <module name="ghost.framework.resource.container.entity" target="1.8" />
+      <module name="ghost.framework.resource.container.plugin" target="1.8" />
+      <module name="ghost.framework.scanner.plugin" target="1.8" />
+      <module name="ghost.framework.scheduling" target="1.8" />
+      <module name="ghost.framework.scheduling.plugin" target="1.8" />
+      <module name="ghost.framework.software.entity" target="1.8" />
+      <module name="ghost.framework.sqlHelper" target="1.8" />
+      <module name="ghost.framework.ssh" target="1.8" />
+      <module name="ghost.framework.ssh.ganymed.plugin" target="1.8" />
+      <module name="ghost.framework.ssh.jsch.plugin" target="1.8" />
+      <module name="ghost.framework.ssh.server.entity" target="1.8" />
+      <module name="ghost.framework.tencent.cloud.cos.plugin" target="1.8" />
+      <module name="ghost.framework.thread" target="1.8" />
+      <module name="ghost.framework.transaction" target="1.8" />
+      <module name="ghost.framework.transaction.jca" target="1.8" />
+      <module name="ghost.framework.undertow.web.context" target="1.8" />
+      <module name="ghost.framework.undertow.web.module" target="1.8" />
+      <module name="ghost.framework.util" target="1.8" />
+      <module name="ghost.framework.util.tests" target="1.8" />
+      <module name="ghost.framework.web.activiti.resources.plugin" target="1.8" />
+      <module name="ghost.framework.web.angular1x.admin.info.plugin" target="1.8" />
+      <module name="ghost.framework.web.angular1x.admin.plugin" target="1.8" />
+      <module name="ghost.framework.web.angular1x.admin.plugin.ko" target="1.8" />
+      <module name="ghost.framework.web.angular1x.aliyun.plugin" target="1.8" />
+      <module name="ghost.framework.web.angular1x.aly.plugin" target="1.8" />
+      <module name="ghost.framework.web.angular1x.api.permissions.manage.plugin" target="1.8" />
+      <module name="ghost.framework.web.angular1x.cerebro.plugin" target="1.8" />
+      <module name="ghost.framework.web.angular1x.cloud.tencent.plugin" target="1.8" />
+      <module name="ghost.framework.web.angular1x.container.plugin" target="1.8" />
+      <module name="ghost.framework.web.angular1x.context" target="1.8" />
+      <module name="ghost.framework.web.angular1x.datasource.plugin" target="1.8" />
+      <module name="ghost.framework.web.angular1x.deploy.manage.plugin" target="1.8" />
+      <module name="ghost.framework.web.angular1x.docker.plugin" target="1.8" />
+      <module name="ghost.framework.web.angular1x.header.fullscreen.plugin" target="1.8" />
+      <module name="ghost.framework.web.angular1x.header.locale.plugin" target="1.8" />
+      <module name="ghost.framework.web.angular1x.header.logo.plugin" target="1.8" />
+      <module name="ghost.framework.web.angular1x.header.message.plugin" target="1.8" />
+      <module name="ghost.framework.web.angular1x.header.plugin" target="1.8" />
+      <module name="ghost.framework.web.angular1x.header.search.plugin" target="1.8" />
+      <module name="ghost.framework.web.angular1x.header.settings.plugin" target="1.8" />
+      <module name="ghost.framework.web.angular1x.header.test1.plugin" target="1.8" />
+      <module name="ghost.framework.web.angular1x.header.test2.plugin" target="1.8" />
+      <module name="ghost.framework.web.angular1x.header.user.plugin" target="1.8" />
+      <module name="ghost.framework.web.angular1x.init.plugin" target="1.8" />
+      <module name="ghost.framework.web.angular1x.layout.config.plugin" target="1.8" />
+      <module name="ghost.framework.web.angular1x.login.plugin" target="1.8" />
+      <module name="ghost.framework.web.angular1x.maintenance.manage.plugin" target="1.8" />
+      <module name="ghost.framework.web.angular1x.maven.repository.plugin" target="1.8" />
+      <module name="ghost.framework.web.angular1x.module.manage.plugin" target="1.8" />
+      <module name="ghost.framework.web.angular1x.module.repositories.manage.plugin" target="1.8" />
+      <module name="ghost.framework.web.angular1x.monitor.manage.plugin" target="1.8" />
+      <module name="ghost.framework.web.angular1x.monitor.plugin" target="1.8" />
+      <module name="ghost.framework.web.angular1x.nginx.plugin" target="1.8" />
+      <module name="ghost.framework.web.angular1x.pc.container.plugin" target="1.8" />
+      <module name="ghost.framework.web.angular1x.picture.drag.verify.plugin" target="1.8" />
+      <module name="ghost.framework.web.angular1x.range.plugin" target="1.8" />
+      <module name="ghost.framework.web.angular1x.resource.container.manage.plugin" target="1.8" />
+      <module name="ghost.framework.web.angular1x.script.plugin" target="1.8" />
+      <module name="ghost.framework.web.angular1x.setting.plugin" target="1.8" />
+      <module name="ghost.framework.web.angular1x.setting.plugin.en" target="1.8" />
+      <module name="ghost.framework.web.angular1x.setting.plugin.zn_TW" target="1.8" />
+      <module name="ghost.framework.web.angular1x.ssh.plugin" target="1.8" />
+      <module name="ghost.framework.web.angular1x.ssh.software.plugin" target="1.8" />
+      <module name="ghost.framework.web.angular1x.top.locale.plugin" target="1.8" />
+      <module name="ghost.framework.web.angular1x.top.message.plugin" target="1.8" />
+      <module name="ghost.framework.web.api.permissions.context" target="1.8" />
+      <module name="ghost.framework.web.api.permissions.entity" target="1.8" />
+      <module name="ghost.framework.web.codemirror.resources.plugin" target="1.8" />
+      <module name="ghost.framework.web.config.plugin" target="1.8" />
+      <module name="ghost.framework.web.context" target="1.8" />
+      <module name="ghost.framework.web.error.plugin" target="1.8" />
+      <module name="ghost.framework.web.gateway.module" target="1.8" />
+      <module name="ghost.framework.web.image.code.plugin" target="1.8" />
+      <module name="ghost.framework.web.jquery.resources.plugin" target="1.8" />
+      <module name="ghost.framework.web.login.plugin" target="1.8" />
+      <module name="ghost.framework.web.module" target="1.8" />
+      <module name="ghost.framework.web.module.repositories.api.plugin" target="1.8" />
+      <module name="ghost.framework.web.mvc.context" target="1.8" />
+      <module name="ghost.framework.web.mvc.freemarker.plugin" target="1.8" />
+      <module name="ghost.framework.web.mvc.groovy.plugin" target="1.8" />
+      <module name="ghost.framework.web.mvc.nginx.ui.plugin" target="1.8" />
+      <module name="ghost.framework.web.mvc.plugin" target="1.8" />
+      <module name="ghost.framework.web.mvc.test.plugin" target="1.8" />
+      <module name="ghost.framework.web.mvc.thymeleaf.context" target="1.8" />
+      <module name="ghost.framework.web.mvc.thymeleaf.css.plugin" target="1.8" />
+      <module name="ghost.framework.web.mvc.thymeleaf.js.plugin" target="1.8" />
+      <module name="ghost.framework.web.mvc.thymeleaf.layout.plugin" target="1.8" />
+      <module name="ghost.framework.web.mvc.thymeleaf.plugin" target="1.8" />
+      <module name="ghost.framework.web.mvc.thymeleaf.text.plugin" target="1.8" />
+      <module name="ghost.framework.web.mvc.thymeleaf.xml.plugin" target="1.8" />
+      <module name="ghost.framework.web.mvc.tiles3.plugin" target="1.8" />
+      <module name="ghost.framework.web.mvc.velocity.plugin" target="1.8" />
+      <module name="ghost.framework.web.register.center.plugin" target="1.8" />
+      <module name="ghost.framework.web.register.client.plugin" target="1.8" />
+      <module name="ghost.framework.web.session.core" target="1.8" />
+      <module name="ghost.framework.web.session.data.jdbc.plugin" target="1.8" />
+      <module name="ghost.framework.web.setting.entity" target="1.8" />
+      <module name="ghost.framework.web.socket.plugin" target="1.8" />
+      <module name="ghost.framework.web.socket.test.plugin" target="1.8" />
+      <module name="ghost.framework.web.test.plugin" target="1.8" />
+      <module name="ghost.framework.web.top.message.entity" target="1.8" />
+      <module name="ghost.framework.web.websocket" target="1.8" />
+      <module name="ghost.framework.web.webssh.resources.plugin" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

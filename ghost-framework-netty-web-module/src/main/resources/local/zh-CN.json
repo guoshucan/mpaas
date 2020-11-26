@@ -1,0 +1,12 @@
+{
+  "ghost": {
+    "framework": {
+      "netty": {
+        "web": {
+          "module": {
+          }
+        }
+      }
+    }
+  }
+}

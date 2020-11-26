@@ -1,0 +1,58 @@
+HTTP升级（又称websocket）请求到了，会发生什么？
+
+
+
+
+容器看到它有各种标题，表明它是websocket的升级请求。
+
+
+
+
+请求方法 GET ？
+
+升级标头值 WebSocket ？
+
+Sec-WebSocket-Key 标头值是否存在且有效？
+
+是 Sec-WebSocket-Version 标头值是否存在且有效？
+
+< / li>
+容器尝试查找某些内容是否映射到该传入请求（使用servlet路径映射规则和javax.websocket uri模板路径映射规则的组合）。
+
+
+从上述规则中发现注册端点后，必须先将其初始化并进行配置，然后才能将其视为已打开。
+
+
+ServerEndpointConfig （所有端点都注册了此类，一些是默认值，有些是从注释计算的，有些是通过 ServerContainer.addEndpoint（ServerEndpointConfig） 方法。
+
+
+以下顺序用于初始化websocket端点
+
+
+
+
+Container建立 HandshakeRequest 和 HandshakeResponse 表示传入原始升级请求的对象
+
+Conta iner获得 配置器< / code> 来自 ServerEndpointConfig.getConfigurator（）
+
+容器调用 Configurator.modifyHandshake（ServerEndpointConfig配置，HandshakeRequest请求，HandshakeResponse响应）
+
+容器调用 Configurator.checkOrigin（字符串来源） - 如果失败，则返回立即错误403 Forbidden返回
+
+容器调用 Configurator.getNegotiatedSubprotocol（列表与LT;字符串>支持，列表< String>请求） - 如果提供了子协议，则用于WebSocket升级响应头 Sec-WebSocket-Protocol
+
+容器调用 Configurator.getNegotiatedExtensions（List< Extension>已安装，List< Extension> required） - 值返回用于WebSocket升级响应头 Sec-WebSocket-Extensions
+
+容器调用 Configurator.getEndpointInstance（Class<带有端点类参数的T> endpointClass） 创建了 ServerEndpointConfig 。
+
+此时端点 + 会话已创建且websocket已打开。
+
+
+
+
+如果您在任何时候不希望升级此请求，只需从 getEndpointInstance 类中抛出异常。我建议使用 java。 lang.InstantiationException 。
+这将导致Jetty不执行升级并将请求发送到servlet处理链。
+
+
+
+请注意您的http响应选项从Configurator看起来非常有限（而且根据JSR-356 / javax.websocket规范，未定义）。

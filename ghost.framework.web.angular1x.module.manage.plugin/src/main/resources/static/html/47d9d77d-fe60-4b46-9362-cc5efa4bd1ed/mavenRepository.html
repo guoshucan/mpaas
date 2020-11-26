@@ -1,0 +1,204 @@
+<!--
+	作者：27048384@qq.com
+	时间：2020-04-06
+	描述：删除确认弹框
+-->
+<script type="text/ng-template" id="d305fb00-49d3-4b0c-9af0-268e9bf0e2be">
+	<div class="modal-header">
+		<h4 class="modal-title">确认删除!</h4>
+	</div>
+	<div class="modal-body">
+		<ul>
+			<li ng-repeat="item in rows" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+		            选择的是: <b>{{ item.groupName }}</b>
+			</li>
+		</ul>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-default" ng-click="cancel()">取消</button>
+		<button class="btn btn-primary" ng-click="ok()">确定</button>
+	</div>
+</script>
+<!--
+	作者：27048384@qq.com
+	时间：2020-04-06
+	描述：管理组内容
+-->
+<div class="bg-light lter b-b wrapper-md page_header" style="padding: 10px;">系统管理 ><strong style="color: rgb(25,158,216);">管理组管理</strong></div>
+<div class="wrapper-md" ng-controller="0fa99dad-79a6-438a-860e-8e66344c43f2" ng-init="init()">
+	<div ng-controller="ToasterCtrl" ng-init="init()">
+		<!-- toaster directive -->
+		<toaster-container toaster-options="{'position-class': 'toast-top-center', 'close-button':true}"></toaster-container>
+		<!-- / toaster directive -->
+	</div>
+	<!--列表-->
+	<div class="panel panel-default" ng-show="tableContent">
+		<div class="panel-heading">管理组</div>
+		<div class="row wrapper">
+
+			<div style="margin-bottom: 0px;width: auto;" class="form-group col-sm-2">
+				<div class="input-group">
+					<select class="form-control inline v-middle" ng-model="selectRequest.status">
+						<option value="-1">请选择状态</option>
+						<option value="0">禁用</option>
+						<option value="1">启用</option>
+					</select>
+				</div>
+			</div>
+
+			<div style="margin-bottom: 0px;" class="form-group col-sm-2" ng-controller="02fdff6a" ng-init="init('startTime')">
+				<div class="input-group">
+					<input type="text" class="form-control" datepicker-popup="{{format}}" id="startTime" ng-model="selectRequest.startTime" is-open="opened" min-date="'1980-1-1'" max-date="'2100-12-31'" datepicker-options="dateOptions" ng-required="true" close-text="关闭" clear-text="清除" current-text="今天" format-date placeholder="开始日期" />
+					<span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open($event, 'startTime')"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+				</div>
+			</div>
+
+			<div style="margin-bottom: 0px;" class="form-group col-sm-2" ng-controller="02fdff6a" ng-init="init('endTime')">
+				<div class="input-group">
+					<input type="text" class="form-control" datepicker-popup="{{format}}" id="endTime" ng-model="selectRequest.endTime" is-open="opened" min-date="'1980-1-1'" max-date="'2100-12-31'" datepicker-options="dateOptions" ng-required="true" close-text="关闭" clear-text="清除" current-text="今天" format-date placeholder="结束日期" />
+					<span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open($event, 'endTime')"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+				</div>
+			</div>
+
+			<div style="margin-bottom: 0px;" class="form-group col-sm-2">
+				<div class="input-group">
+					<input type="text" class="form-control" ng-model="selectRequest.key" placeholder="请输入关键字...">
+					<span class="input-group-btn"><button class="btn btn-info" type="button" ng-click="search(false)">搜索</button></span>
+				</div>
+			</div>
+			<div style="margin-bottom: 0px;width: auto;" class="form-group col-sm-2">
+				<div class="input-group">
+					<button class="btn btn-dark" ng-click="search(true)">清除</button>
+				</div>
+			</div>
+
+			<div style="margin-bottom: 0px;width: auto;" class="form-group col-sm-2">
+				<div class="input-group">
+					<button class="btn btn-primary" ng-click="add()">新增</button>
+				</div>
+			</div>
+
+			<div style="margin-bottom: 0px;width: auto;" class="form-group col-sm-2">
+				<div class="input-group" ng-controller="ff6f79f6">
+					<button class="btn btn-danger" ng-disabled="deleteAllDisabled" ng-click="open()">删除所选</button>
+				</div>
+			</div>
+		</div>
+		<div class="table-responsive">
+			<table class="table table-striped b-t b-light">
+				<thead>
+					<tr>
+						<th style="width:20px;">
+							<label class="i-checks m-b-none">
+							<input type="checkbox" ng-model="selectAll" ng-click="checkboxAll(selectAll)" ng-checked="selectAll" ng-disabled="page.data.length==0"><i></i>
+						</label>
+						</th>
+						<th>Id</th>
+						<th>名称</th>
+						<th>状态</th>
+						<th>日期</th>
+						<th style="text-align: center;">操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="item in page.data">
+						<td><label class="i-checks m-b-none"><input type="checkbox" value="{{item.groupId}}" ng-click="checkboxSelected($event,item.groupId)" ng-checked="item.check" ng-model="item.check"><i></i></label></td>
+						<td><span class="text-ellipsis">{{item.groupId}}</span></td>
+						<td><span class="text-ellipsis">{{item.groupName}}</span></td>
+						<td>
+							<label class="i-switch m-t-xs m-r">
+								<input type="checkbox" ng-model="item.statusCheck" ng-click="statusUpdate(item);"><i></i>
+							</label>
+						</td>
+						<td><span class="text-ellipsis">{{item.createTime}}</span></td>
+						<td style="text-align: center;" ng-controller="0ebf2e8e-9269-4661-8b34-e8364c0e59d5">
+							<button style="height: 24px;padding: 2px;" class="btn btn-success btn-sm" style="margin-left:5px;" ng-click="edit(item)">修改</button>
+							<button style="height: 24px;padding: 2px;" class="btn btn-danger btn-sm" style="margin-left:5px;" ng-click="open(item)">删除</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<footer class="panel-footer">
+			<div class="row">
+				<div class="col-sm-3 hidden-xs">
+					<select class="input-sm form-control w-sm inline v-middle" ng-model="selectRequest.length" ng-change="selectRowLengthChange();">
+						<option value="10">10</option>
+						<option value="25">25</option>
+						<option value="50">50</option>
+						<option value="100">100</option>
+					</select>
+					<small class="text-muted inline m-t-sm m-b-sm">每页{{selectRequest.length}}行</small>
+				</div>
+				<div class="col-sm-7">
+					<div class="col-sm-4 text-center">
+						<small class="text-muted inline m-t-sm m-b-sm">显示 {{page.data.length}}条， 共 {{page.count}} 条</small>
+					</div>
+					<div style="height: 29px;padding-top: 5px; width: 66%;" class="col-sm-4 text-right text-center-xs">
+						<pagination ng-change="pageChange()" total-items="page.count" ng-model="selectRequest.start" max-size="page.maxSize" class="pagination-sm m-t-none m-b" boundary-links="true" boundary-link-numbers="true" rotate="false" items-per-page="selectRequest.length" num-pages="page.pages" previous-text="上一页" next-text="下一页" first-text="第一页" last-text="尾页"></pagination>
+					</div>
+				</div>
+			</div>
+		</footer>
+	</div>
+	<!--添加-->
+	<div class="panel panel-default" ng-show="addContent">
+		<form name="formValidateAdd" class="form-horizontal form-validation">
+			<div class="panel-heading">
+				<strong>添加管理组</strong>
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">管理组名称：</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" placeholder="请填写管理组名称..." ng-model="addData.groupName" maxlength="50" minlength="2" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">是否启用：</label>
+					<div class="col-sm-9">
+						<label class="checkbox i-checks">
+                    <input type="checkbox" ng-model="addData.status"><i></i>
+                  </label>
+					</div>
+				</div>
+			</div>
+			<footer class="panel-footer text-center bg-light lter">
+				<button type="submit" class="btn btn-success" ng-disabled="formValidateAdd.$invalid" aria-disabled="false" ng-click="add();">提交</button>
+				<button type="button" class="btn btn-danger" style="margin-left: 50px;" ng-click="back();">返回</button>
+			</footer>
+		</form>
+	</div>
+	<!--修改-->
+	<div class="panel panel-default" ng-show="editContent">
+		<form name="formValidateEdit" class="form-horizontal form-validation">
+			<div class="panel-heading">
+				<strong>修改管理组</strong>
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">管理组名称：</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" placeholder="请填写管理组名称..." ng-model="editRow.groupName" maxlength="50" minlength="2" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">是否启用：</label>
+					<div class="col-sm-9">
+						<label class="checkbox i-checks">
+                    <input type="checkbox" ng-model="editRow.status"><i></i>
+                  </label>
+					</div>
+				</div>
+			</div>
+			<footer class="panel-footer text-center bg-light lter">
+				<button type="submit" class="btn btn-info" ng-click="edit(null);">提交</button>
+				<button type="button" class="btn btn-danger" style="margin-left: 50px;" ng-click="back();">返回</button>
+			</footer>
+		</form>
+	</div>
+</div>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="0.0" y="370.0">ghost.framework.web.module.http.request.method.argument.RequestMethodArgumentPathVariableAnnotationResolver</node>
+    <node x="0.0" y="444.0">ghost.framework.web.module.http.request.method.argument.RequestMethodArgumentRequestParamAnnotationResolver</node>
+    <node x="427.0" y="666.0">ghost.framework.web.module.http.request.method.argument.RequestMethodArgumentValueAnnotationResolver</node>
+    <node x="0.0" y="814.0">ghost.framework.web.module.http.request.method.argument.RequestMethodArgumentServletClassResolver</node>
+    <node x="0.0" y="0.0">ghost.framework.web.module.http.request.method.argument.RequestMethodArgumentMultipartRequestParamAnnotationResolver</node>
+    <node x="0.0" y="592.0">ghost.framework.web.module.http.request.method.argument.RequestMethodArgumentCookieValueAnnotationResolver</node>
+    <node x="0.0" y="740.0">ghost.framework.web.module.http.request.method.argument.RequestMethodArgumentThrowableClassResolver</node>
+    <node x="378.0" y="814.0">ghost.framework.web.module.http.request.method.argument.RequestMethodArgumentResolverContainer</node>
+    <node x="0.0" y="518.0">ghost.framework.web.module.http.request.method.argument.RequestMethodArgumentCookieValuesAnnotationResolver</node>
+    <node x="392.0" y="740.0">ghost.framework.web.module.http.request.method.argument.RequestMethodArgumentMultipartClassResolver</node>
+    <node x="441.0" y="592.0">ghost.framework.web.module.http.request.method.argument.RequestMethodArgumentRequestPartAnnotationResolver</node>
+    <node x="0.0" y="148.0">ghost.framework.web.module.http.request.method.argument.RequestMethodArgumentRequestParamPrimitiveClassResolver</node>
+    <node x="0.0" y="74.0">ghost.framework.web.module.http.request.method.argument.RequestMethodArgumentSessionAttributesAnnotationResolver</node>
+    <node x="0.0" y="222.0">ghost.framework.web.module.http.request.method.argument.RequestMethodArgumentSessionAttributeAnnotationResolver</node>
+    <node x="448.0" y="518.0">ghost.framework.web.module.http.request.method.argument.RequestMethodArgumentRequestBodyAnnotationResolver</node>
+    <node x="0.0" y="666.0">ghost.framework.web.module.http.request.method.argument.RequestMethodArgumentAutowiredAnnotationResolver</node>
+    <node x="0.0" y="296.0">ghost.framework.web.module.http.request.method.argument.RequestMethodArgumentRequestHeaderAnnotationResolver</node>
+  </nodes>
+  <notes />
+  <edges />
+  <settings layout="Hierarchic Group" zoom="1.0" x="708.0" y="216.0" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

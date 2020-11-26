@@ -1,0 +1,9 @@
+{
+  "layoutSettings": "布局設置",
+  "selectThemeColor": "請選擇顏色主題",
+  "container": "盒模型布局",
+  "asideDock": "頂部停靠側邊欄",
+  "asideFolded": "折疊側邊欄",
+  "asideFixed": "冻结侧边栏",
+  "headerFixed": "凍結側邊欄"
+}

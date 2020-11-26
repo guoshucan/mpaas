@@ -1,0 +1,5 @@
+og4j.logger.ghost.framework.app.core=INFO,DEBUG
+og4j.logger.ghost.framework.app.context=INFO,DEBUG
+og4j.logger.ghost.framework.beans=INFO,DEBUG
+og4j.logger.ghost.framework.context=INFO,DEBUG
+og4j.logger.ghost.framework.jetty.web.module.test=INFO,DEBUG

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="867.0" y="1109.0">ghost.framework.maven.ConsoleTransferListener</node>
+    <node x="232.0" y="1109.0">ghost.framework.maven.MavenRepositoryServer</node>
+    <node x="930.0" y="0.0">ghost.framework.maven.MavenArtifactMetadata</node>
+    <node x="1258.0" y="0.0">ghost.framework.maven.ConsoleRepositoryListener</node>
+    <node x="1181.0" y="1109.0">ghost.framework.maven.FileArtifact</node>
+    <node x="0.0" y="1482.0">ghost.framework.maven.ConsoleDependencyGraphDumper</node>
+    <node x="0.0" y="0.0">ghost.framework.maven.Booter</node>
+    <node x="0.0" y="1109.0">ghost.framework.maven.Params</node>
+    <node x="469.0" y="1109.0">ghost.framework.maven.MavenArtifactMetadataList</node>
+  </nodes>
+  <notes />
+  <edges />
+  <settings layout="Hierarchic Group" zoom="1.0" x="346.0" y="358.0" />
+  <SelectedNodes>
+    <node>ghost.framework.maven.Booter</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

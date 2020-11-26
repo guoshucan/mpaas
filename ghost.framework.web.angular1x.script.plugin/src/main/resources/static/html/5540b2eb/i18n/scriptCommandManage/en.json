@@ -1,0 +1,76 @@
+{
+  "operationMaintenance": "Operation Maintenance",
+  "error": "Error!",
+  "complete": "Complete",
+  "disable": "Disable",
+  "enable": "Enable",
+  "startTime": "Start time",
+  "endTime": "End time",
+  "close": "Close",
+  "clear": "Clear",
+  "currentDate": "Current date",
+  "name": "Name",
+  "status": "Status",
+  "date": "Date",
+  "open": "Open",
+  "submit": "Submit",
+  "back": "Back",
+  "repeat": "Repeat!",
+  "statusComplete": "Status complete",
+  "show": "Show",
+  "script": "Script",
+  "command": "Command",
+  "form": {
+    "name": {
+      "name": "Name:",
+      "placeholder": "Please fill in the name..."
+    },
+    "command": {
+      "name": "Command:",
+      "placeholder": "Please fill in the command..."
+    },
+    "description": {
+      "name": "Description:",
+      "placeholder": "Please fill in the name of the description..."
+    },
+    "status": "Enable:"
+  },
+  "add": {
+    "name": "Add",
+    "command": "Add command"
+  },
+  "edit": {
+    "name": "Edit",
+    "command": "Edit command"
+  },
+  "content": {
+    "details": "Command details",
+    "commandManagement": "Command management"
+  },
+  "delete": {
+    "confirmDeletion": "Confirm deletion!",
+    "chooseIs": "Choose is:",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "selected": "Delete selected",
+    "name": "Delete",
+    "complete": "Delete complete",
+    "error": "Delete error！"
+  },
+  "search": {
+    "pleaseSelectStatus": "Please select status",
+    "key": "Please enter key words...",
+    "name": "Search"
+  },
+  "page": {
+    "perPage": "Per page",
+    "row": "row",
+    "show": "Show",
+    "article": "article",
+    "total": "Total",
+    "previous": "Previous",
+    "next": "Next",
+    "first": "First",
+    "last": "Last"
+  }
+}

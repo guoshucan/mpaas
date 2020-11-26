@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="0.0" y="153.0">ghost.framework.maven.filemanager.Lock</node>
+    <node x="22.0" y="0.0">ghost.framework.maven.filemanager.FileManager</node>
+    <node x="0.0" y="79.0">ghost.framework.maven.filemanager.internal.DefaultFileManager</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="ghost.framework.maven.filemanager.internal.DefaultFileManager" target="ghost.framework.maven.filemanager.FileManager">
+      <point x="0.0" y="-14.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="0.0" y="0.0" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

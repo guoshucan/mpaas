@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: biz.aQute:bndlib:0.0.203">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/biz/aQute/bndlib/0.0.203/bndlib-0.0.203.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/biz/aQute/bndlib/0.0.203/bndlib-0.0.203-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/biz/aQute/bndlib/0.0.203/bndlib-0.0.203-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

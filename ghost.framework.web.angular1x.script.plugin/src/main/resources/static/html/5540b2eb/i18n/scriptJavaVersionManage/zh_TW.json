@@ -1,0 +1,56 @@
+{
+  "operationMaintenance":"運維",
+  "error": "錯誤！",
+  "complete": "完成",
+  "clear": "清除",
+  "close": "關閉",
+  "version": "版本",
+  "date": "日期",
+  "open": "操作",
+  "submit": "提交",
+  "back": "返回",
+  "repeat": "重復！",
+  "script": "腳本",
+  "type": "類型",
+  "form":{
+    "version": {
+      "name": "版本：",
+      "placeholder": "請填寫版本..."
+    },
+    "type":{
+      "name": "類型："
+    }
+  },
+  "add": {
+    "name": "新增",
+    "version": "添加版本"
+  },
+  "edit": {
+    "name": "修改",
+    "version": "修改版本"
+  },
+  "content": {
+    "versionManagement": "Java版本管理"
+  },
+  "delete": {
+    "confirmDeletion": "確認刪除！",
+    "chooseIs": "選擇的是:",
+    "cancel": "取消",
+    "confirm": "確認",
+    "selected": "刪除所選",
+    "name": "刪除",
+    "complete": "刪除完成",
+    "error": "刪除錯誤！"
+  },
+  "page": {
+    "perPage": "每頁",
+    "row": "行",
+    "show": "顯示",
+    "article": "條",
+    "total": "總",
+    "previous": "上壹頁",
+    "next": "下壹頁",
+    "first": "第壹頁",
+    "last": "尾頁"
+  }
+}

@@ -1,0 +1,141 @@
+{
+  "operationMaintenance": "Operation Maintenance",
+  "error": "Error！",
+  "complete": "Complete",
+  "disable": "Disable",
+  "enable": "Enable",
+  "startTime": "Start time",
+  "endTime": "End time",
+  "close": "Close",
+  "clear": "Clear",
+  "currentDate": "Current date",
+  "name": "Name",
+  "status": "Status",
+  "date": "Date",
+  "open": "Open",
+  "submit": "Submit",
+  "back": "Back",
+  "repeat": "Repeat！",
+  "statusComplete": "Status complete",
+  "show": "Show",
+  "select": "Select",
+  "cancel": "Cancel",
+  "version": "Version",
+  "supertube": "Supertube",
+  "hostName": "Host",
+  "port": "Port",
+  "test": "Test",
+  "testConnection": "Test connection",
+  "testConnectionFailed": "Test connection failed",
+  "testConnectionComplete": "Test connection complete",
+  "console": "Console",
+  "fileManagement": "File management",
+  "management": {
+    "hide": "Hide management list",
+    "show": "Display management list"
+  },
+  "form": {
+    "name": {
+      "name": "Name:",
+      "placeholder": "Please fill in the name..."
+    },
+    "port": {
+      "name": "Port:",
+      "placeholder": "Please fill in the port..."
+    },
+    "group": {
+      "name": "Group:",
+      "placeholder": "Please select a group..."
+    },
+    "type": {
+      "name": "Type:",
+      "placeholder": "Please choose the type..."
+    },
+    "account": {
+      "name": "account:",
+      "placeholder": "Please select an account..."
+    },
+    "region": {
+      "name": "Region:",
+      "placeholder": "Please select a region..."
+    },
+    "host": {
+      "name": "Host:",
+      "placeholder": "Please fill in the host..."
+    },
+    "timeout": {
+      "name": "Timeout:",
+      "placeholder": "Please fill in the timeout..."
+    },
+    "channelTimeout": {
+      "name": "Channel timeout:",
+      "placeholder": "Please fill in the channel timeout..."
+    },
+    "remoteDirectory": {
+      "name": "Remote path:",
+      "placeholder": "Please fill in the remote path..."
+    },
+    "createTime": "Creation time:",
+    "description": {
+      "name": "description:",
+      "placeholder": "Please fill in the description..."
+    },
+    "status": "Enable:",
+    "id": "Id："
+  },
+  "add": {
+    "name": "Add",
+    "server": "Add server"
+  },
+  "edit": {
+    "name": "Edit",
+    "server": "Edit server"
+  },
+  "content": {
+    "details": "Server details",
+    "serverManagement": "Server management"
+  },
+  "group": {
+    "details": "Group"
+  },
+  "type": {
+    "details": "Type"
+  },
+  "region": {
+    "details": "Region"
+  },
+  "account": {
+    "details": "Account",
+    "select": {
+      "pleaseSelect": "Please select super tube",
+      "manage": "Manage"
+    }
+  },
+  "delete": {
+    "confirmDeletion": "Confirm deletion!",
+    "chooseIs": "Choose is:",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "selected": "Delete selected",
+    "name": "Delete",
+    "complete": "Delete complete",
+    "error": "Delete error！"
+  },
+  "search": {
+    "pleaseSelectStatus": "Please select status",
+    "pleaseSelect": "please choose...",
+    "key": "Please enter key words...",
+    "name": "Search"
+  },
+  "page": {
+    "perPage": "Per page",
+    "row": "row",
+    "show": "Show",
+    "article": "article",
+    "total": "Total",
+    "previous": "Previous",
+    "next": "Next",
+    "first": "First",
+    "last": "Last"
+  }
+}

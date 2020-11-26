@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+    <mirrors>
+        <!-- 阿里云仓库 -->
+        <mirror>
+            <id>alimaven</id>
+            <mirrorOf>central</mirrorOf>
+            <name>aliyun maven</name>
+            <url>https://maven.aliyun.com/repository/central</url>
+        </mirror>
+        <!-- 中央仓库1 -->
+		<!--
+        <mirror>
+            <id>repo1</id>
+            <mirrorOf>central</mirrorOf>
+            <name>Human Readable Name for this Mirror.</name>
+            <url>http://repo1.maven.org/maven2/</url>
+        </mirror>
+		-->
+        <!-- 中央仓库2 -->
+		<!--
+        <mirror>
+            <id>repo2</id>
+            <mirrorOf>central</mirrorOf>
+            <name>Human Readable Name for this Mirror.</name>
+            <url>http://repo2.maven.org/maven2/</url>
+        </mirror>
+		-->
+        <!-- nexus私库
+        <mirror>
+            <id>maven-public</id>
+            <mirrorOf>central</mirrorOf>
+            <name>Nexus Mirror.</name>
+            <url>http://www.xxx.com:8081/repository/maven-public/</url>
+        </mirror>-->
+    </mirrors>
+	<!--配置私库账号密码-->
+	<servers>
+    	<!--发布版本
+	   <server>
+           <id>maven-public</id>
+           <username>admin</username>
+           <password>123456</password>
+        </server>-->
+    	<!--发布版本-->
+	   <server>
+           <id>maven-releases</id>
+           <username>admin</username>
+           <password>123456</password>
+        </server>
+	    <!--开发快照版本-->
+        <server>
+           <id>maven-snapshots</id>
+           <username>admin</username>
+           <password>123456</password>
+        </server>
+	</servers>
+    <profiles>
+        <profile>
+            <id>maven-releases</id>
+            <repositories>
+                <repository>
+                    <id>maven-releases</id>
+                    <url>http://www.xxx.com:8081/repository/maven-releases/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+            </repositories>
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>maven-releases</id>
+                    <url>http://www.xxx.com:8081/repository/maven-releases/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </pluginRepository>
+            </pluginRepositories>
+        </profile>
+        <profile>
+            <id>maven-snapshots</id>
+            <repositories>
+                <repository>
+                    <id>maven-snapshots</id>
+                    <url>http://www.xxx.com:8081/repository/maven-snapshots/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+            </repositories>
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>maven-snapshots</id>
+                    <url>http://www.xxx.com:8081/repository/maven-snapshots/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </pluginRepository>
+            </pluginRepositories>
+        </profile>
+    </profiles>
+</settings>

@@ -1,0 +1,10 @@
+{
+  "ghost": {
+    "framework": {
+      "web": {
+        "module": {
+        }
+      }
+    }
+  }
+}

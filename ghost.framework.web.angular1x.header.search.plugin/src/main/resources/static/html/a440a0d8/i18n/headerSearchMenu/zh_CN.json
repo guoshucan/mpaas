@@ -1,0 +1,14 @@
+{
+  "key": "请输入关键字...",
+  "page": {
+    "perPage": "每页",
+    "row": "行",
+    "show": "显示",
+    "article": "条",
+    "total": "总",
+    "previous": "上一页",
+    "next": "下一页",
+    "first": "第一页",
+    "last": "尾页"
+  }
+}

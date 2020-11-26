@@ -1,0 +1,22 @@
+{
+    "title": "Login",
+    "password": "password",
+    "username": "username",
+    "system": {
+        "login": "system login"
+    },
+    "button":{
+        "login": "login"
+    },
+    "record": {
+        "password": "record password"
+    },
+    "message": {
+        "username": "please enter your account",
+        "password": "enter your password"
+    },
+    "code": {
+        "title": "code",
+        "alt": "click refresh code"
+    }
+}

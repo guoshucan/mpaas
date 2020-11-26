@@ -1,0 +1,3 @@
+ghost\framework\web\vue\router\plugin\controller\DynamicRouterController.class
+ghost\framework\web\vue\router\plugin\DynamicRouterResolver.class
+ghost\framework\web\vue\router\plugin\package-info.class

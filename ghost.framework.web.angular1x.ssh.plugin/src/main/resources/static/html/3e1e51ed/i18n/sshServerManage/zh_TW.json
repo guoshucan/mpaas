@@ -1,0 +1,141 @@
+{
+  "operationMaintenance": "運維",
+  "error": "完成！",
+  "complete": "完成",
+  "disable": "禁用",
+  "enable": "啟用",
+  "startTime": "開始日期",
+  "endTime": "結束日期",
+  "close": "關閉",
+  "clear": "清除",
+  "currentDate": "今天",
+  "name": "名稱",
+  "status": "狀態",
+  "date": "日期",
+  "open": "操作",
+  "submit": "提交",
+  "back": "返回",
+  "repeat": "重復！",
+  "statusComplete": "狀態完成。",
+  "show": "查看",
+  "select": "選擇",
+  "cancel": "取消",
+  "version": "版本",
+  "supertube": "超管",
+  "hostName": "地址",
+  "port": "端口",
+  "test": "測試",
+  "testConnection": "測試連接",
+  "testConnectionFailed": "測試連接失敗",
+  "testConnectionComplete": "測試連接完成",
+  "console": "控制臺",
+  "fileManagement": "文件管理",
+  "management": {
+    "hide": "隱藏管理列表",
+    "show": "顯示管理列表"
+  },
+  "form": {
+    "name": {
+      "name": "名稱：",
+      "placeholder": "請填寫名稱..."
+    },
+    "port": {
+      "name": "端口：",
+      "placeholder": "請填寫端口..."
+    },
+    "group": {
+      "name": "組：",
+      "placeholder": "請選擇組..."
+    },
+    "type": {
+      "name": "類型：",
+      "placeholder": "請選擇類型..."
+    },
+    "account": {
+      "name": "賬號：",
+      "placeholder": "請選擇賬號..."
+    },
+    "region": {
+      "name": "區域：",
+      "placeholder": "請選擇區域..."
+    },
+    "host": {
+      "name": "主機：",
+      "placeholder": "請填寫主機..."
+    },
+    "timeout": {
+      "name": "超時：",
+      "placeholder": "請填寫超時..."
+    },
+    "channelTimeout": {
+      "name": "通道超時：",
+      "placeholder": "請填寫通道超時..."
+    },
+    "remoteDirectory": {
+      "name": "遠程路徑：",
+      "placeholder": "請填寫遠程路徑..."
+    },
+    "createTime": "創建時間：",
+    "description": {
+      "name": "描述：",
+      "placeholder": "請填寫描述..."
+    },
+    "status": "是否啟用：",
+    "id": "Id："
+  },
+  "add": {
+    "name": "新增",
+    "server": "添加服務器"
+  },
+  "edit": {
+    "name": "修改",
+    "server": "修改服務器"
+  },
+  "content": {
+    "details": "服務器詳情",
+    "serverManagement": "服務器管理"
+  },
+  "group": {
+    "details": "組"
+  },
+  "type": {
+    "details": "類型"
+  },
+  "region": {
+    "details": "區域"
+  },
+  "account": {
+    "details": "賬號",
+    "select": {
+      "pleaseSelect": "請選擇超管",
+      "manage": "管理"
+    }
+  },
+  "delete": {
+    "confirmDeletion": "確認刪除！",
+    "chooseIs": "選擇的是:",
+    "cancel": "取消",
+    "confirm": "確認",
+    "selected": "刪除所選",
+    "name": "刪除",
+    "complete": "刪除完成",
+    "error": "刪除錯誤！"
+  },
+  "search": {
+    "pleaseSelectStatus": "請選擇狀態",
+    "pleaseSelect": "請選擇...",
+    "key": "請輸入關鍵字...",
+    "name": "搜索"
+  },
+  "page": {
+    "perPage": "每頁",
+    "row": "行",
+    "show": "顯示",
+    "article": "條",
+    "total": "總",
+    "previous": "上壹頁",
+    "next": "下壹頁",
+    "first": "第壹頁",
+    "last": "尾頁"
+  }
+}

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="50.0" y="17.076171875">ghost.framework.maven.aether.localrepo</node>
+    <node x="30.0" y="142.076171875">ghost.framework.maven.aether.concurrency</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="ghost.framework.maven.aether.localrepo" target="ghost.framework.maven.aether.localrepo">
+      <point x="-17.0" y="14.5" />
+      <point x="101.0" y="76.076171875" />
+      <point x="20.0" y="76.076171875" />
+      <point x="20.0" y="35.201171875" />
+      <point x="-68.0" y="3.625" />
+    </edge>
+    <edge source="ghost.framework.maven.aether.concurrency" target="ghost.framework.maven.aether.concurrency">
+      <point x="-37.25" y="14.5" />
+      <point x="67.25" y="191.076171875" />
+      <point x="10.0" y="191.076171875" />
+      <point x="10.0" y="163.826171875" />
+      <point x="-74.5" y="7.25" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="0.0" y="0.0" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

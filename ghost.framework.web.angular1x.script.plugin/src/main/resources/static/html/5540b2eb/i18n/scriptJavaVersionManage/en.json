@@ -1,0 +1,56 @@
+{
+  "operationMaintenance":"Operation Maintenance",
+  "error": "error！",
+  "complete": "Complete",
+  "clear": "Clear",
+  "close": "Close",
+  "version": "Version",
+  "date": "Date",
+  "open": "Open",
+  "submit": "Submit",
+  "back": "Back",
+  "repeat": "repeat！",
+  "script": "Script",
+  "type": "Type",
+  "form":{
+    "version": {
+      "name": "Version name:",
+      "placeholder": "Please fill in the name of the version..."
+    },
+    "type":{
+      "name": "Type："
+    }
+  },
+  "add": {
+    "name": "Add",
+    "version": "Add Version"
+  },
+  "edit": {
+    "name": "Edit",
+    "version": "Edit Version"
+  },
+  "content": {
+    "versionManagement": "Java version management"
+  },
+  "delete": {
+    "confirmDeletion": "Confirm deletion!",
+    "chooseIs": "Choose is:",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "selected": "Delete selected",
+    "name": "Delete",
+    "complete": "Delete complete",
+    "error": "Delete error！"
+  },
+  "page": {
+    "perPage": "Per page",
+    "row": "row",
+    "show": "Show",
+    "article": "article",
+    "total": "Total",
+    "previous": "Previous",
+    "next": "Next",
+    "first": "First",
+    "last": "Last"
+  }
+}

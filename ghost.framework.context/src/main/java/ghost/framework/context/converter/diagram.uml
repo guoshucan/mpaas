@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="213.0" y="158.0">ghost.framework.context.converter.TypeDescriptorConverter</node>
+    <node x="0.0" y="158.0">ghost.framework.context.converter.EncodingTypeConverter</node>
+    <node x="138.0" y="79.0">ghost.framework.context.converter.TypeConverter</node>
+    <node x="152.0" y="0.0">ghost.framework.context.converter.Converter</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="ghost.framework.context.converter.EncodingTypeConverter" target="ghost.framework.context.converter.TypeConverter">
+      <point x="0.0" y="-14.5" />
+      <point x="96.5" y="133.0" />
+      <point x="172.25" y="133.0" />
+      <point x="-34.25" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.context.converter.TypeDescriptorConverter" target="ghost.framework.context.converter.TypeConverter">
+      <point x="0.0" y="-14.5" />
+      <point x="316.5" y="133.0" />
+      <point x="240.75" y="133.0" />
+      <point x="34.25" y="14.5" />
+    </edge>
+    <edge source="ghost.framework.context.converter.TypeConverter" target="ghost.framework.context.converter.Converter">
+      <point x="0.0" y="-14.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="597.5" y="239.5" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

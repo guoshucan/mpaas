@@ -1,0 +1,9 @@
+{
+  "layoutSettings": "레이아웃 설정",
+  "selectThemeColor": "색상 테마를 선택하세요",
+  "container": "박스 모델 레이아웃",
+  "asideDock": "상단 도크 사이드 바",
+  "asideFolded": "사이드 바 접기",
+  "asideFixed": "사이드 바 고정",
+  "headerFixed": "상단 고정"
+}

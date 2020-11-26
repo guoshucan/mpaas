@@ -1,0 +1,78 @@
+{
+  "operationMaintenance": "运维",
+  "error": "错误！",
+  "complete": "完成",
+  "disable": "禁用",
+  "enable": "启用",
+  "startTime": "开始日期",
+  "endTime": "结束日期",
+  "close": "关闭",
+  "clear": "清除",
+  "currentDate": "今天",
+  "script": "脚本",
+  "name": "名称",
+  "type": "类型",
+  "status": "状态",
+  "date": "日期",
+  "open": "操作",
+  "submit": "提交",
+  "back": "返回",
+  "repeat": "重复！",
+  "statusComplete": "状态完成。",
+  "show": "查看",
+  "form": {
+    "name": {
+      "name": "名称：",
+      "placeholder": "请填写名称..."
+    },
+    "description": {
+      "name": "描述：",
+      "placeholder": "请填写描述..."
+    },
+    "status": "是否启用：",
+    "content": "脚本内容：",
+    "type": "脚本类型：",
+    "python": "Python版本：",
+    "golnag": "GoLnag版本：",
+    "java": "Java版本："
+  },
+  "add": {
+    "name": "新增",
+    "script": "添加脚本"
+  },
+  "edit": {
+    "name": "修改",
+    "script": "修改脚本"
+  },
+  "delete": {
+    "confirmDeletion": "确认删除！",
+    "chooseIs": "选择的是:",
+    "cancel": "取消",
+    "confirm": "确认",
+    "selected": "删除所选",
+    "name": "删除",
+    "complete": "删除完成",
+    "error": "删除错误！"
+  },
+  "content": {
+    "details": "脚本详情",
+    "scriptManagement": "脚本管理"
+  },
+  "search": {
+    "pleaseSelectStatus": "请选择状态",
+    "pleaseSelectScriptType": "请选择脚本类型",
+    "key": "请输入关键字...",
+    "name": "搜索"
+  },
+  "page": {
+    "perPage": "每页",
+    "row": "行",
+    "show": "显示",
+    "article": "条",
+    "total": "总",
+    "previous": "上一页",
+    "next": "下一页",
+    "first": "第一页",
+    "last": "尾页"
+  }
+}

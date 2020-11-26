@@ -1,0 +1,357 @@
+CGLIB库可以动态生成一个类的子类，一个类的子类也可以用作该类的代理，所以，如果要为一个没有实现接口的类生成动态代理类，那么可以使用CGLIB库
+java CGLib代理
+转载自   cglib之Enhancer
+
+
+
+1. 背景
+cglib库的Enhancer在Spring AOP中作为一种生成代理的方式被广泛使用。本文针对Enhancer的用法以实际代码为例作一些介绍。
+
+2. Enhancer是啥
+Enhancer是cglib中使用频率很高的一个类，它是一个字节码增强器，可以用来为无接口的类创建代理。它的功能与java自带的Proxy类挺相似的。它会根据某个给定的类创建子类，并且所有非final的方法都带有回调钩子。
+
+2.1 Callback
+那么Enhancer使用的Callback具体有哪些呢？下面介绍以下这几种Callback。在cglib中Callback是一个标记接口，Enhancer使用的回调就是cglib中Callback接口的子接口。
+
+2.1.1 Callback-MethodInterceptor
+方法拦截器。这个东西和JDK自带的InvocationHandler很类似
+
+Object intercept(Object obj, java.lang.reflect.Method method, Object[] args, MethodProxy proxy) throws Throwable
+这其中MethodProxy proxy参数一般是用来调用原来的对应方法的。比如可以proxy.invokeSuper(obj, args)。那么为什么不能像InvocationHandler那样用method来调用呢？因为如果用method调用会再次进入拦截器。为了避免这种情况，应该使用接口方法中第四个参数methodProxy调用invokeSuper方法。
+
+复制代码
+public class EnhancerTest {
+
+    public static void main(String[] args) {
+        Enhancer enhancer = new Enhancer();
+        enhancer.setSuperclass(Car.class);
+        enhancer.setCallback(new MethodInterceptor() {
+            @Override
+            public Object intercept(Object obj, Method method, Object[] args, MethodProxy methodProxy)
+                    throws Throwable {
+                System.out.println("before");
+                Object res = methodProxy.invokeSuper(obj, args);
+                System.out.println("after");
+                return res;
+            }
+        });
+        Car car = (Car) enhancer.create();
+
+        car.print();
+    }
+
+    static class Car {
+        void print() {
+            System.out.println("I am a car");
+        }
+    }
+
+}
+复制代码
+上面的程序会打印：
+
+before
+I am a car
+after
+
+2.1.2 Callback-NoOp
+这个回调相当简单，就是啥都不干的意思。
+
+Callback-LazyLoader
+LazyLoader是cglib用于实现懒加载的callback。当被增强bean的方法初次被调用时，会触发回调，之后每次再进行方法调用都是对LazyLoader第一次返回的bean调用。
+
+public class EnhancerTest {
+
+    public static void main(String[] args) {
+        CarFactory factory = new CarFactory();
+        System.out.println("factory built");
+        System.out.println(factory.car.getName());
+        System.out.println(factory.car.getName());
+    }
+
+    static class Car {
+        String name;
+        Car() {
+        }
+
+        String getName() {
+            return name;
+        }
+复制代码
+    }
+
+    static class CarFactory {
+        Car car;
+
+        CarFactory() {
+            car = carLazyProxy();
+        }
+
+        Car carLazyProxy() {
+            Enhancer enhancer = new Enhancer();
+            enhancer.setSuperclass(Car.class);
+            enhancer.setCallback(new LazyLoader() {
+                @Override
+                public Object loadObject() throws Exception {
+                    System.out.println("prepare loading");
+                    Car car = new Car();
+                    car.name = "this is a car";
+                    System.out.println("after loading");
+                    return car;
+                }
+            });
+            return ((Car) enhancer.create());
+        }
+    }
+}
+复制代码
+上面的程序打印情况如下：
+factory built
+prepare loading
+after loading
+this is a car
+this is a car
+
+2.1.3 Callback-Dispatcher
+Dispatcher和LazyLoader作用很相似，区别是用Dispatcher的话每次对增强bean进行方法调用都会触发回调。
+
+public class EnhancerTest {
+
+    public static void main(String[] args) {
+        CarFactory factory = new CarFactory();
+        System.out.println("factory built");
+        System.out.println(factory.car.getName());
+        System.out.println(factory.car.getName());
+    }
+
+    static class Car {
+        String name;
+        Car() {
+        }
+
+        String getName() {
+            return name;
+        }
+复制代码
+    }
+
+    static class CarFactory {
+        Car car;
+
+        CarFactory() {
+            car = carLazyProxy();
+        }
+
+        Car carLazyProxy() {
+            Enhancer enhancer = new Enhancer();
+            enhancer.setSuperclass(Car.class);
+            enhancer.setCallback(new Dispatcher() {
+                @Override
+                public Object loadObject() throws Exception {
+                    System.out.println("prepare loading");
+                    Car car = new Car();
+                    car.name = "this is a car";
+                    System.out.println("after loading");
+                    return car;
+                }
+            });
+            return ((Car) enhancer.create());
+        }
+    }
+}
+复制代码
+程序会打印：
+factory built
+prepare loading
+after loading
+this is a car
+prepare loading
+after loading
+this is a car
+
+2.1.4 Callback-InvocationHandler
+cglib的InvocationHandler和JDK自带的InvocationHandler作用基本相同。使用的时候要注意，如果对参数中的method再次调用，会重复进入InvocationHandler。
+
+复制代码
+public class EnhancerTest {
+
+    public static void main(String[] args) {
+        Enhancer enhancer = new Enhancer();
+        enhancer.setSuperclass(Car.class);
+        enhancer.setCallback(new InvocationHandler() {
+            @Override
+            public Object invoke(Object obj, Method method, Object[] args) throws Throwable {
+                if (method.getReturnType() == void.class) {
+                    System.out.println("hack");
+                }
+                return null;
+            }
+        });
+        Car car = (Car) enhancer.create();
+        car.print();
+    }
+
+    static class Car {
+        void print() {
+            System.out.println("I am a car");
+        }
+    }
+}
+复制代码
+上面的程序会打印：
+
+hack
+
+2.1.5 Callback-FixedValue
+FixedValue一般用于替换方法的返回值为回调方法的返回值，但必须保证返回类型是兼容的，否则会出转换异常。
+
+复制代码
+public class EnhancerTest {
+    public static void main(String[] args) {
+        Enhancer enhancer = new Enhancer();
+        enhancer.setSuperclass(Car.class);
+        enhancer.setCallback(new FixedValue() {
+            @Override
+            public Object loadObject() throws Exception {
+                return "hack!";
+            }
+        });
+
+        Car car = (Car) enhancer.create();
+        System.out.println(car.print1());
+        System.out.println(car.print2());
+    }
+
+    static class Car {
+        String print1() {
+            return "car1";
+        }
+        String print2() {
+            return "car2";
+        }
+    }
+}
+复制代码
+上面的代码会打印：
+
+hack!
+hack!
+
+2.2 CallbackFilter
+上面已经介绍了Enhancer的几种常见callback，这里再介绍一下CallbackFilter。
+上面都是为增强bean配置了一种代理callback，但是当需要作一些定制化的时候，CallbackFilter就派上用处了。
+当通过设置CallbackFilter增强bean之后，bean中原方法都会根据设置的filter与一个特定的callback映射。我们通常会使用cglib中CallbackFilter的默认实现CallbackHelper，它的getCallbacks方法可以返回生成的callback数组。
+
+下面是CallbackFilter的demo程序。
+
+public class EnhancerTest {
+复制代码
+    public static void main(String[] args) {
+        Enhancer enhancer = new Enhancer();
+        enhancer.setSuperclass(Car.class);
+        CallbackHelper helper = new CallbackHelper(Car.class,new Class[0]) {
+            @Override
+            protected Object getCallback(Method method) {
+                if (method.getReturnType() == void.class) {
+                    return new MethodInterceptor() {
+                        @Override
+                        public Object intercept(Object obj, Method method, Object[] args, MethodProxy methodProxy)
+                                throws Throwable {
+                            System.out.println("before invocation");
+                            Object res = methodProxy.invokeSuper(obj, args);
+                            System.out.println("after invocation");
+                            return res;
+                        }
+                    };
+                } else if (method.getReturnType() == String.class) {
+                    return new FixedValue() {
+                        @Override
+                        public Object loadObject() throws Exception {
+                            return "a hacked car";
+                        }
+                    };
+                } else return NoOp.INSTANCE;
+            }
+        };
+
+        enhancer.setCallbacks(helper.getCallbacks());
+        enhancer.setCallbackFilter(helper);
+
+        Car car = (Car) enhancer.create();
+        car.print();
+        System.out.println(car.getId());
+        System.out.println(car.getName());
+    }
+
+    static class Car {
+        static int index = 0;
+
+        int id;
+
+        Car() {
+            id = index++;
+        }
+
+        String getName() {
+            return "car";
+        }
+
+        int getId() {
+            return id;
+        }
+
+        void print() {
+            System.out.println("I am a car");
+        }
+
+    }
+}
+复制代码
+程序将打印：
+before invocation
+I am a car
+after invocation
+0
+a hacked car
+
+我们可以看看CallbackHelper的源码在做什么事情：
+
+复制代码
+public CallbackHelper(Class superclass, Class[] interfaces)
+{
+    List methods = new ArrayList();
+    Enhancer.getMethods(superclass, interfaces, methods);
+    Map indexes = new HashMap();
+    for (int i = 0, size = methods.size(); i < size; i++) {
+        Method method = (Method)methods.get(i);
+
+        // getCallback就是我们编写的根据method返回callback的策略方法。
+        Object callback = getCallback(method);
+        if (callback == null)
+            throw new IllegalStateException("getCallback cannot return null");
+        boolean isCallback = callback instanceof Callback;
+        if (!(isCallback || (callback instanceof Class)))
+            throw new IllegalStateException("getCallback must return a Callback or a Class");
+        if (i > 0 && ((callbacks.get(i - 1) instanceof Callback) ^ isCallback))
+            throw new IllegalStateException("getCallback must return a Callback or a Class consistently for every Method");
+
+        // 从callback与编号的map中获取编号。
+        Integer index = (Integer)indexes.get(callback);
+        // 如果map中没有对应callback,则插入到map中。
+        if (index == null) {
+            index = new Integer(callbacks.size());
+            indexes.put(callback, index);
+        }
+        // 维护bean的method与callback编号的映射。
+        methodMap.put(method, index);
+        // 维护callback列表。
+        callbacks.add(callback);
+    }
+}
+复制代码
+
+
+可以看到在CallbackHelper源码中也是维护了一个methodMap用于保存method和callback编号的映射，一个callbacks用于保存callback集合（方便getCallbacks方法导出）。
+
+3. 参考
+CGLib: The Missing Manual

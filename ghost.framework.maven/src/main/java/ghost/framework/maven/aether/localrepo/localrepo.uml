@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="3.5" y="0.0">ghost.framework.maven.aether.localrepo.ArtifactValidationException</node>
+    <node x="0.0" y="375.0">ghost.framework.maven.aether.localrepo.TrackingFileManager</node>
+    <node x="0.0" y="301.0">ghost.framework.maven.aether.localrepo.BaseLocalRepositoryManager</node>
+    <node x="0.0" y="79.0">ghost.framework.maven.aether.localrepo.ArtifactUnavailableException</node>
+    <node x="0.0" y="153.0">ghost.framework.maven.aether.localrepo.TakariLocalRepositoryManagerFactory</node>
+    <node x="0.0" y="227.0">ghost.framework.maven.aether.localrepo.TakariLocalRepositoryManager</node>
+    <node x="210.0" y="375.0">ghost.framework.maven.aether.localrepo.ArtifactValidator</node>
+    <node x="254.0" y="301.0">ghost.framework.maven.aether.localrepo.TakariUpdateCheckManager</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="ghost.framework.maven.aether.localrepo.ArtifactUnavailableException" target="ghost.framework.maven.aether.localrepo.ArtifactValidationException">
+      <point x="0.0" y="-14.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="0.0" y="0.0" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

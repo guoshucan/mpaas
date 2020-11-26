@@ -1,0 +1,14 @@
+{
+  "key": "請輸入關鍵字...",
+  "page": {
+    "perPage": "每頁",
+    "row": "行",
+    "show": "顯示",
+    "article": "條",
+    "total": "總",
+    "previous": "上壹頁",
+    "next": "下壹頁",
+    "first": "第壹頁",
+    "last": "尾頁"
+  }
+}
